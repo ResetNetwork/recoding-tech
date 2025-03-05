@@ -18,18 +18,15 @@
     "sanity"
   ],
   "dependencies": {
-    "@sanity/client": "^6.20.0",
-    "@sanity/studio-secrets": "^3.0.0",
-    "@sanity/ui": "^2.3.6",
+    "@google/generative-ai": "^0.21.0",
     "@sanity/vision": "^3.16.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
-    "sanity": "^3.48.0",
+    "sanity": "^3.16.4",
     "sanity-plugin-documents-pane": "^2.1.1",
     "sanity-plugin-seo-pane": "^2.0.1",
-    "styled-components": "^6.1.0",
-    "swr": "^2.2.5",
+    "styled-components": "^5.2",
     "vite-plugin-node-polyfills": "^0.14.0"
   },
   "devDependencies": {

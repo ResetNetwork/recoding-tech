@@ -1,5 +1,6 @@
 import { AlignLeftIcon, AlignRightIcon, AlignCenterIcon } from '../components/icons'
 import { TextAlign } from '../components/text-align'
+import { TagsAssistant } from '../components/TagsAssistant'
 
 export default {
   type: 'document',
@@ -165,6 +166,14 @@ export default {
           type: 'customHtml',
         },
       ],
+    },
+    {
+      name: 'generateTags',
+      title: 'Suggest Topics and Tags with AI',
+      type: 'string',
+      components: {
+        input: TagsAssistant
+      }
     },
     {
       title: 'Related topics',
