@@ -6,6 +6,7 @@ import { IframeEmbedBlock } from "./IframeEmbedBlock";
 import { CustomHtmlBlock } from "./CustomHtmlBlock";
 import { ImageBlock } from "./ImageBlock";
 import { ReferenceBlock } from "./ReferenceBlock";
+import { CustomTable } from "./CustomTable";
 
 import slugify from "slugify";
 
@@ -35,6 +36,7 @@ const components = {
     Image: ImageBlock,
     PDF: FileBlock,
     File: FileBlock,
+    table: CustomTable
   },
   marks: {
     left: ({children}) => <span style={{ textAlign: 'left', width: '100%', display: 'inline-block' }}>{children}</span>,

@@ -1,6 +1,7 @@
 import { defineConfig } from 'sanity'
 import { deskTool } from 'sanity/desk'
 import { visionTool } from '@sanity/vision'
+import { table } from '@sanity/table'
 import { schemaTypes } from './schemas'
 import { structure, defaultDocumentNode } from './deskStructure'
 
@@ -30,6 +31,7 @@ export default defineConfig({
     // deskTool({structure: structure, defaultDocumentNode: defaultDocumentNodeResolver}),
     deskTool({ structure, defaultDocumentNode }),
     visionTool(),
+    table(),
   ],
   schema: {
     types: schemaTypes,
