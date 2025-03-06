@@ -128,7 +128,7 @@ const Post = (props) => {
         <Container>
           <Grid container spacing={8}>
             <Grid container spacing={4} item xs={12} md={8} direction="row">
-              <Grid item>
+              <Grid item sx={{ maxWidth: "100%" }}>
                 {/* <Typography component="div" className="html-to-react">
                   {markdownify(_.get(props, "page.content", null))}
                 </Typography> */}

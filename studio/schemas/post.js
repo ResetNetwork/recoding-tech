@@ -1,4 +1,5 @@
-import { AlignLeftIcon, AlignRightIcon, AlignCenterIcon } from '../components/icons'
+import { AlignLeftIcon, AlignRightIcon, AlignCenterIcon, TableIcon, HTMLIcon } from '../components/icons'
+import { ImageIcon, CodeBlockIcon, DocumentPdfIcon } from '@sanity/icons'
 import { TextAlign } from '../components/text-align'
 
 export default {
@@ -113,6 +114,7 @@ export default {
           title: 'Image',
           name: 'Image',
           type: 'image',
+          icon: ImageIcon,
           fields: [
             {
               name: 'caption',
@@ -133,9 +135,16 @@ export default {
           ],
         },
         {
+          title: 'Table',
+          name: 'table',
+          type: 'table',
+          icon: TableIcon
+        },
+        {
           title: 'iFrame Embed',
           name: 'iframeEmbed',
           type: 'iframeEmbed',
+          icon: CodeBlockIcon,
         },
         {
           title: 'PDF',
@@ -158,11 +167,13 @@ export default {
               title: 'Title',
             },
           ],
+          icon: DocumentPdfIcon
         },
         {
-          title: 'Custom HTML',
+          title: 'HTML',
           name: 'customHtml',
           type: 'customHtml',
+          icon: HTMLIcon
         },
       ],
     },
