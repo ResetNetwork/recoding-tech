@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     "&:active, &:focus, &:hover": {
       backgroundColor: "#FFF !important",
     },
-},
+  },
   tableRow: {
     fontFamily: "'Lexend', sans-serif",
     fontSize: "1em",
@@ -40,11 +40,9 @@ export const CustomTable = ({ value, children }) => {
           <TableRow className={classes.tableHeaderRow}>
             {headers.cells.map((cell, index) => (
               <TableCell key={index}>
-                <div className="block">
-                  <Typography component="span" variant="tableHeader">
-                    {cell}
-                  </Typography>
-                </div>
+                <Typography component="span" variant="tableHeader">
+                  {cell}
+                </Typography>
               </TableCell>
             ))}
           </TableRow>
