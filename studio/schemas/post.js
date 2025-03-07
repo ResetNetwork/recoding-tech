@@ -1,6 +1,7 @@
 import { AlignLeftIcon, AlignRightIcon, AlignCenterIcon, TableIcon, HTMLIcon } from '../components/icons'
 import { ImageIcon, CodeBlockIcon, DocumentPdfIcon } from '@sanity/icons'
 import { TextAlign } from '../components/text-align'
+import { TagsAssistant } from '../components/TagsAssistant'
 
 export default {
   type: 'document',
@@ -176,6 +177,14 @@ export default {
           icon: HTMLIcon
         },
       ],
+    },
+    {
+      name: 'generateTags',
+      title: 'Suggest Topics and Tags with AI',
+      type: 'string',
+      components: {
+        input: TagsAssistant
+      }
     },
     {
       title: 'Related topics',
