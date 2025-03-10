@@ -58,6 +58,8 @@ export const TagsAssistant = (props) => {
   const docId = typeof form._id === 'string' ? form._id.replace('drafts.', '') : undefined
   const {patch} = useDocumentOperation(docId, form._type)
 
+  const relatedTopics = form.relatedTopics || []
+
   const onAssign = async () => {
     setAiResponse(null)
     const createdTags = []
@@ -131,11 +133,11 @@ export const TagsAssistant = (props) => {
   const selectAllTopics = useCallback((event) => {
     if (!aiResponse) return
     if (event.target.checked) {
-      setSelectedTopics(aiResponse.categories.filter(item => !form.relatedTopics.find((topic) => topic._ref === item._id)).map((item) => item._id))
+      setSelectedTopics(aiResponse.categories.filter(item => !relatedTopics.find((topic) => topic._ref === item._id)).map((item) => item._id))
     } else {
       setSelectedTopics([])
     }
-  }, [aiResponse, form.relatedTopics])
+  }, [aiResponse, relatedTopics])
 
   const selectTopic = useCallback((event) => {
     if (event.target.checked) {
@@ -203,8 +205,8 @@ export const TagsAssistant = (props) => {
                     <Text muted>({item.count} refs)</Text>
                   </Flex>
                   <Checkbox
-                    disabled={form.relatedTopics.find((topic) => topic._ref === item._id)}
-                    checked={selectedTopics.includes(item._id) || form.relatedTopics.find((topic) => topic._ref === item._id)}
+                    disabled={relatedTopics.find((topic) => topic._ref === item._id)}
+                    checked={selectedTopics.includes(item._id) || relatedTopics.find((topic) => topic._ref === item._id)}
                     onChange={selectTopic}
                     value={item._id}
                   />
@@ -224,8 +226,8 @@ export const TagsAssistant = (props) => {
                     <Text muted>({item.count} refs)</Text>
                   </Flex>
                   <Checkbox
-                    disabled={form.relatedTopics.find((topic) => topic._ref === item._id)}
-                    checked={selectedTags.includes(item._id) || form.relatedTopics.find((topic) => topic._ref === item._id)}
+                    disabled={relatedTopics.find((topic) => topic._ref === item._id)}
+                    checked={selectedTags.includes(item._id) || relatedTopics.find((topic) => topic._ref === item._id)}
                     onChange={selectTag}
                     value={item._id}
                   />
