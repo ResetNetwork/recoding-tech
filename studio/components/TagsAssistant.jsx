@@ -85,16 +85,28 @@ export const TagsAssistant = (props) => {
       ...selectedTags.map((item) => ({_ref: item, _type: 'reference', _key: uuid()})),
       ...createdTags.map((item) => ({_ref: item, _type: 'reference', _key: uuid()})),
     ]
+
     if (update.length > 0) {
-      patch.execute([
-        {
-          insert: {
-            "after": "relatedTopics[-1]",
-            "items": update
-          }
-        }
-      ]);
+      if (form.relatedTopics) {
+        patch.execute([
+          {
+            insert: {
+              after: 'relatedTopics[-1]',
+              items: update,
+            },
+          },
+        ])
+      } else {
+        patch.execute([
+          {
+            set: {
+              "relatedTopics": update
+            }
+          },
+        ])
+      }
     }
+
     onReset()
   }
 
