@@ -117,6 +117,8 @@ export const TagsAssistant = (props) => {
   }
 
   const onGenerate = async () => {
+    if (!form.body) return;
+
     setLoading(true)
     setAiResponse(null)
     onReset()
