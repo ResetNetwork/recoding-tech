@@ -2,6 +2,7 @@ import { AlignLeftIcon, AlignRightIcon, AlignCenterIcon, TableIcon, HTMLIcon } f
 import { ImageIcon, CodeBlockIcon, DocumentPdfIcon } from '@sanity/icons'
 import { TextAlign } from '../components/text-align'
 import { TagsAssistant } from '../components/TagsAssistant'
+import { FeaturedImageSearch } from '../components/FeaturedImageSearch'
 
 export default {
   type: 'document',
@@ -117,6 +118,17 @@ export default {
           type: 'image',
           icon: ImageIcon,
           fields: [
+            {
+              name: 'featuredImageSearch',
+              title: 'Internal Image Search',
+              type: 'string',
+              components: {
+                input: FeaturedImageSearch
+              },
+              options: {
+                source: (doc, options) => ({ doc, options }),
+              },
+            },
             {
               name: 'caption',
               type: 'array',
