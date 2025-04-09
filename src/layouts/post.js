@@ -24,6 +24,7 @@ import Typography from "@mui/material/Typography";
 import { Layout } from "../components/index";
 import RelatedCommentary from "../components/RelatedCommentary";
 import RelatedTopics from "../components/RelatedTopics";
+import Badge from "../components/Badge";
 
 // table of contents
 import { PortableText } from "@portabletext/react";
@@ -132,6 +133,7 @@ const Post = (props) => {
                 {/* <Typography component="div" className="html-to-react">
                   {markdownify(_.get(props, "page.content", null))}
                 </Typography> */}
+                {page.badge && <Badge badge={page.badge} />}
                 <Typography
                   component="h1"
                   variant="h2_article"
@@ -262,7 +264,11 @@ const Post = (props) => {
                         item
                         xs={12}
                       >
-                        <Grid item xs={auth.photo ? 3 : 0}>
+                        <Grid
+                          item
+                          xs={auth.photo ? 3 : 0}
+                          sx={{ paddingLeft: "0!important" }}
+                        >
                           {auth.photo && (
                             <Image
                               src={urlFor(auth.photo)
@@ -281,6 +287,8 @@ const Post = (props) => {
                             href={`/author/${auth.slug.current}`}
                             sx={{
                               textDecoration: "none",
+                              marginBottom: "10px",
+                              display: "block",
                               "&:active, &:focus, &:hover": {
                                 color: "#000",
                                 textDecoration: "underline",
@@ -300,6 +308,11 @@ const Post = (props) => {
                               color="rgba(0,0,0,0.48)"
                               component="div"
                               variant="body2"
+                              sx={{
+                                fontSize: "16px",
+                                fontWeight: 400,
+                                lineHeight: 1.5,
+                              }}
                             >
                               {toPlainText(auth.bio).substring(0, 300)}
                               {toPlainText(auth.bio).length > 300 ? "..." : ""}

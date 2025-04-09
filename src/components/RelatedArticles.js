@@ -9,14 +9,17 @@ import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
+import Badge from "./Badge";
+
 const useStyles = makeStyles((theme) => ({
   title: {
     fontFamily: theme.typography.fontFamily,
-    fontSize: "13px",
-    fontWeight: 600,
+    fontSize: "16px",
+    fontWeight: 700,
+    lineHeight: 1.5,
     display: "flex",
     flexDirection: "column",
-    "&>:first-child:hover": {
+    "&>a:hover": {
       textDecoration: "underline",
     },
     "&:not(:last-child)": {
@@ -49,6 +52,8 @@ const RelatedArticles = (props) => {
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
               {articles.map((article, i) => (
                 <div key={i} className={classes.title}>
+                  {/* {article.badge && <Badge badge={article.badge} />} */}
+                  <Badge badge="news" variant={"link"} />
                   <Link
                     href={`/${article.slug.current}`}
                     sx={{ textDecoration: "none" }}
