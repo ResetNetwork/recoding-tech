@@ -52,8 +52,7 @@ const RelatedArticles = (props) => {
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
               {articles.map((article, i) => (
                 <div key={i} className={classes.title}>
-                  {/* {article.badge && <Badge badge={article.badge} />} */}
-                  <Badge badge="news" variant={"link"} />
+                  {article.badge && <Badge badge={article.badge} variant={"link"} />}
                   <Link
                     href={`/${article.slug.current}`}
                     sx={{ textDecoration: "none" }}
