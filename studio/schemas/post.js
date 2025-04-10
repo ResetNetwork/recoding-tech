@@ -17,6 +17,25 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      title: "Badge",
+      name: "badge",
+      type: "string",
+      options: {
+        list: [
+          { title: "Perspective", value: "perspective" },
+          { title: "Analysis", value: "analysis" },
+          { title: "News", value: "news" },
+          { title: "Podcast", value: "podcast" },
+          { title: "Announcement", value: "announcement" },
+          { title: "Transcript", value: "transcript" },
+          { title: "None", value: "" }
+        ],
+        layout: "radio",
+        direction: "horizontal"
+      },
+      initialValue: ""
+    },
+    {
       title: 'Slug',
       name: 'slug',
       type: 'slug',
