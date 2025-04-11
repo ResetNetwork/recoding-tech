@@ -5,7 +5,7 @@ import { Box } from "@mui/material";
 const badges = [
   { key: "perspective", label: "Perspective", color: "#1d5d9e" },
   { key: "analysis", label: "Analysis", color: "#376055" },
-  { key: "news", label: "News", color: "#b11114" },
+  { key: "news", label: "News", color: "#da1619" },
   { key: "podcast", label: "Podcast", color: "#6c5c29" },
   { key: "announcement", label: "Announcement", color: "#000000" },
   { key: "transcript", label: "Transcript", color: "#a00086" },
