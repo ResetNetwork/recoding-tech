@@ -41,7 +41,7 @@
     line-height: 24.5px;
     font-family: "Lexend";
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 300;
   }
 
   a {
@@ -86,7 +86,7 @@
 
         li {
           font-size: 1.2rem;
-          font-weight: 400;
+          font-weight: 300;
           margin-left: unset;
           text-transform: none;
           width: 100%;
@@ -100,7 +100,7 @@
   ol {
     font-family: "Lexend";
     font-size: 1.2rem;
-    font-weight: 400;
+    font-weight: 300;
   }
 }
 
@@ -155,7 +155,7 @@
     line-height: 24.5px;
     font-family: "Lexend";
     font-size: 16px;
-    font-weight: 400;
+    font-weight: 300;
   }
 
   a {
@@ -172,18 +172,8 @@
   div {
     font-family: "Lexend";
     font-size: 1rem;
-    font-weight: 400;
+    font-weight: 300;
     line-height: 28px;
-  }
-
-  p {
-    margin-block-start: 1.5em;
-    margin-block-end: 1.5em;
-  }
-
-  p:empty {
-    margin-block-start: 0;
-    margin-block-end: 0;
   }
 
   p:last-of-type {
