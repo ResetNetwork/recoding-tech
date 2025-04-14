@@ -308,11 +308,6 @@ const Post = (props) => {
                               color="rgba(0,0,0,0.48)"
                               component="div"
                               variant="body2"
-                              sx={{
-                                fontSize: "16px",
-                                fontWeight: 400,
-                                lineHeight: 1.5,
-                              }}
                             >
                               {toPlainText(auth.bio).substring(0, 300)}
                               {toPlainText(auth.bio).length > 300 ? "..." : ""}

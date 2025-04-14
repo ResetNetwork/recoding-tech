@@ -1,6 +1,7 @@
 // base imports
 import React from "react";
 import PropTypes from "prop-types";
+import { DateTime } from "luxon";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -61,6 +62,21 @@ const RelatedArticles = (props) => {
                   >
                     {article.title}
                   </Link>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    sx={{
+                      color: "#a7a7a7",
+                      fontSize: 14,
+                      fontWeight: 400,
+                      marginTop: "8px",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {DateTime.fromISO(article.date)
+                      .setLocale("en-us")
+                      .toLocaleString(DateTime.DATE_FULL)}
+                  </Typography>
                 </div>
               ))}
             </Box>
