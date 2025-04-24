@@ -1,5 +1,5 @@
 // base imports
-import React from "react";
+import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import PropTypes from "prop-types";
 
@@ -16,8 +16,31 @@ import SectionHero from "../components/SectionHero";
 import SectionHeroTracker from "../components/SectionHeroTracker";
 import SectionRecentArticles from "../components/SectionRecentArticles";
 
+// utils
+import client from "../utils/sanityClient";
+import FeaturedHero from "../components/Homepage/FeaturedHero";
+import FeaturedStories from "../components/Homepage/FeatureStories";
+import Podcast from "../components/Homepage/Podcast";
+import LatestFromFellows from "../components/Homepage/LatestFromFellows";
+
+const query = `*[!(_id in path("drafts.**")) && _type=="post"]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...15]`; // just get the most recent articles
+
 const Advanced = (props) => {
-  const { path, page } = props;
+  const { path, page, featured } = props;
+  const [articles, setArticles] = useState([]);
+
+  useEffect(() => {
+    client.fetch(query).then((recents) => {
+      setArticles(recents);
+    });
+  }, []);
+
+  const latest =
+    path === "/"
+      ? articles.filter(
+          (article) => featured.find((a) => a._id === article._id) == null
+        )
+      : undefined;
 
   return (
     <Layout {...props}>
@@ -110,29 +133,24 @@ const Advanced = (props) => {
                 alignItems="flex-start"
                 justifyContent="space-between"
               >
-                <Grid item xs={12} sm={8}>
-                  {_.map(
-                    _.get(props, "page.sections", null),
-                    (section, section_idx) => {
-                      let component = _.upperFirst(
-                        _.camelCase(_.get(section, "type", null))
-                      );
-                      let Component = components[component];
-                      return (
-                        <Component
-                          key={section_idx}
-                          {...props}
-                          section={section}
-                          site={props}
-                        />
-                      );
-                    }
-                  )}
-                </Grid>
+                {featured && (
+                  <Grid item xs={12} sm={8}>
+                    <FeaturedHero article={featured[0]} />
+                    <FeaturedStories articles={featured.slice(1)} />
+                  </Grid>
+                )}
                 <Grid container item xs={12} sm={4}>
                   <Grid item>
-                    <SectionRecentArticles />
+                    <SectionRecentArticles articles={latest.slice(0, 5)} />
                   </Grid>
+                </Grid>
+              </Grid>
+              <Grid container spacing={4} sx={{ marginTop: 1 }}>
+                <Grid item xs={6}>
+                  <Podcast />
+                </Grid>
+                <Grid item xs={6}>
+                  <LatestFromFellows />
                 </Grid>
               </Grid>
               <Box mt={6} mb={8}>
@@ -182,6 +200,7 @@ Advanced.propTypes = {
   citations: PropTypes.array,
   path: PropTypes.string,
   page: PropTypes.object,
+  featured: PropTypes.array,
 };
 
 export default Advanced;

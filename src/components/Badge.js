@@ -18,16 +18,17 @@ function Badge({ badge, variant = "default" }) {
   return (
     <Box
       sx={{
-        marginBottom: variant == "link" ? "6px" : "16px",
+        marginBottom: variant == "link" ? "8px" : "16px",
         color: variant == "link" ? currentBadge.color : "#fff",
         backgroundColor: variant == "link" ? undefined : currentBadge.color,
-        padding: variant == "link" ? undefined : "7px 16px",
+        padding: variant == "link" ? undefined : "4px 16px",
         borderRadius: "4px",
         display: "inline-block",
         textTransform: "uppercase",
         fontFamily: "Lexend",
         fontSize: "12px",
         fontWeight: "500",
+        lineHeight: 1.75,
       }}
     >
       {currentBadge.label}

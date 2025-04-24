@@ -1,36 +1,23 @@
 // base imports
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useRouter } from "next/router";
-import { titleCase } from "title-case";
 import { DateTime } from "luxon";
+import { titleCase } from "title-case";
 
-// material ui imports
 import { makeStyles } from "@mui/styles";
+import { CardActionArea } from "@mui/material";
+import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
-import { CardActionArea } from "@mui/material";
 import CardContent from "@mui/material/CardContent";
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import Badge from "./Badge";
-
-// components
-import FancyTitle from "./FancyTitle";
+import Badge from "../Badge";
 
 // util
-import urlFor from "../utils/imageBuilder";
-
-// client
-import client from "../utils/sanityClient.js";
+import urlFor from "../../utils/imageBuilder";
 
 const useStyles = makeStyles((theme) => ({
-  alsoFeatured: {},
-  alsoFeaturedTag: {
-    color: theme.palette.error.main,
-    marginBottom: 5,
-  },
   box: {
     padding: 10,
     backgroundColor: theme.palette.footer.main,
@@ -58,17 +45,6 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-  authors: {
-    color: "rgba(0, 0, 0, 0.6)",
-    fontFamily: "Lexend",
-    fontSize: "10px",
-    fontWeight: "700",
-    textTransform: "uppercase",
-  },
-  em: {
-    fontSize: "0.95em",
-    fontStyle: "italic",
-  },
   featured: {
     height: 370,
     position: "relative",
@@ -79,49 +55,18 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     zIndex: 2,
   },
-  featuredTag: {
-    backgroundColor: theme.palette.error.main,
-    borderRadius: "2px",
-    color: theme.palette.error.light,
-    paddingLeft: 10,
-    paddingRight: 10,
-    width: 76,
-  },
-  tracker: {
-    backgroundColor: theme.palette.policy.main,
-  },
 }));
 
-// gets the three most recent articles by Tech Policy Press staff
-const staffArticlesQuery = `*[_type=="post" && !(_id in path("drafts.**")) && references(*[_type=="author" && staff]._id)]{ title, slug, badge, date } | order(date desc)[0...3]`;
-
-function SectionArticle(props) {
+function FeaturedHero({ article }) {
   const classes = useStyles();
   const router = useRouter();
-  const {
-    section: { featuredArticle },
-  } = props;
-  const [article, setArticle] = useState(null);
-  const [staffArticles, setStaffArticles] = useState(null);
-
-  useEffect(() => {
-    setArticle(featuredArticle);
-  }, [featuredArticle]);
-
-  useEffect(() => {
-    client.fetch(staffArticlesQuery).then((articles) => {
-      if (Array.isArray(articles) && articles.length) {
-        setStaffArticles(articles);
-      }
-    });
-  }, []);
 
   const articleClick = (url) => {
     router.push({ pathname: "/" + url });
   };
 
   return (
-    <Container>
+    <Container sx={{ paddingLeft: "0!important" }}>
       <Box my={4} mb={10}>
         {article ? (
           <>
@@ -189,48 +134,13 @@ function SectionArticle(props) {
             </Box>
           </>
         ) : null}
-        {staffArticles && staffArticles.length ? (
-          <>
-            <FancyTitle title={"Most recent from Tech Policy Press"} />
-            <Grid
-              container
-              direction="row"
-              justifyContent="space-between"
-              spacing={{ xs: 2, md: 3 }}
-              mb={10}
-            >
-              {staffArticles.map((article, idx) => (
-                <Grid item key={idx} xs={12} md={4} mt={2}>
-                  <Card
-                    variant="outlined"
-                    className={`${classes.box} ${classes.alsoFeatured}`}
-                  >
-                    <CardActionArea
-                      onClick={() => articleClick(article.slug.current)}
-                    >
-                      <CardContent>
-                        <Typography
-                          gutterBottom
-                          component="div"
-                          sx={{ fontWeight: "bold" }}
-                        >
-                          {titleCase(article.title)}
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Grid>
-              ))}
-            </Grid>
-          </>
-        ) : null}
       </Box>
     </Container>
   );
 }
 
-SectionArticle.propTypes = {
-  section: PropTypes.object,
+FeaturedHero.propTypes = {
+  article: PropTypes.object,
 };
 
-export default SectionArticle;
+export default FeaturedHero;
