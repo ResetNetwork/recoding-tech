@@ -1,5 +1,5 @@
 // base imports
-import React, { useEffect, useState } from "react";
+import React from "react";
 import _ from "lodash";
 import PropTypes from "prop-types";
 
@@ -17,23 +17,13 @@ import SectionHeroTracker from "../components/SectionHeroTracker";
 import SectionRecentArticles from "../components/SectionRecentArticles";
 
 // utils
-import client from "../utils/sanityClient";
 import FeaturedHero from "../components/Homepage/FeaturedHero";
 import FeaturedStories from "../components/Homepage/FeatureStories";
 import Podcast from "../components/Homepage/Podcast";
 import LatestFromFellows from "../components/Homepage/LatestFromFellows";
 
-const query = `*[!(_id in path("drafts.**")) && _type=="post"]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...15]`; // just get the most recent articles
-
 const Advanced = (props) => {
-  const { path, page, featured } = props;
-  const [articles, setArticles] = useState([]);
-
-  useEffect(() => {
-    client.fetch(query).then((recents) => {
-      setArticles(recents);
-    });
-  }, []);
+  const { path, page, featured, articles } = props;
 
   const latest =
     path === "/"
@@ -201,6 +191,7 @@ Advanced.propTypes = {
   path: PropTypes.string,
   page: PropTypes.object,
   featured: PropTypes.array,
+  articles: PropTypes.array,
 };
 
 export default Advanced;

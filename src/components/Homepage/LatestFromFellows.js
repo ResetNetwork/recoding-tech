@@ -131,7 +131,7 @@ function LatestFromFellows() {
                     fontWeight: 400,
                     marginTop: "8px",
                     textTransform: "uppercase",
-                    lineHeight: 1.5,
+                    lineHeight: 1.75,
                     display: "inline-block",
                   }}
                 >

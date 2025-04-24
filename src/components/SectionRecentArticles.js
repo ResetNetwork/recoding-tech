@@ -17,9 +17,6 @@ const useStyles = makeStyles(() => ({
     marginBottom: 20,
     paddingBottom: 20,
   },
-  lastArticle: {
-    marginBottom: 20,
-  },
   articleTitle: {
     color: "#000 !important",
     fontSize: "1em",
@@ -135,11 +132,7 @@ const SectionRecentArticles = (props) => {
               <Grid
                 item
                 key={article._id}
-                className={
-                  idx === articles.length - 1
-                    ? classes.lastArticle
-                    : classes.article
-                }
+                className={idx !== articles.length - 1 && classes.article}
               >
                 {article.badge && (
                   <Badge badge={article.badge} variant={"link"} />
@@ -165,7 +158,7 @@ const SectionRecentArticles = (props) => {
                     fontWeight: 400,
                     marginTop: "8px",
                     textTransform: "uppercase",
-                    lineHeight: 1.5,
+                    lineHeight: 1.75,
                     display: "inline-block",
                   }}
                 >

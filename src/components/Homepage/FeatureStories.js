@@ -90,16 +90,8 @@ function FeaturedStories({ articles }) {
       </Grid>
       <Grid container item flexDirection="column">
         {articles && articles.length
-          ? articles.map((article, idx) => (
-              <Grid
-                key={article._id}
-                item
-                className={
-                  idx === articles.length - 1
-                    ? classes.lastArticle
-                    : classes.article
-                }
-              >
+          ? articles.map((article) => (
+              <Grid key={article._id} item className={classes.article}>
                 <Grid container flexDirection="row" flexWrap={"nowrap"} gap={2}>
                   <Grid item>
                     <Link href={`/${article.slug.current}`}>
@@ -133,7 +125,7 @@ function FeaturedStories({ articles }) {
                         fontWeight: 400,
                         marginTop: "8px",
                         textTransform: "uppercase",
-                        lineHeight: 1.5,
+                        lineHeight: 1.75,
                         display: "inline-block",
                       }}
                     >
