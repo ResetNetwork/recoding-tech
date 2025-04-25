@@ -14,7 +14,7 @@ import Badge from "../Badge";
 import urlFor from "../../utils/imageBuilder";
 import client from "../../utils/sanityClient";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   article: {
     borderBottom: "1px solid",
     borderBottomColor: "#DCDCDC",
@@ -38,6 +38,15 @@ const useStyles = makeStyles(() => ({
     marginTop: 25,
     marginBottom: 8,
     position: "relative",
+  },
+  articleGrid: {
+    flexDirection: "row",
+    flexWrap: "nowrap",
+    columnGap: "16px",
+    rowGap: "8px",
+    [theme.breakpoints.down("md")]: {
+      flexDirection: "column",
+    },
   },
   em: {
     fontSize: "0.81em",
@@ -100,7 +109,7 @@ function LatestFromFellows() {
       <Grid item>
         {article ? (
           <Grid key={article._id} item className={classes.article}>
-            <Grid container flexDirection="row" flexWrap={"nowrap"} gap={2}>
+            <Grid container className={classes.articleGrid}>
               <Grid item>
                 <Link href={`/${article.slug.current}`}>
                   <img src={urlFor(article.featuredImage).width(280).url()} />

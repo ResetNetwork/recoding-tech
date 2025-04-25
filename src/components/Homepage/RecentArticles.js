@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
   articleGrid: {
-    flexDirection: "row",
+    flexDirection: "column",
     flexWrap: "nowrap",
     columnGap: "16px",
     rowGap: "8px",
@@ -59,11 +59,7 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "uppercase",
   },
   grid: {
-    marginTop: 32,
-    paddingRight: "20px",
-    [theme.breakpoints.down("md")]: {
-      paddingRight: "0px",
-    },
+    marginTop: 20,
   },
   gridTitle: {
     borderBottom: "1px solid #000",
@@ -90,28 +86,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function FeaturedStories({ articles }) {
+function RecentArticles({ articles }) {
   const classes = useStyles();
 
   return (
     <Grid container className={classes.grid}>
       <Grid item className={classes.gridTitle}>
         <Typography component="h2" variant="h4" sx={{ marginBottom: 1 }}>
-          Featured Stories
+          Recent
         </Typography>
       </Grid>
       <Grid container item flexDirection="column">
         {articles && articles.length
-          ? articles.map((article) => (
+          ? articles.map((article, index) => (
               <Grid key={article._id} item className={classes.article}>
                 <Grid container className={classes.articleGrid}>
-                  <Grid item>
-                    <Link href={`/${article.slug.current}`}>
-                      <img
-                        src={urlFor(article.featuredImage).width(200).url()}
-                      />
-                    </Link>
-                  </Grid>
+                  {index === 0 && (
+                    <Grid item>
+                      <Link href={`/${article.slug.current}`}>
+                        <img
+                          src={urlFor(article.featuredImage).width(400).url()}
+                          style={{ maxWidth: "100%" }}
+                        />
+                      </Link>
+                    </Grid>
+                  )}
                   <Grid item>
                     {article.badge && (
                       <Badge badge={article.badge} variant={"link"} />
@@ -150,13 +149,47 @@ function FeaturedStories({ articles }) {
               </Grid>
             ))
           : null}
+        <Grid item>
+          <Link
+            href="/search"
+            sx={{
+              height: 24,
+              textDecoration: "none",
+              display: "inline-block",
+              "&:hover": {
+                textDecoration: "underline",
+              },
+            }}
+          >
+            <Typography
+              component="div"
+              variant="h5"
+              sx={{
+                backgroundColor: "#ffe5eaFF",
+                borderRadius: "4px",
+                color: "#FF0033",
+                fontWeight: 500,
+                paddingX: "10px",
+                paddingY: "6px",
+                boxShadow: "0px 2px 2px 0px #0000001F",
+                "&:active, & :focus, &:hover": {
+                  color: "#FF0033",
+                  textDecoration: "underline",
+                },
+                marginBottom: "7px",
+              }}
+            >
+              View more
+            </Typography>
+          </Link>
+        </Grid>
       </Grid>
     </Grid>
   );
 }
 
-FeaturedStories.propTypes = {
+RecentArticles.propTypes = {
   articles: PropTypes.array,
 };
 
-export default FeaturedStories;
+export default RecentArticles;

@@ -1,6 +1,5 @@
 // base imports
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useState, useEffect } from "react";
 import { DateTime } from "luxon";
 
 // Material UI imports
@@ -12,6 +11,7 @@ import Badge from "../Badge";
 
 // util
 import urlFor from "../../utils/imageBuilder";
+import client from "../../utils/sanityClient";
 
 const useStyles = makeStyles((theme) => ({
   article: {
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
   articleGrid: {
-    flexDirection: "row",
+    flexDirection: "column",
     flexWrap: "nowrap",
     columnGap: "16px",
     rowGap: "8px",
@@ -59,11 +59,7 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "uppercase",
   },
   grid: {
-    marginTop: 32,
-    paddingRight: "20px",
-    [theme.breakpoints.down("md")]: {
-      paddingRight: "0px",
-    },
+    marginTop: 20,
   },
   gridTitle: {
     borderBottom: "1px solid #000",
@@ -90,28 +86,40 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function FeaturedStories({ articles }) {
+const query = `*[_type == "featured_posts" && title == "Homepage - Spotlight"] { posts[]->{_id, title, author, badge, date, featuredImage, category, date, type, slug, stackbit_model_type} }`;
+
+function SpotlightArticles() {
   const classes = useStyles();
+  const [articles, setArticles] = useState([]);
+
+  useEffect(() => {
+    client.fetch(query).then((recents) => {
+      setArticles(recents[0].posts);
+    });
+  }, []);
 
   return (
     <Grid container className={classes.grid}>
       <Grid item className={classes.gridTitle}>
         <Typography component="h2" variant="h4" sx={{ marginBottom: 1 }}>
-          Featured Stories
+          Spotlight
         </Typography>
       </Grid>
       <Grid container item flexDirection="column">
-        {articles && articles.length
-          ? articles.map((article) => (
+        {articles && articles.length > 0
+          ? articles.map((article, index) => (
               <Grid key={article._id} item className={classes.article}>
                 <Grid container className={classes.articleGrid}>
-                  <Grid item>
-                    <Link href={`/${article.slug.current}`}>
-                      <img
-                        src={urlFor(article.featuredImage).width(200).url()}
-                      />
-                    </Link>
-                  </Grid>
+                  {index === 0 && (
+                    <Grid item>
+                      <Link href={`/${article.slug.current}`}>
+                        <img
+                          src={urlFor(article.featuredImage).width(400).url()}
+                          style={{ maxWidth: "100%" }}
+                        />
+                      </Link>
+                    </Grid>
+                  )}
                   <Grid item>
                     {article.badge && (
                       <Badge badge={article.badge} variant={"link"} />
@@ -155,8 +163,6 @@ function FeaturedStories({ articles }) {
   );
 }
 
-FeaturedStories.propTypes = {
-  articles: PropTypes.array,
-};
+SpotlightArticles.propTypes = {};
 
-export default FeaturedStories;
+export default SpotlightArticles;

@@ -84,7 +84,7 @@ function Podcast() {
       </Grid>
       <Grid item sx={{ width: "100%" }}>
         <iframe
-          src="https://player.captivate.fm/episode/d6d5d4c6-714d-47e3-b0f6-14b11ce2bab0/"
+          src="https://player.captivate.fm/show/1749da6a-9a89-4f1d-bd30-65eb9a749b60/latest"
           style={{ width: "100%", height: "185px", border: "none" }}
         />
       </Grid>

@@ -18,6 +18,12 @@ import Badge from "../Badge";
 import urlFor from "../../utils/imageBuilder";
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    paddingLeft: "0!important",
+    [theme.breakpoints.down("md")]: {
+      paddingRight: "0!important",
+    },
+  },
   box: {
     padding: 10,
     backgroundColor: theme.palette.footer.main,
@@ -66,7 +72,7 @@ function FeaturedHero({ article }) {
   };
 
   return (
-    <Container sx={{ paddingLeft: "0!important" }}>
+    <Container className={classes.container}>
       <Box my={4} mb={10}>
         {article ? (
           <>

@@ -86,14 +86,17 @@ const Header = (props) => {
     <header className={classes.header}>
       <Box
         p={4}
-        mb={4}
-        mt={isMobile ? 0 : 4}
+        mb={props.isHomepage ? 0 : 4}
+        mt={isMobile ? 0 : 1.5}
         sx={{
-          boxShadow: isMobile ? "" : "0px 2px 1px -1px rgba(0, 0, 0, 0.2)",
+          boxShadow:
+            props.isHomepage || isMobile
+              ? ""
+              : "0px 2px 1px -1px rgba(0, 0, 0, 0.2)",
         }}
       >
         <Grid container spacing={3} justifyContent="space-between">
-          <Grid item xs={10} sm={2}>
+          <Grid item xs={10} md={2}>
             <Link href="/" className={classes.logoLink}>
               <Logo />
               <Typography sx={{ display: "none" }}>Home</Typography>
@@ -103,7 +106,7 @@ const Header = (props) => {
             container
             item
             xs={2}
-            sm={10}
+            md={10}
             className={classes.nav}
             alignItems="center"
             spacing={4}
@@ -565,6 +568,7 @@ Header.propTypes = {
     topics: PropTypes.arrayOf(PropTypes.object).isRequired,
   }),
   page: PropTypes.object.isRequired,
+  isHomepage: PropTypes.bool,
 };
 
 export default Header;
