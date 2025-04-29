@@ -1,7 +1,6 @@
 // base imports
 import React, { useState, useEffect } from "react";
 import { DateTime } from "luxon";
-import PropTypes from "prop-types";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
@@ -20,9 +19,6 @@ const useStyles = makeStyles((theme) => ({
     borderBottomColor: "#DCDCDC",
     marginBottom: 20,
     paddingBottom: 20,
-  },
-  lastArticle: {
-    marginBottom: 20,
   },
   articleTitle: {
     color: "#000 !important",
@@ -60,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "uppercase",
   },
   grid: {
-    marginTop: 20,
+    marginTop: 10,
   },
   gridTitle: {
     borderBottom: "1px solid #000",
@@ -87,16 +83,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const query = `*[!(_id in path("drafts.**")) && references("category-democracy") && date != null]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...20]`;
+const query = `*[!(_id in path("drafts.**")) && references("category-journalism-and-news-media") && date != null]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...2]`;
 
-function AroundGlobe({ exclude }) {
+function Announcements() {
   const classes = useStyles();
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
     client.fetch(query).then((recents) => {
-      const posts = recents.filter((post) => !exclude.includes(post._id));
-      setArticles(posts);
+      setArticles(recents);
     });
   }, []);
 
@@ -104,13 +99,17 @@ function AroundGlobe({ exclude }) {
     <Grid container className={classes.grid}>
       <Grid item className={classes.gridTitle}>
         <Typography component="h2" variant="h4" sx={{ marginBottom: 1 }}>
-          Around the globe
+          Announcements
         </Typography>
       </Grid>
       <Grid container item flexDirection="column">
         {articles && articles.length > 0
           ? articles.splice(0, 6).map((article, index) => (
-              <Grid key={article._id} item className={classes.article}>
+              <Grid
+                key={article._id}
+                item
+                className={index <= 0 && classes.article}
+              >
                 <Grid container className={classes.articleGrid}>
                   {index === 0 && article.featuredImage && (
                     <Grid item>
@@ -160,47 +159,11 @@ function AroundGlobe({ exclude }) {
               </Grid>
             ))
           : null}
-        <Grid item>
-          <Link
-            href="/search/?query=around%20the%20globe"
-            sx={{
-              height: 24,
-              textDecoration: "none",
-              display: "inline-block",
-              "&:hover": {
-                textDecoration: "underline",
-              },
-            }}
-          >
-            <Typography
-              component="div"
-              variant="h5"
-              sx={{
-                backgroundColor: "#ffe5eaFF",
-                borderRadius: "4px",
-                color: "#FF0033",
-                fontWeight: 500,
-                paddingX: "10px",
-                paddingY: "6px",
-                boxShadow: "0px 2px 2px 0px #0000001F",
-                "&:active, & :focus, &:hover": {
-                  color: "#FF0033",
-                  textDecoration: "underline",
-                },
-                marginBottom: "7px",
-              }}
-            >
-              View more
-            </Typography>
-          </Link>
-        </Grid>
       </Grid>
     </Grid>
   );
 }
 
-AroundGlobe.propTypes = {
-  exclude: PropTypes.array,
-};
+Announcements.propTypes = {};
 
-export default AroundGlobe;
+export default Announcements;

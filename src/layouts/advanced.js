@@ -10,7 +10,6 @@ import Grid from "@mui/material/Grid";
 
 // components
 import components, { Layout } from "../components/index";
-import HomepageActions from "../components/HomepageActions";
 import SectionHero from "../components/SectionHero";
 import SectionHeroTracker from "../components/SectionHeroTracker";
 import SectionRecentArticles from "../components/SectionRecentArticles";
@@ -23,6 +22,8 @@ import LatestFromFellows from "../components/Homepage/LatestFromFellows";
 import RecentArticles from "../components/Homepage/RecentArticles";
 import SpotlightArticles from "../components/Homepage/SpotlightArticles";
 import AroundGlobe from "../components/Homepage/AroundGlobe";
+import PolicyTracker from "../components/Homepage/PolicyTracker";
+import Announcements from "../components/Homepage/Announcements";
 
 const Advanced = (props) => {
   const { path, page, featured, articles } = props;
@@ -173,11 +174,18 @@ const Advanced = (props) => {
                 <SpotlightArticles />
               </Grid>
             </Grid>
-            <Box mt={6} mb={8}>
-              <HomepageActions
-                trackerText={page.trackerText ? page.trackerText : ""}
-              />
-            </Box>
+            <Grid container spacing={4} sx={{ marginTop: 7, marginBottom: 7 }}>
+              <Grid item xs={12} md={8}>
+                <PolicyTracker
+                  trackerText={page.trackerText ? page.trackerText : ""}
+                />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Box sx={{ backgroundColor: "#efe9da80", padding: "24px" }}>
+                  <Announcements />
+                </Box>
+              </Grid>
+            </Grid>
           </Container>
         </>
       ) : (
