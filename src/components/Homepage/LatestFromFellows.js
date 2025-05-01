@@ -103,7 +103,7 @@ function LatestFromFellows() {
     <Grid container className={classes.grid}>
       <Grid item className={classes.gridTitle}>
         <Typography component="h2" variant="h4" sx={{ marginBottom: 1 }}>
-          Latest From Fellows
+          Latest From Our Fellows
         </Typography>
       </Grid>
       <Grid item>

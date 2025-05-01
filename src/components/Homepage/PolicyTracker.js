@@ -69,203 +69,205 @@ const PolicyTracker = ({ trackerText }) => {
   }, []);
 
   return Array.isArray(actions) && actions.length ? (
-    <section>
-      <Grid container alignItems={"stretch"}>
-        <Grid item xs={12} sx={{ position: "relative" }}>
+    <Grid
+      container
+      direction={"column"}
+      sx={{ height: "100%", flexWrap: "inherit" }}
+    >
+      <Grid item xs={12} sx={{ position: "relative" }}>
+        <Box
+          px={4}
+          sx={{
+            backgroundImage: `url(${TrackerBackground.src})`,
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "50% 17%",
+            backgroundSize: "112%",
+            height: "100%",
+            alignContent: "center",
+            "&:before": {
+              background: "#427569",
+              opacity: 0.8,
+              content: "''",
+              height: "100%",
+              left: 0,
+              mixBlendMode: "multiply",
+              position: "absolute",
+              top: 0,
+              width: "100%",
+            },
+          }}
+        >
           <Box
-            px={4}
-            py={3}
             sx={{
-              backgroundImage: `url(${TrackerBackground.src})`,
-              backgroundRepeat: "no-repeat",
-              backgroundPosition: "50% 17%",
-              backgroundSize: "112%",
-              "&:before": {
-                background: "#427569",
-                opacity: 0.8,
-                content: "''",
-                height: "100%",
-                left: 0,
-                mixBlendMode: "multiply",
-                position: "absolute",
-                top: 0,
-                width: "100%",
-              },
+              color: "#F3F0E6",
+              position: "relative",
+              padding: "24px 0px",
             }}
           >
-            <Box
+            <Typography
+              component="h2"
+              variant="h2"
               sx={{
-                color: "#F3F0E6",
-                position: "relative",
+                marginBottom: 1,
+                textAlign: "center",
+                lineHeight: 1.5,
               }}
             >
-              <Typography
-                component="h2"
-                variant="h2"
-                sx={{
-                  marginBottom: 1,
-                  textAlign: "center",
-                  lineHeight: 1.5,
-                }}
-              >
-                Policy Tracker
-              </Typography>
-              <Typography
-                component="div"
-                variant="body2"
-                sx={{
-                  fontWeight: 400,
-                  textAlign: "center",
-                }}
-              >
-                {trackerText}
-              </Typography>
-            </Box>
+              Policy Tracker
+            </Typography>
+            <Typography
+              component="div"
+              variant="body2"
+              sx={{
+                fontWeight: 400,
+                textAlign: "center",
+              }}
+            >
+              {trackerText}
+            </Typography>
           </Box>
-        </Grid>
-        <Grid item xs={12}>
-          <TableContainer
-            sx={{
-              backgroundColor: "rgba(243,240,230, 0.5) ",
-            }}
-          >
-            <Table aria-label="Policy Tracker Table">
-              <TableHead
+        </Box>
+      </Grid>
+      <Grid item xs={12}>
+        <TableContainer
+          sx={{
+            backgroundColor: "rgba(243,240,230, 0.5) ",
+          }}
+        >
+          <Table aria-label="Policy Tracker Table">
+            <TableHead
+              sx={{
+                "&:active, &:focus, &:hover": {
+                  backgroundColor: "#f9f7f2 !important",
+                },
+              }}
+            >
+              <TableRow
                 sx={{
                   "&:active, &:focus, &:hover": {
                     backgroundColor: "#f9f7f2 !important",
                   },
                 }}
               >
-                <TableRow
-                  sx={{
-                    "&:active, &:focus, &:hover": {
-                      backgroundColor: "#f9f7f2 !important",
-                    },
-                  }}
-                >
-                  {headers.map((column) => (
-                    <TableCell
-                      key={`${column.id}-cell`}
-                      sx={{
-                        paddingLeft: column.id == "title" ? "16px" : "0",
-                      }}
-                    >
-                      <Typography component="div" variant={"tableHeaderHome"}>
-                        {column.label}
-                      </Typography>
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {actions.map((row) => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={`${row._id}-row`}
-                    >
-                      {headers.map((column) => {
-                        let value = row[column.id];
-                        // if (!value) {
-                        //   if (row.country) {
-                        //     value = row.country; // #FIXME
-                        //   } else {
-                        //     value = row.type;
-                        //   }
-                        // }
-                        return (
-                          <TableCell
-                            key={column.id}
-                            className={
-                              column.id == "title"
-                                ? classes.tableCellTitle
-                                : null
-                            }
-                            sx={{
-                              fontSize: "0.85em",
-                              paddingLeft: column.id == "title" ? "16px" : "0",
-                            }}
-                          >
-                            {column.id == "dateInitiated" ||
-                            column.id == "lastUpdate" ? (
-                              <Typography
-                                component="div"
-                                variant={"trackerRowHome"}
-                              >
-                                {value
-                                  ? DateTime.fromISO(value).toLocaleString(
-                                      DateTime.DATE_MED
-                                    )
-                                  : !row.lastUpdate && row.dateInitiated
-                                  ? DateTime.fromISO(
-                                      row.dateInitiated
-                                    ).toLocaleString(DateTime.DATE_MED)
-                                  : ""}{" "}
-                                {/* if lastUpdate is blank, automatically just put in the dateInitiated */}
-                              </Typography>
-                            ) : column.id == "title" ? (
-                              <Typography
-                                component="div"
-                                variant={"trackerTitleHome"}
-                              >
-                                <Link
-                                  className={classes.tableLink}
-                                  href={`/tracker/${
-                                    typeof row.slug === "object"
-                                      ? row.slug.current
-                                      : row.slug
-                                  }`}
-                                >
-                                  {titleCase(truncate(value))}
-                                </Link>
-                              </Typography>
-                            ) : column.id == "type" ? (
-                              <Typography
-                                component="div"
-                                variant={"trackerRowHome"}
-                              >
-                                {row.type}
-                              </Typography>
-                            ) : (
-                              <Typography
-                                component="div"
-                                variant={"trackerRowHome"}
-                              >
-                                {value}
-                              </Typography>
-                            )}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-
-                <TableRow hover role="checkbox" tabIndex={-1}>
-                  <TableCell colSpan={3} sx={{ textAlign: "center" }}>
-                    <Link
-                      href="/tracker"
-                      sx={{
-                        textTransform: "uppercase",
-                        textDecoration: "none",
-                        fontSize: "16px",
-                        fontWeight: "400",
-                        color: "#589383",
-                      }}
-                    >
-                      SEE ALL
-                    </Link>
+                {headers.map((column) => (
+                  <TableCell
+                    key={`${column.id}-cell`}
+                    sx={{
+                      paddingLeft: column.id == "title" ? "16px" : "0",
+                    }}
+                  >
+                    <Typography component="div" variant={"tableHeaderHome"}>
+                      {column.label}
+                    </Typography>
                   </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Grid>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {actions.map((row) => {
+                return (
+                  <TableRow
+                    hover
+                    role="checkbox"
+                    tabIndex={-1}
+                    key={`${row._id}-row`}
+                  >
+                    {headers.map((column) => {
+                      let value = row[column.id];
+                      // if (!value) {
+                      //   if (row.country) {
+                      //     value = row.country; // #FIXME
+                      //   } else {
+                      //     value = row.type;
+                      //   }
+                      // }
+                      return (
+                        <TableCell
+                          key={column.id}
+                          className={
+                            column.id == "title" ? classes.tableCellTitle : null
+                          }
+                          sx={{
+                            fontSize: "0.85em",
+                            paddingLeft: column.id == "title" ? "16px" : "0",
+                          }}
+                        >
+                          {column.id == "dateInitiated" ||
+                          column.id == "lastUpdate" ? (
+                            <Typography
+                              component="div"
+                              variant={"trackerRowHome"}
+                            >
+                              {value
+                                ? DateTime.fromISO(value).toLocaleString(
+                                    DateTime.DATE_MED
+                                  )
+                                : !row.lastUpdate && row.dateInitiated
+                                ? DateTime.fromISO(
+                                    row.dateInitiated
+                                  ).toLocaleString(DateTime.DATE_MED)
+                                : ""}{" "}
+                              {/* if lastUpdate is blank, automatically just put in the dateInitiated */}
+                            </Typography>
+                          ) : column.id == "title" ? (
+                            <Typography
+                              component="div"
+                              variant={"trackerTitleHome"}
+                            >
+                              <Link
+                                className={classes.tableLink}
+                                href={`/tracker/${
+                                  typeof row.slug === "object"
+                                    ? row.slug.current
+                                    : row.slug
+                                }`}
+                              >
+                                {titleCase(truncate(value))}
+                              </Link>
+                            </Typography>
+                          ) : column.id == "type" ? (
+                            <Typography
+                              component="div"
+                              variant={"trackerRowHome"}
+                            >
+                              {row.type}
+                            </Typography>
+                          ) : (
+                            <Typography
+                              component="div"
+                              variant={"trackerRowHome"}
+                            >
+                              {value}
+                            </Typography>
+                          )}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })}
+
+              <TableRow hover role="checkbox" tabIndex={-1}>
+                <TableCell colSpan={3} sx={{ textAlign: "center" }}>
+                  <Link
+                    href="/tracker"
+                    sx={{
+                      textTransform: "uppercase",
+                      textDecoration: "none",
+                      fontSize: "16px",
+                      fontWeight: "400",
+                      color: "#589383",
+                    }}
+                  >
+                    SEE ALL
+                  </Link>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </TableContainer>
       </Grid>
-    </section>
+    </Grid>
   ) : null;
 };
 
