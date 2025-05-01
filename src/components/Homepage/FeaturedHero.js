@@ -88,7 +88,7 @@ function FeaturedHero({ article }) {
                   backgroundSize: "100%",
                   "&:after": {
                     background:
-                      "linear-gradient(180deg,rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.9) 100%)",
+                      "linear-gradient(180deg,rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.9) 100%)",
                     bottom: 0,
                     content: "''",
                     height: "100%",
