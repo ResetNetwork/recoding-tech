@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const query = `*[!(_id in path("drafts.**")) && references("category-journalism-and-news-media") && date != null]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...2]`;
+const query = `*[!(_id in path("drafts.**")) && references("a4e6c730-0baf-4eeb-ad92-c5c98beeb085") && date != null]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...2]`;
 
 function Announcements() {
   const classes = useStyles();

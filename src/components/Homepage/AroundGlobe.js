@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const query = `*[!(_id in path("drafts.**")) && references("category-democracy") && date != null]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...20]`;
+const query = `*[!(_id in path("drafts.**")) && references("11f11842-a05b-452c-b1ea-a8268c4ce2f2") && date != null]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...20]`;
 
 function AroundGlobe({ exclude }) {
   const classes = useStyles();
