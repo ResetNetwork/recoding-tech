@@ -73,7 +73,7 @@ const useStyles = makeStyles(
       padding: 6,
     },
   }),
-  { name: "SectionRecentArticles" }
+  { classNamePrefix: "SectionRecentArticles" }
 );
 
 const SectionRecentArticles = (props) => {
