@@ -19,7 +19,7 @@ const useStyles = makeStyles(
       paddingBottom: 20,
     },
     lastArticle: {},
-    articleTitle: {
+    articleTitleRecent: {
       color: "#000 !important",
       fontSize: "1em",
       fontWeight: "700",
@@ -152,7 +152,7 @@ const SectionRecentArticles = (props) => {
                   <Typography
                     component="div"
                     variant="body1"
-                    className={classes.articleTitle}
+                    className={classes.articleTitleRecent}
                   >
                     {article.title}
                   </Typography>
