@@ -14,7 +14,6 @@ import Seo from "./Seo.js";
 
 // Material UI imports
 import { ThemeProvider } from "@mui/material/styles";
-import { StylesProvider } from "@mui/styles";
 
 const Body = (props) => {
   const { page, data, path } = props;
@@ -107,13 +106,11 @@ const Body = (props) => {
           />
         )}
       </Head>
-      <StylesProvider>
-        <ThemeProvider theme={theme}>
-          <Header {...props} />
-          <main id="main">{props.children}</main>
-          <Footer {...props} />
-        </ThemeProvider>
-      </StylesProvider>
+      <ThemeProvider theme={theme}>
+        <Header {...props} />
+        <main id="main">{props.children}</main>
+        <Footer {...props} />
+      </ThemeProvider>
     </>
   );
 };

@@ -10,72 +10,69 @@ import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 import Badge from "./Badge";
 
-const useStyles = makeStyles(
-  () => ({
-    article: {
-      borderBottom: "1px solid",
-      borderBottomColor: "#DCDCDC",
-      marginBottom: 20,
-      paddingBottom: 20,
-    },
-    lastArticle: {},
-    articleTitleRecent: {
-      color: "#000 !important",
-      fontSize: "1em",
-      fontWeight: "700",
-      "&:hover": {
-        color: "#225C9D !important",
-        textDecoration: "none",
-      },
-    },
-    articlePublication: {
-      color: "rgba(0, 0, 0, 0.6)",
-      marginTop: 25,
-      marginBottom: 8,
-      position: "relative",
-    },
-    em: {
-      fontSize: "0.81em",
-      fontStyle: "italic",
-    },
-    authors: {
-      color: "rgba(0, 0, 0, 0.6)",
-      fontFamily: "Lexend",
-      fontSize: "10px",
-      fontWeight: "700",
-      textTransform: "uppercase",
-    },
-    grid: {
-      marginTop: 32,
-      background: "#efe9da80",
-      padding: "20px",
-    },
-    gridTitle: {
-      borderBottom: "1px solid #000",
-      marginBottom: 32,
-      width: "100%",
-    },
-    link: {
-      textDecoration: "none !important",
-    },
-    more: {
+const useStyles = makeStyles(() => ({
+  article: {
+    borderBottom: "1px solid",
+    borderBottomColor: "#DCDCDC",
+    marginBottom: 20,
+    paddingBottom: 20,
+  },
+  lastArticle: {},
+  articleTitleRecent: {
+    color: "#000 !important",
+    fontSize: "1em",
+    fontWeight: "700",
+    "&:hover": {
+      color: "#225C9D !important",
       textDecoration: "none",
-      width: 200,
-      "&:active, & :focus, &:hover": {
-        color: "#FF0033",
-        textDecoration: "underline",
-      },
     },
-    moreText: {
-      backgroundColor: "#FFE5EA",
-      borderRadius: 2,
+  },
+  articlePublication: {
+    color: "rgba(0, 0, 0, 0.6)",
+    marginTop: 25,
+    marginBottom: 8,
+    position: "relative",
+  },
+  em: {
+    fontSize: "0.81em",
+    fontStyle: "italic",
+  },
+  authors: {
+    color: "rgba(0, 0, 0, 0.6)",
+    fontFamily: "Lexend",
+    fontSize: "10px",
+    fontWeight: "700",
+    textTransform: "uppercase",
+  },
+  grid: {
+    marginTop: 32,
+    background: "#efe9da80",
+    padding: "20px",
+  },
+  gridTitle: {
+    borderBottom: "1px solid #000",
+    marginBottom: 32,
+    width: "100%",
+  },
+  link: {
+    textDecoration: "none !important",
+  },
+  more: {
+    textDecoration: "none",
+    width: 200,
+    "&:active, & :focus, &:hover": {
       color: "#FF0033",
-      fontWeight: 500,
-      padding: 6,
+      textDecoration: "underline",
     },
-  }),
-  { index: 1 }
-);
+  },
+  moreText: {
+    backgroundColor: "#FFE5EA",
+    borderRadius: 2,
+    color: "#FF0033",
+    fontWeight: 500,
+    padding: 6,
+  },
+}));
 
 const SectionRecentArticles = (props) => {
   const { articles } = props;
