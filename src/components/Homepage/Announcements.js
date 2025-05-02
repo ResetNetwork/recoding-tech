@@ -108,7 +108,7 @@ function Announcements() {
               <Grid
                 key={article._id}
                 item
-                className={index <= 0 && classes.article}
+                className={index <= 0 ? classes.article : ""}
               >
                 <Grid container className={classes.articleGrid}>
                   {index === 0 && article.featuredImage && (

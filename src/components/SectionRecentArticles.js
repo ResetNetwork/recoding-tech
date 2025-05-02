@@ -132,7 +132,7 @@ const SectionRecentArticles = (props) => {
               <Grid
                 item
                 key={article._id}
-                className={idx !== articles.length - 1 && classes.article}
+                className={idx !== articles.length - 1 ? classes.article : ""}
               >
                 {article.badge && (
                   <Badge badge={article.badge} variant={"link"} />
