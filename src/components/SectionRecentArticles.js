@@ -17,7 +17,9 @@ const useStyles = makeStyles(() => ({
     marginBottom: 20,
     paddingBottom: 20,
   },
-  lastArticle: {},
+  lastArticle: {
+    marginBottom: 0,
+  },
   articleTitleRecent: {
     color: "#000 !important",
     fontSize: "1em",

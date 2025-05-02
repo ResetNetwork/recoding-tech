@@ -20,7 +20,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 20,
     paddingBottom: 20,
   },
-  lastArticle: {},
+  lastArticle: {
+    marginBottom: 0,
+  },
   articleTitle: {
     color: "#000 !important",
     fontSize: "1em",
