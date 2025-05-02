@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 20,
     paddingBottom: 20,
   },
+  lastArticle: {},
   articleTitle: {
     color: "#000 !important",
     fontSize: "1em",
@@ -108,7 +109,7 @@ function Announcements() {
               <Grid
                 key={article._id}
                 item
-                className={index <= 0 ? classes.article : ""}
+                className={index <= 0 ? classes.article : classes.lastArticle}
               >
                 <Grid container className={classes.articleGrid}>
                   {index === 0 && article.featuredImage && (
