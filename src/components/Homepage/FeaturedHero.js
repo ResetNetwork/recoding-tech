@@ -128,6 +128,7 @@ function FeaturedHero({ article }) {
                     }}
                   >
                     {DateTime.fromISO(article.date)
+                      .setZone("America/New_York")
                       .setLocale("en-us")
                       .toLocaleString(DateTime.DATE_FULL)}
                   </Typography>

@@ -141,6 +141,7 @@ function RecentArticles({ articles }) {
                       }}
                     >
                       {DateTime.fromISO(article.date)
+                        .setZone("America/New_York")
                         .setLocale("en-us")
                         .toLocaleString(DateTime.DATE_FULL)}
                     </Typography>
