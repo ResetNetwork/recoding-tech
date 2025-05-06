@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useRouter } from "next/router";
 import { titleCase } from "title-case";
+import { DateTime } from "luxon";
 
 // material ui imports
 import { makeStyles } from "@mui/styles";
@@ -13,6 +14,7 @@ import CardContent from "@mui/material/CardContent";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Badge from "./Badge";
 
 // components
 import FancyTitle from "./FancyTitle";
@@ -91,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // gets the three most recent articles by Tech Policy Press staff
-const staffArticlesQuery = `*[_type=="post" && !(_id in path("drafts.**")) && references(*[_type=="author" && staff]._id)]{ title, slug, date } | order(date desc)[0...3]`;
+const staffArticlesQuery = `*[_type=="post" && !(_id in path("drafts.**")) && references(*[_type=="author" && staff]._id)]{ title, slug, badge, date } | order(date desc)[0...3]`;
 
 function SectionArticle(props) {
   const classes = useStyles();
@@ -155,13 +157,7 @@ function SectionArticle(props) {
                   className={classes.featuredContent}
                 >
                   <CardContent>
-                    <Typography
-                      className={classes.featuredTag}
-                      component="span"
-                      variant="subtitle1"
-                    >
-                      Featured
-                    </Typography>
+                    {article.badge && <Badge badge={article.badge} />}
                     <Typography
                       gutterBottom
                       component="div"
@@ -170,20 +166,23 @@ function SectionArticle(props) {
                     >
                       {titleCase(article.title)}
                     </Typography>
-                    {article.authors &&
-                      article.authors.length &&
-                      article.authors.map((auth) => (
-                        <Typography
-                          key={auth._id}
-                          gutterBottom
-                          component="div"
-                          variant="h5_card"
-                          color={article.featuredImage ? "#FFF" : "#000"}
-                          sx={{ textShadow: "1px 1px 3px #000" }}
-                        >
-                          {auth.name}
-                        </Typography>
-                      ))}
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      sx={{
+                        color: "#a7a7a7",
+                        fontSize: 14,
+                        fontWeight: 400,
+                        marginTop: "8px",
+                        textTransform: "uppercase",
+                        lineHeight: 1.5,
+                        display: "inline-block",
+                      }}
+                    >
+                      {DateTime.fromISO(article.date)
+                        .setLocale("en-us")
+                        .toLocaleString(DateTime.DATE_FULL)}
+                    </Typography>
                   </CardContent>
                 </CardActionArea>
               </Card>

@@ -1,16 +1,20 @@
 // base imports
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { DateTime } from "luxon";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import Badge from "./Badge";
+import Link from "@mui/material/Link";
+import Badge from "../Badge";
 
-const useStyles = makeStyles(() => ({
+// utils
+import urlFor from "../../utils/imageBuilder";
+import client from "../../utils/sanityClient";
+
+const useStyles = makeStyles((theme) => ({
   article: {
     borderBottom: "1px solid",
     borderBottomColor: "#DCDCDC",
@@ -18,9 +22,9 @@ const useStyles = makeStyles(() => ({
     paddingBottom: 20,
   },
   lastArticle: {
-    marginBottom: 0,
+    marginBottom: 20,
   },
-  articleTitleRecent: {
+  articleTitle: {
     color: "#000 !important",
     fontSize: "1em",
     fontWeight: "700",
@@ -35,6 +39,15 @@ const useStyles = makeStyles(() => ({
     marginBottom: 8,
     position: "relative",
   },
+  articleGrid: {
+    flexDirection: "row",
+    flexWrap: "nowrap",
+    columnGap: "16px",
+    rowGap: "8px",
+    [theme.breakpoints.down("md")]: {
+      flexDirection: "column",
+    },
+  },
   em: {
     fontSize: "0.81em",
     fontStyle: "italic",
@@ -48,8 +61,6 @@ const useStyles = makeStyles(() => ({
   },
   grid: {
     marginTop: 32,
-    background: "#efe9da80",
-    padding: "20px",
   },
   gridTitle: {
     borderBottom: "1px solid #000",
@@ -76,71 +87,35 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const SectionRecentArticles = (props) => {
-  const { articles } = props;
+const query = `*[!(_id in path("drafts.**")) && references("6fe4e72c-3d0a-4ec5-a71e-ad8633edccc5")]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...1]`;
+
+function LatestFromFellows() {
   const classes = useStyles();
+  const [article, setArticle] = useState(null);
+
+  useEffect(() => {
+    client.fetch(query).then((recents) => {
+      setArticle(recents[0]);
+    });
+  }, []);
 
   return (
     <Grid container className={classes.grid}>
       <Grid item className={classes.gridTitle}>
-        <Grid
-          container
-          alignItems={"flex-end"}
-          sx={{ justifyContent: "space-between" }}
-        >
-          <Grid item>
-            <Typography component="h2" variant="h4" sx={{ marginBottom: 1 }}>
-              Latest
-            </Typography>
-          </Grid>
-          <Grid item>
-            <Link
-              href="/search"
-              sx={{
-                height: 24,
-                textDecoration: "none",
-                width: 162,
-                "&:hover": {
-                  textDecoration: "underline",
-                },
-              }}
-            >
-              <Typography
-                component="div"
-                variant="h5"
-                sx={{
-                  backgroundColor: "#FFF",
-                  borderRadius: "4px",
-                  color: "#FF0033",
-                  fontWeight: 500,
-                  paddingX: "10px",
-                  paddingY: "6px",
-                  boxShadow: "0px 2px 2px 0px #0000001F",
-                  "&:active, & :focus, &:hover": {
-                    color: "#FF0033",
-                    textDecoration: "underline",
-                  },
-                  marginBottom: "7px",
-                }}
-              >
-                View more
-              </Typography>
-            </Link>
-          </Grid>
-        </Grid>
+        <Typography component="h2" variant="h4" sx={{ marginBottom: 1 }}>
+          Latest From Our Fellows
+        </Typography>
       </Grid>
-      <Grid container item flexDirection="column">
-        {articles && articles.length
-          ? articles.map((article, idx) => (
-              <Grid
-                item
-                key={article._id}
-                className={
-                  idx !== articles.length - 1
-                    ? classes.article
-                    : classes.lastArticle
-                }
-              >
+      <Grid item>
+        {article ? (
+          <Grid key={article._id} item className={classes.article}>
+            <Grid container className={classes.articleGrid}>
+              <Grid item>
+                <Link href={`/${article.slug.current}`}>
+                  <img src={urlFor(article.featuredImage).width(280).url()} />
+                </Link>
+              </Grid>
+              <Grid item>
                 {article.badge && (
                   <Badge badge={article.badge} variant={"link"} />
                 )}
@@ -151,7 +126,7 @@ const SectionRecentArticles = (props) => {
                   <Typography
                     component="div"
                     variant="body1"
-                    className={classes.articleTitleRecent}
+                    className={classes.articleTitle}
                   >
                     {article.title}
                   </Typography>
@@ -170,20 +145,20 @@ const SectionRecentArticles = (props) => {
                   }}
                 >
                   {DateTime.fromISO(article.date)
-                    .setZone("America/New_York")
                     .setLocale("en-us")
                     .toLocaleString(DateTime.DATE_FULL)}
                 </Typography>
               </Grid>
-            ))
-          : null}
+            </Grid>
+          </Grid>
+        ) : null}
       </Grid>
     </Grid>
   );
-};
+}
 
-SectionRecentArticles.propTypes = {
+LatestFromFellows.propTypes = {
   articles: PropTypes.array,
 };
 
-export default SectionRecentArticles;
+export default LatestFromFellows;
