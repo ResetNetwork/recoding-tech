@@ -162,7 +162,7 @@ function AroundGlobe({ exclude }) {
           : null}
         <Grid item>
           <Link
-            href="/search/?query=around%20the%20globe"
+            href="/category/around-the-globe/"
             sx={{
               height: 24,
               textDecoration: "none",
