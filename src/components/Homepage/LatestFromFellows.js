@@ -48,6 +48,12 @@ const useStyles = makeStyles((theme) => ({
       flexDirection: "column",
     },
   },
+  image: {
+    maxWidth: "280px",
+    [theme.breakpoints.down("md")]: {
+      maxWidth: "100%",
+    },
+  },
   em: {
     fontSize: "0.81em",
     fontStyle: "italic",
@@ -112,7 +118,10 @@ function LatestFromFellows() {
             <Grid container className={classes.articleGrid}>
               <Grid item>
                 <Link href={`/${article.slug.current}`}>
-                  <img src={urlFor(article.featuredImage).width(280).url()} />
+                  <img
+                    src={urlFor(article.featuredImage).width(400).url()}
+                    className={classes.image}
+                  />
                 </Link>
               </Grid>
               <Grid item>

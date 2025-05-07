@@ -7,7 +7,7 @@ import { makeStyles } from "@mui/styles";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   article: {
     borderBottom: "1px solid",
     borderBottomColor: "#DCDCDC",
@@ -46,6 +46,9 @@ const useStyles = makeStyles(() => ({
   grid: {
     marginTop: 32,
     paddingRight: "20px",
+    [theme.breakpoints.down("md")]: {
+      paddingRight: "0px",
+    },
   },
   gridTitle: {
     borderBottom: "1px solid #000",
