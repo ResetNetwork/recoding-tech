@@ -58,6 +58,12 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "700",
     textTransform: "uppercase",
   },
+  image: {
+    maxWidth: "200px",
+    [theme.breakpoints.down("md")]: {
+      maxWidth: "100%",
+    },
+  },
   grid: {
     marginTop: 32,
     paddingRight: "20px",
@@ -108,7 +114,8 @@ function FeaturedStories({ articles }) {
                   <Grid item>
                     <Link href={`/${article.slug.current}`}>
                       <img
-                        src={urlFor(article.featuredImage).width(200).url()}
+                        src={urlFor(article.featuredImage).width(400).url()}
+                        className={classes.image}
                       />
                     </Link>
                   </Grid>
