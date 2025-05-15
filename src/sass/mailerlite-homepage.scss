@@ -715,14 +715,13 @@
   color: red !important
 }
 
-@media only screen and (min-width:430px) {
+@media only screen and (min-width:600px) {
   .ml-subscribe-form-5983540 {
     .ml-form-embedBody.ml-form-embedBodyDefault.row-form {
       display: flex;
       margin-left: -10px;
 
       .ml-form-embedContent {
-        flex-grow: 2;
         margin-bottom: 0 !important;
         margin-left: 10px !important;
         margin-top: 14px !important;
@@ -785,5 +784,15 @@
 
   .ml-form-formContent.horozintalForm .ml-button-horizontal.labelsOn {
     padding-top: 0 !important
+  }
+}
+
+@media only screen and (max-width:1024px) {
+  .ml-subscribe-form-5983540 {
+    .ml-form-embedBody.ml-form-embedBodyDefault.row-form {
+      .ml-form-embedContent {
+        margin-top: 0px !important;
+      }
+    }
   }
 }

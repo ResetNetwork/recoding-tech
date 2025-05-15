@@ -39,6 +39,7 @@ import topic from './topic.js'
 import action from './action.js'
 import form_field from './form_field.js'
 import stackbit_page_meta from './stackbit_page_meta.js'
+import featured_posts from './featured_posts.js'
 
 // new models
 import post from './post.js'
@@ -91,4 +92,5 @@ export const schemaTypes = [
   action,
   form_field,
   stackbit_page_meta,
+  featured_posts,
 ]

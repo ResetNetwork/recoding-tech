@@ -11,10 +11,16 @@ export async function getStaticProps() {
     `*[_type == "topic" && stackbit_model_type == "page"]{ displayName, link, slug, type }`
   );
   const [page] = await client.fetch(
-    `*[_type == "advanced" && stackbit_url_path == "/"]{_id, _type, _createdAt, trackerText, title, sections[]{type, alsoFeatured[]->{title, author, category, date, type, slug, stackbit_model_type}, featuredArticle->{title, author, featuredImage, category, date, type, slug, stackbit_model_type}}}`
+    `*[_type == "advanced" && stackbit_url_path == "/"]{_id, _type, _createdAt, trackerText, title, sections[]{type, alsoFeatured[]->{title, author, category, date, type, slug, stackbit_model_type}}}`
   );
+  const [featured] = await client.fetch(
+    `*[_type == "featured_posts" && title == "Homepage"] { posts[]->{_id, title, author, badge, date, featuredImage, category, date, type, slug, stackbit_model_type} }`
+  );
+  const articles = await client.fetch(
+    `*[!(_id in path("drafts.**")) && _type=="post"]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...15]`
+  )
   return {
-    props: { path: "/", page, data: { config, topics } },
+    props: { path: "/", page, data: { config, topics }, featured: featured.posts, articles },
     revalidate: 60,
   };
 }

@@ -10,17 +10,38 @@ import Grid from "@mui/material/Grid";
 
 // components
 import components, { Layout } from "../components/index";
-import HomepageActions from "../components/HomepageActions";
-import HomepageRecents from "../components/HomepageRecents";
 import SectionHero from "../components/SectionHero";
 import SectionHeroTracker from "../components/SectionHeroTracker";
 import SectionRecentArticles from "../components/SectionRecentArticles";
 
+// utils
+import FeaturedHero from "../components/Homepage/FeaturedHero";
+import FeaturedStories from "../components/Homepage/FeatureStories";
+import Podcast from "../components/Homepage/Podcast";
+import LatestFromFellows from "../components/Homepage/LatestFromFellows";
+import RecentArticles from "../components/Homepage/RecentArticles";
+import SpotlightArticles from "../components/Homepage/SpotlightArticles";
+import AroundGlobe from "../components/Homepage/AroundGlobe";
+import PolicyTracker from "../components/Homepage/PolicyTracker";
+import Announcements from "../components/Homepage/Announcements";
+
 const Advanced = (props) => {
-  const { path, page } = props;
+  const { path, page, featured, articles } = props;
+
+  const latest =
+    path === "/"
+      ? articles.filter(
+          (article) => featured.find((a) => a._id === article._id) == null
+        )
+      : undefined;
+
+  const excludeIds = [
+    ...(featured?.map((f) => f._id) || []),
+    ...(latest?.slice(0, 11).map((a) => a._id) || []),
+  ];
 
   return (
-    <Layout {...props}>
+    <Layout {...props} isHomepage>
       <Box>
         {path === "/" ? (
           <>
@@ -30,7 +51,10 @@ const Advanced = (props) => {
             >
               <div className="ml-form-align-center">
                 <div className="ml-form-embedWrapper embedForm">
-                  <div className="ml-form-embedBody ml-form-embedBodyDefault row-form">
+                  <div
+                    className="ml-form-embedBody ml-form-embedBodyDefault row-form"
+                    style={{ justifyContent: "center", columnGap: "60px" }}
+                  >
                     <div className="ml-form-embedContent">
                       <h4>
                         Join our newsletter on issues and ideas at the
@@ -43,8 +67,18 @@ const Advanced = (props) => {
                       data-code="v2f5x1"
                       method="post"
                       target="_blank"
+                      style={{
+                        maxWidth: "360px",
+                        marginLeft: 0,
+                        display: "flex",
+                        columnGap: "10px",
+                        justifySelf: "center",
+                      }}
                     >
-                      <div className="ml-form-formContent">
+                      <div
+                        className="ml-form-formContent"
+                        style={{ maxWidth: "250px" }}
+                      >
                         <div className="ml-form-fieldRow ml-last-item">
                           <div className="ml-field-group ml-field-email ml-validate-email ml-validate-required">
                             <input
@@ -110,39 +144,53 @@ const Advanced = (props) => {
                 alignItems="flex-start"
                 justifyContent="space-between"
               >
-                <Grid item xs={12} sm={8}>
-                  {_.map(
-                    _.get(props, "page.sections", null),
-                    (section, section_idx) => {
-                      let component = _.upperFirst(
-                        _.camelCase(_.get(section, "type", null))
-                      );
-                      let Component = components[component];
-                      return (
-                        <Component
-                          key={section_idx}
-                          {...props}
-                          section={section}
-                          site={props}
-                        />
-                      );
-                    }
-                  )}
-                </Grid>
-                <Grid container item xs={12} sm={4}>
+                {featured && (
+                  <Grid item xs={12} md={8}>
+                    <FeaturedHero article={featured[0]} />
+                    <FeaturedStories articles={featured.slice(1)} />
+                  </Grid>
+                )}
+                <Grid container item xs={12} md={4}>
                   <Grid item>
-                    <SectionRecentArticles />
+                    <SectionRecentArticles articles={latest.slice(0, 5)} />
                   </Grid>
                 </Grid>
               </Grid>
-              <Box mt={6} mb={8}>
-                <HomepageActions
-                  trackerText={page.trackerText ? page.trackerText : ""}
-                />
-              </Box>
-              <Box mt={2} mb={8}>
-                <HomepageRecents />
-              </Box>
+              <Grid container spacing={4} sx={{ marginTop: 1 }}>
+                <Grid item xs={12} md={6}>
+                  <Podcast />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <LatestFromFellows />
+                </Grid>
+              </Grid>
+              <Grid container spacing={4} sx={{ marginTop: 1 }}>
+                <Grid item xs={12} md={4}>
+                  <RecentArticles articles={latest.slice(5, 11)} />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <AroundGlobe exclude={excludeIds} />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <SpotlightArticles />
+                </Grid>
+              </Grid>
+              <Grid
+                container
+                spacing={4}
+                sx={{ marginTop: 7, marginBottom: 7 }}
+              >
+                <Grid item xs={12} md={8}>
+                  <PolicyTracker
+                    trackerText={page.trackerText ? page.trackerText : ""}
+                  />
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Box sx={{ backgroundColor: "#efe9da80", padding: "24px" }}>
+                    <Announcements />
+                  </Box>
+                </Grid>
+              </Grid>
             </Container>
           </>
         ) : (
@@ -182,6 +230,8 @@ Advanced.propTypes = {
   citations: PropTypes.array,
   path: PropTypes.string,
   page: PropTypes.object,
+  featured: PropTypes.array,
+  articles: PropTypes.array,
 };
 
 export default Advanced;
