@@ -4,7 +4,7 @@ import Image from "next/image";
 
 // material ui imports
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
 
@@ -23,22 +23,20 @@ const Sidebar = (props) => {
             variant="h4"
             borderBottom="1px solid #000"
             paddingBottom={2}
+            fontSize={"20px"}
           >
             Staff
           </Typography>
           {content[0].staff &&
             content[0].staff.length &&
             content[0].staff.map((author) => (
-              <Grid
-                container
-                item
+              <Box
                 key={author.slug.current}
-                spacing={2}
-                xs={12}
-                marginBottom={4}
+                marginBottom={2}
+                sx={{ display: "flex", gap: "8px" }}
               >
                 {author.photo && (
-                  <Grid item xs={3}>
+                  <Box>
                     <Image
                       src={urlFor(author.photo).url()}
                       height={80}
@@ -46,9 +44,9 @@ const Sidebar = (props) => {
                       alt=""
                       style={{ borderRadius: 50 }}
                     />
-                  </Grid>
+                  </Box>
                 )}
-                <Grid item xs={author.photo ? 9 : 12}>
+                <Box paddingTop={"14px"}>
                   <Link
                     href={`/author/${author.slug.current}`}
                     sx={{
@@ -69,37 +67,38 @@ const Sidebar = (props) => {
                   </Link>
                   {author.specialTitle && (
                     <Typography
-                      color="rgba(0,0,0,0.48)"
+                      color="#A7A7A7"
                       component="div"
                       variant="body2"
+                      paddingTop={1}
+                      sx={{ fontSize: "1rem", fontWeight: 400 }}
                     >
                       {author.specialTitle}
                     </Typography>
                   )}
-                </Grid>
-              </Grid>
+                </Box>
+              </Box>
             ))}
           <Typography
             component="h2"
             variant="h4"
             borderBottom="1px solid #000"
             paddingBottom={2}
+            paddingTop={"24px"}
+            fontSize={"20px"}
           >
             Board of directors
           </Typography>
           {content[0].board &&
             content[0].board.length &&
             content[0].board.map((author) => (
-              <Grid
-                container
-                item
+              <Box
                 key={author.slug.current}
-                spacing={2}
-                xs={12}
-                marginBottom={4}
+                marginBottom={2}
+                sx={{ display: "flex", gap: "8px" }}
               >
                 {author.photo && (
-                  <Grid item xs={3}>
+                  <Box>
                     <Image
                       src={urlFor(author.photo).url()}
                       height={80}
@@ -107,9 +106,9 @@ const Sidebar = (props) => {
                       alt=""
                       style={{ borderRadius: 50 }}
                     />
-                  </Grid>
+                  </Box>
                 )}
-                <Grid item xs={author.photo ? 9 : 12}>
+                <Box paddingTop={"14px"}>
                   <Link
                     href={`/author/${author.slug.current}`}
                     sx={{
@@ -130,37 +129,38 @@ const Sidebar = (props) => {
                   </Link>
                   {author.specialTitle && (
                     <Typography
-                      color="rgba(0,0,0,0.48)"
+                      color="#A7A7A7"
                       component="div"
                       variant="body2"
+                      paddingTop={1}
+                      sx={{ fontSize: "1rem", fontWeight: 400 }}
                     >
                       {author.specialTitle}
                     </Typography>
                   )}
-                </Grid>
-              </Grid>
+                </Box>
+              </Box>
             ))}
           <Typography
             component="h2"
             variant="h4"
             borderBottom="1px solid #000"
             paddingBottom={2}
+            paddingTop={"24px"}
+            fontSize={"20px"}
           >
             Fellows
           </Typography>
           {content[0].masthead &&
             content[0].masthead.length &&
             content[0].masthead.map((author) => (
-              <Grid
-                container
-                item
+              <Box
                 key={author.slug.current}
-                spacing={2}
-                xs={12}
-                marginBottom={4}
+                marginBottom={2}
+                sx={{ display: "flex", gap: "8px" }}
               >
                 {author.photo && (
-                  <Grid item xs={3}>
+                  <Box>
                     <Image
                       src={urlFor(author.photo).url()}
                       height={80}
@@ -168,9 +168,9 @@ const Sidebar = (props) => {
                       alt=""
                       style={{ borderRadius: 50 }}
                     />
-                  </Grid>
+                  </Box>
                 )}
-                <Grid item xs={author.photo ? 9 : 12}>
+                <Box paddingTop={"14px"}>
                   <Link
                     href={`/author/${author.slug.current}`}
                     sx={{
@@ -189,8 +189,8 @@ const Sidebar = (props) => {
                       {author.name}
                     </Typography>
                   </Link>
-                </Grid>
-              </Grid>
+                </Box>
+              </Box>
             ))}
         </>
       </Container>
