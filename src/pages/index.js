@@ -17,7 +17,7 @@ export async function getStaticProps() {
     `*[_type == "featured_posts" && title == "Homepage"] { posts[]->{_id, title, author, badge, date, featuredImage, category, date, type, slug, stackbit_model_type} }`
   );
   const articles = await client.fetch(
-    `*[!(_id in path("drafts.**")) && _type=="post"]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...15]`
+    `*[!(_id in path("drafts.**")) && !references("a4e6c730-0baf-4eeb-ad92-c5c98beeb085") && _type=="post"]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...15]`
   )
   return {
     props: { path: "/", page, data: { config, topics }, featured: featured.posts, articles },
