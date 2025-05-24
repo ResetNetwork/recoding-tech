@@ -80,7 +80,7 @@ export async function getStaticProps(props) {
   let articles = [];
 
   if (path == "search") {
-    const articlesQuery = `*[!(_id in path("drafts.**")) && _type == "post"]{ title, date, slug, 'key': slug } | order(date desc)`;
+    const articlesQuery = `*[!(_id in path("drafts.**")) && _type == "post"]{ title, date, slug, badge, 'key': slug } | order(date desc)`;
 
     articles = await client.fetch(articlesQuery);
   }
