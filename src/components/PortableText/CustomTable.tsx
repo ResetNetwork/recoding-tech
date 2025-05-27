@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   tableRow: {
-    fontFamily: "'Lexend', sans-serif",
+    fontFamily: "'Lexend', sans-serif!important",
     fontSize: "1em",
     fontWeight: 400,
     lineHeight: 1.4,
