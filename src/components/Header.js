@@ -35,7 +35,7 @@ const useStyles = makeStyles(() => ({
   header: {},
   link: {
     color: "#000 !important",
-    textDecoration: "none",
+    textDecoration: "none!important",
   },
   logoLink: {
     color: "unset",
