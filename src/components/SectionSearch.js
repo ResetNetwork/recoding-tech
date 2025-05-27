@@ -30,6 +30,8 @@ import { AdapterLuxon } from "@mui/x-date-pickers/AdapterLuxon";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 
+import Badge from "./Badge";
+
 const useStyles = makeStyles((theme) => ({
   chip: {
     fontFamily: theme.typography.link.fontFamily,
@@ -61,6 +63,24 @@ const useStyles = makeStyles((theme) => ({
   link: {
     color: theme.typography.link.color,
   },
+  resultItem: {
+    fontFamily: theme.typography.fontFamily,
+    fontSize: "16px",
+    fontWeight: 700,
+    lineHeight: 1.5,
+    display: "flex",
+    flexDirection: "column",
+    "&>a": {
+      textDecoration: "none",
+    },
+    "&>a:hover": {
+      textDecoration: "underline",
+    },
+    "&:not(:last-child)": {
+      borderBottom: "1px solid #E2D7BB77",
+      paddingBottom: "10px",
+    },
+  },
 }));
 
 const ROWS_PER_PAGE = 21;
@@ -87,7 +107,11 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
 
     if (query.filter) {
       filterTopic = topics.filter((topic) => topic._id === query.filter);
-      setFilters(filterTopic);
+      if (filterTopic.length > 0) {
+        setFilters(filterTopic);
+      } else {
+        setFilters([{ _id: query.filter }]);
+      }
     }
 
     if (query.query) {
@@ -118,7 +142,7 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
     // if there's a searchvalue text, boost the results where the title matches the search value
     // let scoreFragment = ` | score(pt::text(body) match "${searchValue}", boost(title match "${searchValue}", 3)) { _id, title, date, slug, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type}, _score }`;
 
-    let detailFragment = ` { _id, title, date, slug, relatedTopics[]->{ slug, _id, name, displayName, stackbit_model_type} } | order(date desc)`;
+    let detailFragment = ` { _id, title, date, slug, badge, relatedTopics[]->{ slug, _id, name, displayName, stackbit_model_type} } | order(date desc)`;
 
     let filterFragment = [];
     if (filters.length) {
@@ -144,7 +168,9 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
     if (filters.length || search || (startValue && endValue)) {
       // reset pagination
       setPage(1);
-      fetchArticles().catch(console.error);
+      fetchArticles()
+        .catch(console.error)
+        .finally(() => setLoading(false));
     }
 
     if (!filters.length && !search && !(startValue && endValue)) {
@@ -222,9 +248,10 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
             onChange={(e) => setSearchValue(e.target.value)}
             onKeyDown={(e) => {
               if (e.key == "Enter") {
-                setLoading(true);
-                setSearch(e.target.value);
-                setSearchValue(e.target.value);
+                const url = "/search/?query=" + encodeURI(e.target.value);
+                if (router && router.push) {
+                  router.push(url);
+                }
               }
             }}
             fullWidth
@@ -346,15 +373,17 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
             <Grid item xs={12}>
               <Stack direction="row" spacing={1} flexWrap={"wrap"} useFlexGap>
                 {filters.length
-                  ? filters.map((filter, index) => (
-                      <Chip
-                        className={classes.chip}
-                        key={`${filter}-${index}`}
-                        item
-                        label={filter.displayName}
-                        onDelete={handleDelete(filter)}
-                      />
-                    ))
+                  ? filters
+                      .filter((f) => f.displayName)
+                      .map((filter, index) => (
+                        <Chip
+                          className={classes.chip}
+                          key={`${filter}-${index}`}
+                          item
+                          label={filter.displayName}
+                          onDelete={handleDelete(filter)}
+                        />
+                      ))
                   : null}
               </Stack>
             </Grid>
@@ -376,19 +405,31 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
                       (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE
                     )
                     .map((article) => (
-                      <Grid key={article._id} item xs={12}>
-                        <Link
-                          variant="body1"
-                          sx={{
-                            color: "#000",
-                            fontWeight: 700,
-                            textDecoration: "none",
-                          }}
-                          href={`/${article.slug.current}`}
-                        >
+                      <Grid
+                        key={article._id}
+                        item
+                        xs={12}
+                        className={classes.resultItem}
+                      >
+                        {article.badge && (
+                          <Badge badge={article.badge} variant={"link"} />
+                        )}
+                        <Link href={`/${article.slug.current}`}>
                           {article.title}
                         </Link>
-                        <Typography variant="h4" color="rgba(0,0,0,0.6)">
+                        <Typography
+                          component="span"
+                          variant="body2"
+                          sx={{
+                            color: "#a7a7a7",
+                            fontSize: 14,
+                            fontWeight: 400,
+                            marginTop: "8px",
+                            textTransform: "uppercase",
+                            lineHeight: 1.75,
+                            display: "inline-block",
+                          }}
+                        >
                           {DateTime.fromISO(article.date).toLocaleString(
                             DateTime.DATE_MED
                           )}{" "}
@@ -403,7 +444,7 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
                 <Pagination
                   count={Math.ceil(articles.length / ROWS_PER_PAGE)}
                   onChange={handleChangePage}
-                  sx={{ marginLeft: "-16px" }}
+                  sx={{ marginLeft: "-16px", marginBottom: "32px" }}
                 />
               </Grid>
             ) : (
