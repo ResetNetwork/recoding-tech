@@ -116,14 +116,16 @@ function LatestFromFellows() {
         {article ? (
           <Grid key={article._id} item className={classes.article}>
             <Grid container className={classes.articleGrid}>
-              <Grid item>
-                <Link href={`/${article.slug.current}`}>
-                  <img
-                    src={urlFor(article.featuredImage).width(400).url()}
-                    className={classes.image}
-                  />
-                </Link>
-              </Grid>
+              {article.featuredImage && (
+                <Grid item>
+                  <Link href={`/${article.slug.current}`}>
+                    <img
+                      src={urlFor(article.featuredImage).width(400).url()}
+                      className={classes.image}
+                    />
+                  </Link>
+                </Grid>
+              )}
               <Grid item>
                 {article.badge && (
                   <Badge badge={article.badge} variant={"link"} />

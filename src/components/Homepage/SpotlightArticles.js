@@ -110,7 +110,7 @@ function SpotlightArticles() {
           ? articles.map((article, index) => (
               <Grid key={article._id} item className={classes.article}>
                 <Grid container className={classes.articleGrid}>
-                  {index === 0 && (
+                  {index === 0 && article.featuredImage && (
                     <Grid item>
                       <Link href={`/${article.slug.current}`}>
                         <img
