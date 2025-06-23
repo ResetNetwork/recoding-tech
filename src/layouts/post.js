@@ -123,6 +123,8 @@ const Post = (props) => {
     }
   }
 
+  const isTOC = page.toc && Array.isArray(page.toc) && page.toc.length > 0;
+
   return (
     <Layout {...props}>
       <Box my={6}>
@@ -197,13 +199,13 @@ const Post = (props) => {
                   //   </Box>
                   // </Grid>
                 )} */}
-                {page.featuredImage && page.toc && (
+                {page.featuredImage && isTOC && (
                   <Typography component="div" className="html-to-react-article">
                     <ImageBlock value={page.featuredImage} />
                   </Typography>
                 )}
 
-                {page.toc && (
+                {isTOC && (
                   <>
                     <Box mb={0}>
                       <Typography variant="tocTitle">
