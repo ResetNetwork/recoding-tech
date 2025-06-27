@@ -1,5 +1,5 @@
 // base imports
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { DateTime } from "luxon";
 
@@ -12,7 +12,6 @@ import Badge from "../Badge";
 
 // utils
 import urlFor from "../../utils/imageBuilder";
-import client from "../../utils/sanityClient";
 
 const useStyles = makeStyles((theme) => ({
   article: {
@@ -93,17 +92,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const query = `*[!(_id in path("drafts.**")) && references("6fe4e72c-3d0a-4ec5-a71e-ad8633edccc5")]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...1]`;
-
-function LatestFromFellows() {
+function LatestFromFellows({ articles }) {
   const classes = useStyles();
-  const [article, setArticle] = useState(null);
 
-  useEffect(() => {
-    client.fetch(query).then((recents) => {
-      setArticle(recents[0]);
-    });
-  }, []);
+  const article = articles && articles.length > 0 ? articles[0] : null;
 
   return (
     <Grid container className={classes.grid}>

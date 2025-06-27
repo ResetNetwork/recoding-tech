@@ -26,18 +26,21 @@ import PolicyTracker from "../components/Homepage/PolicyTracker";
 import Announcements from "../components/Homepage/Announcements";
 
 const Advanced = (props) => {
-  const { path, page, featured, articles } = props;
+  const { path, page, featured, articles, fellows } = props;
 
   const latest =
     path === "/"
       ? articles.filter(
-          (article) => featured.find((a) => a._id === article._id) == null
+          (article) =>
+            featured.find((a) => a._id === article._id) == null &&
+            fellows.find((a) => a._id === article._id) == null
         )
       : undefined;
 
   const excludeIds = [
     ...(featured?.map((f) => f._id) || []),
     ...(latest?.slice(0, 11).map((a) => a._id) || []),
+    ...(fellows?.map((f) => f._id) || []),
   ];
 
   return (
@@ -161,7 +164,7 @@ const Advanced = (props) => {
                   <Podcast />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <LatestFromFellows />
+                  <LatestFromFellows articles={fellows} />
                 </Grid>
               </Grid>
               <Grid container spacing={4} sx={{ marginTop: 1 }}>
@@ -232,6 +235,7 @@ Advanced.propTypes = {
   page: PropTypes.object,
   featured: PropTypes.array,
   articles: PropTypes.array,
+  fellows: PropTypes.array,
 };
 
 export default Advanced;

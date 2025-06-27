@@ -19,8 +19,11 @@ export async function getStaticProps() {
   const articles = await client.fetch(
     `*[!(_id in path("drafts.**")) && !references("a4e6c730-0baf-4eeb-ad92-c5c98beeb085") && _type=="post"]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...15]`
   )
+  const fellows = await client.fetch(
+    `*[!(_id in path("drafts.**")) && references("6fe4e72c-3d0a-4ec5-a71e-ad8633edccc5")]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...1]`
+  )
   return {
-    props: { path: "/", page, data: { config, topics }, featured: featured.posts, articles },
+    props: { path: "/", page, data: { config, topics }, featured: featured.posts, articles, fellows },
     revalidate: 60,
   };
 }
