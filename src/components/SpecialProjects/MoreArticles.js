@@ -87,8 +87,6 @@ const useStyles = makeStyles((theme) => ({
 function MoreArticles({ articles, topics }) {
   const classes = useStyles();
 
-  console.log(topics);
-
   return (
     <Grid container className={classes.grid}>
       <Grid item className={classes.gridTitle}>
