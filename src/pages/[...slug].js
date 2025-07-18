@@ -86,7 +86,7 @@ export async function getStaticProps(props) {
   } else if (page && page.layout === "project") {
     const refs = page.projectTopics.map((ref) => `references("${ref._id}")`).join(" || ");
     articles = await client.fetch(
-      `*[!(_id in path("drafts.**")) && (${refs}) && _type=="post"]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...20]`
+      `*[!(_id in path("drafts.**")) && (${refs}) && _type=="post"]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...29]`
     )
   }
 

@@ -57,6 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
   grid: {
     marginTop: 20,
+    marginBottom: 60,
   },
   gridTitle: {
     borderBottom: "1px solid #000",
@@ -83,8 +84,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function MoreArticles({ articles }) {
+function MoreArticles({ articles, topics }) {
   const classes = useStyles();
+
+  console.log(topics);
 
   return (
     <Grid container className={classes.grid}>
@@ -144,12 +147,49 @@ function MoreArticles({ articles }) {
             ))
           : null}
       </Grid>
+      {topics && topics.length > 0 && (
+        <Grid item>
+          <Link
+            href={"/search/?filter=" + topics[0]._id}
+            sx={{
+              height: 24,
+              textDecoration: "none",
+              display: "inline-block",
+              "&:hover": {
+                textDecoration: "underline",
+              },
+            }}
+          >
+            <Typography
+              component="div"
+              variant="h5"
+              sx={{
+                backgroundColor: "#ffe5eaFF",
+                borderRadius: "4px",
+                color: "#FF0033",
+                fontWeight: 500,
+                paddingX: "10px",
+                paddingY: "6px",
+                boxShadow: "0px 2px 2px 0px #0000001F",
+                "&:active, & :focus, &:hover": {
+                  color: "#FF0033",
+                  textDecoration: "underline",
+                },
+                marginBottom: "7px",
+              }}
+            >
+              View more
+            </Typography>
+          </Link>
+        </Grid>
+      )}
     </Grid>
   );
 }
 
 MoreArticles.propTypes = {
   articles: PropTypes.array,
+  topics: PropTypes.array,
 };
 
 export default MoreArticles;

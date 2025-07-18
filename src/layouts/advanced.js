@@ -226,7 +226,10 @@ const Advanced = (props) => {
                   </Grid>
                 </Grid>
               </Grid>
-              <MoreArticles articles={latest.slice(5, 14)} />
+              <MoreArticles
+                articles={latest.slice(5, 23)}
+                topics={page.projectTopics}
+              />
             </Container>
           </>
         ) : (
