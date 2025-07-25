@@ -164,7 +164,11 @@ const Advanced = (props) => {
                   <Podcast />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <LatestFromFellows articles={fellows} />
+                  <LatestFromFellows
+                    articles={fellows.filter(
+                      (article) => !featured.some((a) => a._id === article._id)
+                    )}
+                  />
                 </Grid>
               </Grid>
               <Grid container spacing={4} sx={{ marginTop: 1 }}>
