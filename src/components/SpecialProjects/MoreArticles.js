@@ -12,6 +12,7 @@ import Badge from "../Badge";
 
 const useStyles = makeStyles((theme) => ({
   article: {
+    paddingTop: "0!important",
     marginBottom: 20,
   },
   lastArticle: {
@@ -87,6 +88,51 @@ const useStyles = makeStyles((theme) => ({
 function MoreArticles({ articles, topics }) {
   const classes = useStyles();
 
+  const drawArticle = (article) => {
+    return (
+      <Grid key={article._id} item className={classes.article}>
+        <Grid container className={classes.articleGrid}>
+          <Grid item>
+            {article.badge && <Badge badge={article.badge} variant={"link"} />}
+            <Link href={`/${article.slug.current}`} className={classes.link}>
+              <Typography
+                component="div"
+                variant="body1"
+                className={classes.articleTitle}
+              >
+                {article.title}
+              </Typography>
+            </Link>
+            <Typography
+              component="span"
+              variant="body2"
+              sx={{
+                color: "#a7a7a7",
+                fontSize: 14,
+                fontWeight: 400,
+                marginTop: "8px",
+                textTransform: "uppercase",
+                lineHeight: 1.75,
+                display: "inline-block",
+              }}
+            >
+              {DateTime.fromISO(article.date)
+                .setZone("America/New_York")
+                .setLocale("en-us")
+                .toLocaleString(DateTime.DATE_FULL)}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  };
+
+  const columns = [[], [], []];
+
+  articles.forEach((article, index) => {
+    columns[index % 3].push(article);
+  });
+
   return (
     <Grid container className={classes.grid}>
       <Grid item className={classes.gridTitle}>
@@ -94,56 +140,14 @@ function MoreArticles({ articles, topics }) {
           More
         </Typography>
       </Grid>
-      <Grid container item spacing={4}>
-        {articles && articles.length
-          ? articles.map((article) => (
-              <Grid
-                key={article._id}
-                item
-                className={classes.article}
-                xs={12}
-                md={4}
-              >
-                <Grid container className={classes.articleGrid}>
-                  <Grid item>
-                    {article.badge && (
-                      <Badge badge={article.badge} variant={"link"} />
-                    )}
-                    <Link
-                      href={`/${article.slug.current}`}
-                      className={classes.link}
-                    >
-                      <Typography
-                        component="div"
-                        variant="body1"
-                        className={classes.articleTitle}
-                      >
-                        {article.title}
-                      </Typography>
-                    </Link>
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      sx={{
-                        color: "#a7a7a7",
-                        fontSize: 14,
-                        fontWeight: 400,
-                        marginTop: "8px",
-                        textTransform: "uppercase",
-                        lineHeight: 1.75,
-                        display: "inline-block",
-                      }}
-                    >
-                      {DateTime.fromISO(article.date)
-                        .setZone("America/New_York")
-                        .setLocale("en-us")
-                        .toLocaleString(DateTime.DATE_FULL)}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Grid>
-            ))
-          : null}
+      <Grid container spacing={4} sx={{ paddingTop: "0px" }}>
+        {columns.map((col, colIndex) => (
+          <Grid item xs={12} md={4} key={colIndex}>
+            <Grid container item flexDirection="column">
+              {col.map((article) => drawArticle(article))}
+            </Grid>
+          </Grid>
+        ))}
       </Grid>
       {topics && topics.length > 0 && (
         <Grid item>
