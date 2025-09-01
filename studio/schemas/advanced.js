@@ -12,27 +12,41 @@ export default {
     },
     {
       type: 'string',
+      name: 'layout',
+      title: 'Layout',
+      hidden: false,
+      validation: (Rule) => Rule.required(),
+      options: {
+        list: [{ title: 'Advanced', value: 'advanced' }, { title: 'Special Project', value: 'project' }],
+      },
+    },
+    {
+      type: 'string',
       name: 'heroContent',
       title: 'Hero Content',
       description: 'The text in the page hero.',
+      hidden: ({document}) => document?.layout !== 'advanced',
     },
     {
       type: 'string',
       name: 'heroLinkText',
       title: 'Hero Link Text',
       description: 'The text displayed on the hero link.',
+      hidden: ({document}) => document?.layout !== 'advanced',
     },
     {
       type: 'string',
       name: 'heroLinkUrl',
       title: 'Hero Link URL',
       description: 'The URL for the hero link.',
+      hidden: ({document}) => document?.layout !== 'advanced',
     },
     {
       type: 'text',
       name: 'trackerText',
       title: 'Policy tracker intro text',
-      description: 'Add the introduction text for the Policy Tracker for the homepage'
+      description: 'Add the introduction text for the Policy Tracker for the homepage',
+      hidden: ({document}) => document?.layout !== 'advanced',
     },
     // {
     //   name: "featuredTopics",
@@ -87,6 +101,37 @@ export default {
           type: 'section_podcast',
         },
       ],
+      hidden: ({document}) => document?.layout !== 'advanced',
+    },
+    {
+      title: 'Project topics',
+      name: 'projectTopics',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'topic' }],
+          options: {
+            disableNew: true,
+          },
+        },
+      ],
+      hidden: ({document}) => document?.layout !== 'project',
+    },
+    {
+      type: 'array',
+      name: 'featuredPosts',
+      of: [
+        {
+          title: 'Posts',
+          type: 'reference',
+          to: [{type: 'post'}],
+          options: {
+            disableNew: true,
+          },
+        },
+      ],
+      hidden: ({document}) => document?.layout !== 'project',
     },
     {
       type: 'string',
@@ -100,16 +145,6 @@ export default {
       name: 'seo',
       title: 'Seo',
       validation: null,
-    },
-    {
-      type: 'string',
-      name: 'layout',
-      title: 'Layout',
-      hidden: false,
-      validation: (Rule) => Rule.required(),
-      options: {
-        list: ['advanced'],
-      },
     },
     {
       type: 'string',

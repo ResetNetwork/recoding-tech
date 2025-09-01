@@ -77,7 +77,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const SectionRecentArticles = (props) => {
-  const { articles } = props;
+  const { articles, viewMore } = props;
   const classes = useStyles();
 
   return (
@@ -93,40 +93,42 @@ const SectionRecentArticles = (props) => {
               Latest
             </Typography>
           </Grid>
-          <Grid item>
-            <Link
-              href="/search"
-              sx={{
-                height: 24,
-                textDecoration: "none",
-                width: 162,
-                "&:hover": {
-                  textDecoration: "underline",
-                },
-              }}
-            >
-              <Typography
-                component="div"
-                variant="h5"
+          {viewMore !== false && (
+            <Grid item>
+              <Link
+                href="/search"
                 sx={{
-                  backgroundColor: "#FFF",
-                  borderRadius: "4px",
-                  color: "#FF0033",
-                  fontWeight: 500,
-                  paddingX: "10px",
-                  paddingY: "6px",
-                  boxShadow: "0px 2px 2px 0px #0000001F",
-                  "&:active, & :focus, &:hover": {
-                    color: "#FF0033",
+                  height: 24,
+                  textDecoration: "none",
+                  width: 162,
+                  "&:hover": {
                     textDecoration: "underline",
                   },
-                  marginBottom: "7px",
                 }}
               >
-                View more
-              </Typography>
-            </Link>
-          </Grid>
+                <Typography
+                  component="div"
+                  variant="h5"
+                  sx={{
+                    backgroundColor: "#FFF",
+                    borderRadius: "4px",
+                    color: "#FF0033",
+                    fontWeight: 500,
+                    paddingX: "10px",
+                    paddingY: "6px",
+                    boxShadow: "0px 2px 2px 0px #0000001F",
+                    "&:active, & :focus, &:hover": {
+                      color: "#FF0033",
+                      textDecoration: "underline",
+                    },
+                    marginBottom: "7px",
+                  }}
+                >
+                  View more
+                </Typography>
+              </Link>
+            </Grid>
+          )}
         </Grid>
       </Grid>
       <Grid container item flexDirection="column">
@@ -184,6 +186,7 @@ const SectionRecentArticles = (props) => {
 
 SectionRecentArticles.propTypes = {
   articles: PropTypes.array,
+  viewMore: PropTypes.boolean,
 };
 
 export default SectionRecentArticles;

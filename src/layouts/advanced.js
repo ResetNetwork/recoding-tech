@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 // components
 import components, { Layout } from "../components/index";
@@ -24,12 +25,13 @@ import SpotlightArticles from "../components/Homepage/SpotlightArticles";
 import AroundGlobe from "../components/Homepage/AroundGlobe";
 import PolicyTracker from "../components/Homepage/PolicyTracker";
 import Announcements from "../components/Homepage/Announcements";
+import MoreArticles from "../components/SpecialProjects/MoreArticles";
 
 const Advanced = (props) => {
   const { path, page, featured, articles, fellows } = props;
 
   const latest =
-    path === "/"
+    (path === "/" || (page && page.layout === "project")) && articles
       ? articles.filter(
           (article) =>
             featured.find((a) => a._id === article._id) == null &&
@@ -198,6 +200,43 @@ const Advanced = (props) => {
                   </Box>
                 </Grid>
               </Grid>
+            </Container>
+          </>
+        ) : page && page.layout === "project" ? (
+          <>
+            <Container>
+              <Typography
+                component="h1"
+                variant="h2_article"
+                sx={{ borderBottom: "1px solid #8AA29D", paddingBottom: 2 }}
+              >
+                {page.title}
+              </Typography>
+              <Grid
+                container
+                spacing={4}
+                alignItems="flex-start"
+                justifyContent="space-between"
+              >
+                {featured && (
+                  <Grid item xs={12} md={8}>
+                    <FeaturedHero article={featured[0]} />
+                    <FeaturedStories articles={featured.slice(1)} />
+                  </Grid>
+                )}
+                <Grid container item xs={12} md={4}>
+                  <Grid item>
+                    <SectionRecentArticles
+                      articles={latest.slice(0, 5)}
+                      viewMore={false}
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+              <MoreArticles
+                articles={latest.slice(5, 23)}
+                topics={page.projectTopics}
+              />
             </Container>
           </>
         ) : (

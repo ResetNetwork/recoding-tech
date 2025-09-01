@@ -51,7 +51,7 @@ export async function getStaticProps(props) {
   );
 
   let [page] = await client.fetch(
-    `*[!(_id in path("drafts.**")) && _type in ["advanced", "page", "post"] && (slug.current == "${slug}" || stackbit_url_path == "/${slug}")]{_id, _type, stackbit_url_path, trackerText, _createdAt, _updatedAt, badge, date, slug, title, body, toc, tocTitle, featuredImage, seo, disableNewsletterSignup, authors[]->{slug, name, photo, bio}, heroContent, layout, sections, sidebar_content[type == "sidebar_about"]{staff[]->, board[]->, masthead[]->}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedArticles[]->{date,badge,title,slug,authors[]->{firstName, lastName}},relatedCommentary[]->}`
+    `*[!(_id in path("drafts.**")) && _type in ["advanced", "page", "post"] && (slug.current == "${slug}" || stackbit_url_path == "/${slug}")]{_id, _type, stackbit_url_path, trackerText, _createdAt, _updatedAt, badge, date, slug, title, body, toc, tocTitle, featuredImage, seo, disableNewsletterSignup, authors[]->{slug, name, photo, bio}, heroContent, layout, sections, sidebar_content[type == "sidebar_about"]{staff[]->, board[]->, masthead[]->}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedArticles[]->{date,badge,title,slug,authors[]->{firstName, lastName}},relatedCommentary[]->,featuredPosts[]->{_id, title, author, badge, date, featuredImage, category, date, type, slug, stackbit_model_type},projectTopics[]->{_id}}`
   );
 
   let path;
@@ -83,6 +83,11 @@ export async function getStaticProps(props) {
     const articlesQuery = `*[!(_id in path("drafts.**")) && _type == "post"]{ title, date, slug, badge, 'key': slug } | order(date desc)`;
 
     articles = await client.fetch(articlesQuery);
+  } else if (page && page.layout === "project") {
+    const refs = page.projectTopics.map((ref) => `references("${ref._id}")`).join(" || ");
+    articles = await client.fetch(
+      `*[!(_id in path("drafts.**")) && (${refs}) && _type=="post"]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...29]`
+    )
   }
 
   return {
@@ -91,6 +96,7 @@ export async function getStaticProps(props) {
       articles: articles.length ? articles : null,
       _type: page ? page._type : null,
       authors: authors.length ? authors : null,
+      featured: page ? page.featuredPosts : null,
       path: path,
       data: { config, topics },
     },
