@@ -47,11 +47,11 @@ export async function getStaticProps(props) {
   const slug = params.slug.join();
   const [config] = await client.fetch(`*[_type == "config"]`);
   const topics = await client.fetch(
-    `*[_type == "topic" && stackbit_model_type == "page" && !(_id in path("drafts.**"))]{ displayName, _id, slug } | order(displayName asc)`
+    `*[_type == "topic" && stackbit_model_type == "page" && (_id in path("drafts.**"))]{ displayName, _id, slug } | order(displayName asc)`
   );
 
   let [page] = await client.fetch(
-    `*[_type in ["advanced", "page", "post"] && (slug.current == "${slug}" || stackbit_url_path == "/${slug}")]{_id, _type, stackbit_url_path, trackerText, _createdAt, _updatedAt, badge, date, slug, title, body, toc, tocTitle, featuredImage, seo, disableNewsletterSignup, authors[]->{slug, name, photo, bio}, heroContent, layout, sections, sidebar_content[type == "sidebar_about"]{staff[]->, board[]->, masthead[]->}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedArticles[]->{date,badge,title,slug,authors[]->{firstName, lastName}},relatedCommentary[]->}`
+    `*[_type in ["advanced", "page", "post"] && _id == "drafts.${slug}"]{_id, _type, stackbit_url_path, trackerText, _createdAt, _updatedAt, badge, date, slug, title, body, toc, tocTitle, featuredImage, seo, disableNewsletterSignup, authors[]->{slug, name, photo, bio}, heroContent, layout, sections, sidebar_content[type == "sidebar_about"]{staff[]->, board[]->, masthead[]->}, relatedTopics[]->{displayName, name, type, slug, stackbit_model_type}, relatedArticles[]->{date,badge,title,slug,authors[]->{firstName, lastName}},relatedCommentary[]->}`
   );
 
   let path;
@@ -70,20 +70,7 @@ export async function getStaticProps(props) {
 
   let authors = [];
 
-  if (path == "contributors") {
-    // const authorsQuery = `*[_type == "author" && !(_id in path("drafts.**"))] {name, firstName, lastName, slug, email, bio, socials, _updatedAt, photo, "relatedPostTopics": *[_type=='post' && references(^._id)]{ _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }}|order(_updatedAt asc)`;
-    const authorsQuery = `*[_type == "author" && !(_id in path("drafts.**"))] {name, firstName, lastName, slug, email, bio, socials, _updatedAt, photo, "relatedPostTopics": *[_type=='post' && references(^._id)]{ _id, relatedTopics[]->{slug, _id, name, displayName, stackbit_model_type} }}|order(_updatedAt asc)[0..50]`
-
-    authors = await client.fetch(authorsQuery);
-  }
-
   let articles = [];
-
-  if (path == "search") {
-    const articlesQuery = `*[!(_id in path("drafts.**")) && _type == "post"]{ title, date, slug, badge, 'key': slug } | order(date desc)`;
-
-    articles = await client.fetch(articlesQuery);
-  }
 
   return {
     props: {
@@ -98,4 +85,13 @@ export async function getStaticProps(props) {
   };
 }
 
-export default meta;
+const PreviewPage = (props) => {
+  const extraHead = (
+    <>
+      <meta name="robots" content="noindex, nofollow" />
+    </>
+  );
+  return meta({ ...props, extraHead });
+};
+
+export default PreviewPage;

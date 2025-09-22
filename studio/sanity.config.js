@@ -4,6 +4,7 @@ import { visionTool } from '@sanity/vision'
 import { table } from '@sanity/table'
 import { schemaTypes } from './schemas'
 import { structure, defaultDocumentNode } from './deskStructure'
+import { PreviewAction } from './components/PreviewAction'
 
 export default defineConfig({
   name: 'default',
@@ -27,6 +28,17 @@ export default defineConfig({
   //     return prev
   //   },
   // },
+  document: {
+    actions: (prev, context) => {
+      if (context.schemaType === 'post') {
+        return [
+          ...prev,
+          PreviewAction
+        ]
+      }
+      return prev
+    },
+  },
   plugins: [
     // deskTool({structure: structure, defaultDocumentNode: defaultDocumentNodeResolver}),
     deskTool({ structure, defaultDocumentNode }),

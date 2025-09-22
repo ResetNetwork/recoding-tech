@@ -16,7 +16,7 @@ import Seo from "./Seo.js";
 import { ThemeProvider } from "@mui/material/styles";
 
 const Body = (props) => {
-  const { page, data, path } = props;
+  const { page, data, path, extraHead } = props;
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -105,6 +105,7 @@ const Body = (props) => {
             }
           />
         )}
+        {extraHead}
       </Head>
       <ThemeProvider theme={theme}>
         <Header {...props} />
@@ -120,6 +121,11 @@ Body.propTypes = {
   page: PropTypes.object,
   data: PropTypes.object,
   path: PropTypes.string,
+  extraHead: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.bool,
+  ]),
 };
 
 export default Body;
