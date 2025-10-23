@@ -3,7 +3,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import { useRouter } from "next/router";
 import { DateTime } from "luxon";
-import { titleCase } from "title-case";
 
 import { makeStyles } from "@mui/styles";
 import { CardActionArea } from "@mui/material";
@@ -112,7 +111,7 @@ function FeaturedHero({ article }) {
                     variant="h2_article"
                     color={article.featuredImage ? "#FFF" : "#000"}
                   >
-                    {titleCase(article.title)}
+                    {article.title}
                   </Typography>
                   <Typography
                     component="span"
