@@ -44,7 +44,7 @@ const components = {
     right: ({children}) => <span style={{ textAlign: 'right', width: '100%', display: 'inline-block' }}>{children}</span>,
     link: ({ value, children }) => {
       const { href } = value
-      if (href.startsWith('#')) {
+      if (href && href.startsWith('#')) {
         return <a href={href} rel="noopener">{children}</a>
       } else {
         return <a href={href} target="_blank" rel="noopener">{children}</a>
