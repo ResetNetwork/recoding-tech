@@ -1,6 +1,7 @@
 // base imports
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { DateTime } from "luxon";
+import PropTypes from "prop-types";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
@@ -11,7 +12,6 @@ import Badge from "../Badge";
 
 // util
 import urlFor from "../../utils/imageBuilder";
-import client from "../../utils/sanityClient";
 
 const useStyles = makeStyles((theme) => ({
   article: {
@@ -86,17 +86,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const query = `*[_type == "featured_posts" && title == "Homepage - Spotlight"] { posts[]->{_id, title, author, badge, date, featuredImage, category, date, type, slug, stackbit_model_type} }`;
-
-function SpotlightArticles() {
+function SpotlightArticles({ articles }) {
   const classes = useStyles();
-  const [articles, setArticles] = useState([]);
-
-  useEffect(() => {
-    client.fetch(query).then((recents) => {
-      setArticles(recents[0].posts);
-    });
-  }, []);
 
   return (
     <Grid container className={classes.grid}>
@@ -197,6 +188,8 @@ function SpotlightArticles() {
   );
 }
 
-SpotlightArticles.propTypes = {};
+SpotlightArticles.propTypes = {
+  articles: PropTypes.array,
+};
 
 export default SpotlightArticles;

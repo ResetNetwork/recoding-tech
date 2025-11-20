@@ -1,5 +1,5 @@
 // base imports
-import React from "react";
+import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import PropTypes from "prop-types";
 
@@ -24,16 +24,27 @@ import SpotlightArticles from "../components/Homepage/SpotlightArticles";
 import AroundGlobe from "../components/Homepage/AroundGlobe";
 import PolicyTracker from "../components/Homepage/PolicyTracker";
 import Announcements from "../components/Homepage/Announcements";
+import client from "../utils/sanityClient";
+
+const query = `*[_type == "featured_posts" && title == "Homepage - Spotlight"] { posts[]->{_id, title, author, badge, date, featuredImage, category, date, type, slug, stackbit_model_type} }`;
 
 const Advanced = (props) => {
   const { path, page, featured, articles, fellows } = props;
+  const [spotlight, setSpotlight] = useState([]);
+
+  useEffect(() => {
+    client.fetch(query).then((recents) => {
+      setSpotlight(recents[0].posts);
+    });
+  }, []);
 
   const latest =
     path === "/"
       ? articles.filter(
           (article) =>
             featured.find((a) => a._id === article._id) == null &&
-            fellows.find((a) => a._id === article._id) == null
+            fellows.find((a) => a._id === article._id) == null &&
+            spotlight.find((a) => a._id === article._id) == null
         )
       : undefined;
 
@@ -179,7 +190,7 @@ const Advanced = (props) => {
                   <AroundGlobe exclude={excludeIds} />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <SpotlightArticles />
+                  <SpotlightArticles articles={spotlight} />
                 </Grid>
               </Grid>
               <Grid
