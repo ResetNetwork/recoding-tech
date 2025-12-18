@@ -109,7 +109,7 @@ function AroundGlobe({ exclude }) {
       </Grid>
       <Grid container item flexDirection="column">
         {articles && articles.length > 0
-          ? articles.splice(0, 6).map((article, index) => (
+          ? articles.slice(0, 6).map((article, index) => (
               <Grid key={article._id} item className={classes.article}>
                 <Grid container className={classes.articleGrid}>
                   {index === 0 && article.featuredImage && (
