@@ -47,7 +47,7 @@ export const TagsAssistant = (props) => {
   const aikey = import.meta.env.SANITY_STUDIO_GEMINI_API_KEY
   const genAI = new GoogleGenerativeAI(aikey)
   const model = genAI.getGenerativeModel({
-    model: 'gemini-2.0-flash',
+    model: 'gemini-2.5-flash',
     generationConfig: {
       responseMimeType: 'application/json',
       responseSchema: geminiResponseSchema,
