@@ -3,47 +3,8 @@ import client from "../../utils/sanityClient";
 
 import { meta } from "../../layouts";
 
-export async function getStaticPaths() {
-  console.log("Page [...slug].js getStaticPaths");
-
-  if (process.env.SKIP_BUILD_STATIC_GENERATION) {
-    return {
-      paths: [],
-      fallback: "blocking",
-    };
-  }
-
-  // *[ _type in ["post", "advanced", "page"] ]{ slug, stackbit_url_path }`);
-  const slugs = await client.fetch(
-    `*[ _type in ["post", "advanced", "page" && !(_id in path("drafts.**"))] ]{ slug, stackbit_url_path }`
-  );
-
-  const paths = slugs.map((path) => {
-    let slug;
-    if (path.slug && path.slug.current) {
-      slug = path.slug.current
-    }
-    if (path.stackbit_url_path) {
-      slug = path.stackbit_url_path.split("/")[1]
-    }
-    return {
-      params: {
-        slug: [
-          slug.length ? slug : null,
-        ],
-      },
-    }
-  });
-
-  return {
-    paths,
-    fallback: false,
-  };
-}
-
-export async function getStaticProps(props) {
-  const { params } = props
-  console.log("Page /[...slug].js getStaticProps, slug: ", params);
+export async function getServerSideProps({ params }) {
+  console.log("Page /preview/[...slug].js getServerSideProps, slug: ", params);
   const slug = params.slug.join();
   const [config] = await client.fetch(`*[_type == "config"]`);
   const topics = await client.fetch(
@@ -81,7 +42,6 @@ export async function getStaticProps(props) {
       path: path,
       data: { config, topics },
     },
-    revalidate: 60,
   };
 }
 
