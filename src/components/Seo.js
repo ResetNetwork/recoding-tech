@@ -91,6 +91,35 @@ const Seo = (props) => {
     }
   };
 
+  const titleTextWithoutSuffix = () => {
+    if (path == "/") {
+      return `${page.title}`;
+    }
+    if (page._type == "author") {
+      return `${page.name}, Author at ${_.get(
+        props,
+        "data.config.title",
+        null
+      )}`;
+    }
+
+    if (page.displayName) {
+      return `${page.displayName}`;
+    }
+
+    if (page.seo && page.seo.title) {
+      return `${page.seo.title}`;
+    }
+
+    if (page.title) {
+      return `${page.title}`;
+    }
+
+    if (page.name) {
+      return `${page.name}`;
+    }
+  };
+
   const description = () => {
     return page.seo && page.seo.description
       ? page.seo.description
@@ -118,6 +147,7 @@ const Seo = (props) => {
       url: url(),
       type: pageType(),
       images: [{ url: ogImage() }],
+      title: titleTextWithoutSuffix(),
     };
 
     if (page._type == "post") {
