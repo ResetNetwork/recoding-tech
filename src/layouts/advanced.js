@@ -43,15 +43,22 @@ const Advanced = (props) => {
       ? articles.filter(
           (article) =>
             featured.find((a) => a._id === article._id) == null &&
-            fellows.find((a) => a._id === article._id) == null &&
             spotlight.find((a) => a._id === article._id) == null
         )
       : undefined;
 
+  const fellowsPosts = fellows
+    ? fellows.filter(
+        (article) =>
+          latest.slice(0, 5).find((a) => a._id === article._id) == null &&
+          featured.find((a) => a._id === article._id) == null
+      )
+    : [];
+
   const excludeIds = [
     ...(featured?.map((f) => f._id) || []),
     ...(latest?.slice(0, 11).map((a) => a._id) || []),
-    ...(fellows?.map((f) => f._id) || []),
+    ...(fellowsPosts && fellowsPosts.length > 0 ? [fellowsPosts[0]._id] : []),
   ];
 
   return (
@@ -175,11 +182,7 @@ const Advanced = (props) => {
                   <Podcast />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                  <LatestFromFellows
-                    articles={fellows.filter(
-                      (article) => !featured.some((a) => a._id === article._id)
-                    )}
-                  />
+                  <LatestFromFellows articles={fellowsPosts} />
                 </Grid>
               </Grid>
               <Grid container spacing={4} sx={{ marginTop: 1 }}>
