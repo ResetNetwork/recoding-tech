@@ -129,6 +129,7 @@ export const FeaturedImageSearch = (props) => {
                               {result.body[0].asset && 
                                 <img
                                   src={createImageUrlBuilder(client).image(result.body[0].asset).width(200).url()}
+                                  crossOrigin="anonymous"
                                   title={result.body[0].altText}
                                   style={{ height: "100%", width: "200px", paddingTop: "16px"}}
                                 />
