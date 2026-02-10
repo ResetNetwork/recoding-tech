@@ -98,7 +98,7 @@ function AroundGlobe({ exclude }) {
       const posts = recents.filter((post) => !exclude.includes(post._id));
       setArticles(posts);
     });
-  }, []);
+  }, [exclude]);
 
   return (
     <Grid container className={classes.grid}>
