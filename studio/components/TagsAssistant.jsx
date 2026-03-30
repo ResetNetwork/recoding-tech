@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react'
 import {Stack, Text, Flex, Button, Heading, Card, Spinner, Checkbox} from '@sanity/ui'
-import {useFormValue, useDocumentOperation, useClient} from 'sanity'
+import { useFormValue, useDocumentOperation, useClient, getPublishedId, getVersionFromId, isVersionId} from 'sanity'
 import {GoogleGenerativeAI, SchemaType} from '@google/generative-ai'
 import portabletextToText from '../libs/portabletextToText'
 import {uuid} from '@sanity/uuid'
@@ -55,8 +55,10 @@ export const TagsAssistant = (props) => {
   })
 
   const form = useFormValue([])
-  const docId = typeof form._id === 'string' ? form._id.replace('drafts.', '') : undefined
-  const {patch} = useDocumentOperation(docId, form._type)
+  const rawId = typeof form._id === 'string' ? form._id : undefined
+  const publishedId = rawId ? getPublishedId(rawId) : undefined
+  const version = rawId && isVersionId(rawId) ? getVersionFromId(rawId) : undefined
+  const {patch} = useDocumentOperation(publishedId, form._type, version)
 
   const relatedTopics = form.relatedTopics || []
 
