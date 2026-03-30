@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react'
 import { TextInput, Stack, Container, Flex, Button, Grid, Card, Spinner, Dialog, Box } from '@sanity/ui'
-import {useFormValue, useDocumentOperation, useClient} from 'sanity'
+import {useFormValue, useDocumentOperation, useClient, getPublishedId, getVersionFromId, isVersionId} from 'sanity'
 import createImageUrlBuilder from '@sanity/image-url'
 import BlockContent from "@sanity/block-content-to-react"
 
@@ -20,8 +20,10 @@ export const FeaturedImageSearch = (props) => {
     const client = useClient({apiVersion: '2021-10-21'})
 
     const form = useFormValue([])
-    const docId = typeof form._id === 'string' ? form._id.replace('drafts.', '') : undefined
-    const { patch } = useDocumentOperation(docId, form._type)
+    const rawId = typeof form._id === 'string' ? form._id : undefined
+    const publishedId = rawId ? getPublishedId(rawId) : undefined
+    const version = rawId && isVersionId(rawId) ? getVersionFromId(rawId) : undefined
+    const { patch } = useDocumentOperation(publishedId, form._type, version)
 
     const onSearch = useCallback(async () => {
       setLoading(true)
