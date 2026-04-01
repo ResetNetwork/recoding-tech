@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react'
 import { TextInput, Stack, Container, Flex, Button, Grid, Card, Spinner, Dialog, Box } from '@sanity/ui'
 import {useFormValue, useDocumentOperation, useClient, getPublishedId, getVersionFromId, isVersionId} from 'sanity'
 import createImageUrlBuilder from '@sanity/image-url'
-import BlockContent from "@sanity/block-content-to-react"
+import { PortableText } from '@portabletext/react'
 
 const searchSanityImages = async (client, keywords) => {
     return await client.fetch(`
@@ -137,7 +137,7 @@ export const FeaturedImageSearch = (props) => {
                                 />
                               }
                               <Flex gap={3} direction={"column"} height={"auto"} justify={'space-between'} style={{ width: "100%" }}>
-                                <BlockContent blocks={result.body[0].caption} />
+                                <PortableText value={result.body[0].caption} />
                                 <Button
                                   fontSize={1}
                                   mode="ghost"
