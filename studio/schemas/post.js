@@ -28,6 +28,7 @@ export default {
           { title: "Podcast", value: "podcast" },
           { title: "Announcement", value: "announcement" },
           { title: "Transcript", value: "transcript" },
+          { title: "Newsletter", value: "newsletter" },
           { title: "None", value: "" }
         ],
         layout: "radio",
