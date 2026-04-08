@@ -9,6 +9,7 @@ const badges = [
   { key: "podcast", label: "Podcast", color: "#6c5c29" },
   { key: "announcement", label: "Announcement", color: "#000000" },
   { key: "transcript", label: "Transcript", color: "#a00086" },
+  { key: "newsletter", label: "Newsletter", color: "#000" },
 ];
 
 function Badge({ badge, variant = "default" }) {
@@ -20,7 +21,10 @@ function Badge({ badge, variant = "default" }) {
       sx={{
         marginBottom: variant == "link" ? "8px" : "16px",
         color: variant == "link" ? currentBadge.color : "#fff",
-        backgroundColor: variant == "link" ? undefined : currentBadge.color,
+        backgroundColor:
+          variant == "link" || currentBadge.key == "newsletter"
+            ? undefined
+            : currentBadge.color,
         padding: variant == "link" ? undefined : "4px 16px",
         borderRadius: "4px",
         display: "inline-block",
