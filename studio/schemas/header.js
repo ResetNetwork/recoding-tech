@@ -4,6 +4,30 @@ export default {
   title: "Header Configuration",
   fields: [
     {
+      title: "Topics",
+      type: "array",
+      name: "topics",
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'topic'}],
+          options: { filter: 'topicType == "topic"' }
+        },
+      ],
+    },
+    {
+      title: "Series",
+      type: "array",
+      name: "series",
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'topic'}],
+          options: { filter: 'topicType == "series"' }
+        },
+      ],
+    },
+    {
       type: "array",
       name: "topicsLinks",
       title: "Topics Links",
@@ -13,7 +37,8 @@ export default {
         {
           type: "action"
         }
-      ]
+      ],
+      hidden: true
     },
     {
       type: "array",
@@ -25,7 +50,8 @@ export default {
         {
           type: "action"
         }
-      ]
+      ],
+      hidden: true
     },
     {
       type: "string",
