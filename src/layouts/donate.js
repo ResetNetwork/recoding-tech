@@ -185,36 +185,37 @@ const Page = (props) => {
           <Divider sx={{ margin: "20px 0" }} />
 
           <Grid container columnSpacing={"20px"} rowSpacing={"40px"}>
-            {page.faq.map((faq, index) => (
-              <Grid item xs={12} sm={6} key={index}>
-                <Typography
-                  variant="h3"
-                  sx={{
-                    fontSize: "16px",
-                    fontWeight: 700,
-                    lineHeight: 1.75,
-                    textAlign: "left",
-                    m: 0,
-                  }}
-                >
-                  {faq.question}
-                </Typography>
-                <Typography
-                  variant="body1"
-                  sx={{
-                    fontFamily: "Lexend",
-                    fontSize: "16px",
-                    fontWeight: 300,
-                    lineHeight: 1.75,
-                    textAlign: "left",
-                    m: 0,
-                    mt: "4px",
-                  }}
-                >
-                  {faq.answer}
-                </Typography>
-              </Grid>
-            ))}
+            {page.faq &&
+              page.faq.map((faq, index) => (
+                <Grid item xs={12} sm={6} key={index}>
+                  <Typography
+                    variant="h3"
+                    sx={{
+                      fontSize: "16px",
+                      fontWeight: 700,
+                      lineHeight: 1.75,
+                      textAlign: "left",
+                      m: 0,
+                    }}
+                  >
+                    {faq.question}
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontFamily: "Lexend",
+                      fontSize: "16px",
+                      fontWeight: 300,
+                      lineHeight: 1.75,
+                      textAlign: "left",
+                      m: 0,
+                      mt: "4px",
+                    }}
+                  >
+                    {faq.answer}
+                  </Typography>
+                </Grid>
+              ))}
           </Grid>
         </Container>
       </section>

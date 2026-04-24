@@ -177,7 +177,8 @@ const Header = (props) => {
                           </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                          {data.config.header.topics &&
+                          {data.config.header &&
+                            data.config.header.topics &&
                             data.config.header.topics.map((link) => (
                               <Typography
                                 key={link.slug.current}
@@ -240,7 +241,8 @@ const Header = (props) => {
                           </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                          {data.config.header.series &&
+                          {data.config.header &&
+                            data.config.header.series &&
                             data.config.header.series.map((link) => (
                               <Typography
                                 key={link.slug.current}
@@ -378,7 +380,8 @@ const Header = (props) => {
                           },
                         }}
                       >
-                        {data.config.header.topics &&
+                        {data.config.header &&
+                          data.config.header.topics &&
                           data.config.header.topics.map((link) => (
                             <MenuItem
                               key={link.slug.current}
@@ -484,7 +487,8 @@ const Header = (props) => {
                           },
                         }}
                       >
-                        {data.config.header.series &&
+                        {data.config.header &&
+                          data.config.header.series &&
                           data.config.header.series.map((link) => (
                             <MenuItem
                               key={link.slug.current}
