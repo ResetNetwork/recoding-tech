@@ -9,7 +9,7 @@ export async function getStaticProps() {
     `*[_type == "advanced" && stackbit_url_path == "/"]{_id, _type, _createdAt, trackerText, title, sections[]{type, alsoFeatured[]->{title, author, category, date, type, slug, stackbit_model_type}}}`
   );
   const newsletters = await client.fetch(
-    `*[!(_id in path("drafts.**")) && _type == "post" && badge == "newsletter"]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...3]`
+    `*[!(_id in path("drafts.**")) && _type == "post" && badge == "podcast"]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...3]`
   );
 
   return {
