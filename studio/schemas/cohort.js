@@ -79,7 +79,7 @@ export default {
   ],
   preview: {
     select: {
-      title: 'title',
+      title: 'stackbit_url_path',
     },
   },
 }
