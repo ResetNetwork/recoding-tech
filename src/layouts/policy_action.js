@@ -15,8 +15,8 @@ import { Layout } from "../components/index";
 import SectionHero from "../components/SectionHero";
 import TrackerActions from "../components/TrackerActions";
 import RelatedDocuments from "../components/RelatedDocuments";
-import RelatedCommentary from "../components/RelatedCommentary";
-import RelatedTopics from "../components/RelatedTopics";
+import RelatedCommentary from "../components/Article/RelatedCommentary";
+import RelatedTopics from "../components/Article/RelatedTopics";
 
 const PolicyAction = (props) => {
   const { page } = props;

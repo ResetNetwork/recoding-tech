@@ -40,6 +40,12 @@ import action from './action.js'
 import form_field from './form_field.js'
 import stackbit_page_meta from './stackbit_page_meta.js'
 import featured_posts from './featured_posts.js'
+import homepage_section from './homepage_section.js'
+import homepage_section_light from './homepage_section_light.js'
+import section_fellowship_stats from './section_fellowship_stats.js'
+import section_fellowship_quote from './section_fellowship_quote.js'
+import section_fellowship_cohort from './section_fellowship_cohort.js'
+import cohort from './cohort.js'
 
 // new models
 import post from './post.js'
@@ -93,4 +99,10 @@ export const schemaTypes = [
   form_field,
   stackbit_page_meta,
   featured_posts,
+  homepage_section,
+  homepage_section_light,
+  section_fellowship_stats,
+  section_fellowship_quote,
+  section_fellowship_cohort,
+  cohort,
 ]

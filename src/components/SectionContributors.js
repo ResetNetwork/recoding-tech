@@ -302,10 +302,22 @@ const Contributors = () => {
               container
               alignItems="center"
               justifyContent="space-between"
-              sx={{ borderBottom: loading ? "" : "1px solid #8AA29D" }}
+              sx={{
+                borderBottom: loading ? "" : "1px solid #8AA29D",
+                paddingBottom: "25px",
+              }}
             >
               <Grid item>
-                <Typography component="h2" variant="h4">
+                <Typography
+                  component="h2"
+                  variant="h4"
+                  sx={{
+                    fontSize: "20px",
+                    fontWeight: 700,
+                    lineHeight: 1.2,
+                    m: 0,
+                  }}
+                >
                   Meet our contributors
                 </Typography>
               </Grid>
@@ -326,19 +338,22 @@ const Contributors = () => {
                     variant="h5"
                     sx={{
                       backgroundColor: "#FFE5EA",
-                      borderRadius: "2px",
+                      borderRadius: "12px",
                       color: "#FF0033",
-                      fontWeight: 500,
-                      paddingX: "10px",
-                      paddingY: "6px",
+                      fontSize: "16px",
+                      fontWeight: 400,
+                      lineHeight: 1.5,
+                      paddingX: "16px",
+                      paddingY: "8px",
                       marginBottom: 0,
+                      textTransform: "none",
                       "&:active, & :focus, &:hover": {
                         color: "#FF0033",
                         textDecoration: "underline",
                       },
                     }}
                   >
-                    Search / filter
+                    Search/Filter
                   </Typography>
                 </Button>
                 <Popper
@@ -474,7 +489,7 @@ const Contributors = () => {
               alignItems={"space-between"}
               justifyContent={"flex-start"}
               spacing={2}
-              sx={{ marginTop: 1 }}
+              sx={{ marginTop: 0 }}
             >
               <Grid item xs={12} sm={2}></Grid>
               <Grid item>
@@ -549,10 +564,14 @@ const Contributors = () => {
                             component="div"
                             marginTop={1}
                             variant="body2"
-                            sx={{ lineHeight: 1.8 }}
+                            sx={{
+                              fontSize: "16px",
+                              fontWeight: 300,
+                              lineHeight: 1.75,
+                            }}
                           >
-                            {toPlainText(author.bio).substring(0, 300)}
-                            {toPlainText(author.bio).length > 300 ? "..." : ""}
+                            {toPlainText(author.bio).substring(0, 250)}
+                            {toPlainText(author.bio).length > 250 ? "..." : ""}
                           </Typography>
                         )}
                       </Grid>
@@ -564,25 +583,31 @@ const Contributors = () => {
         )}
         {authors.length < totalAuthors && !searchValue ? (
           <Grid container item justifyContent="center">
-            <Button onClick={fetchNextResults}>
+            <Button
+              onClick={fetchNextResults}
+              sx={{ m: 0, "&:hover": { backgroundColor: "transparent" } }}
+            >
               <Typography
                 component="div"
                 variant="h5"
                 sx={{
-                  backgroundColor: "#FFE5EA",
-                  borderRadius: "2px",
-                  color: "#FF0033",
-                  fontWeight: 500,
-                  paddingX: "10px",
-                  paddingY: "6px",
-                  textAlign: "center",
-                  "&:active, & :focus, &:hover": {
-                    color: "#FF0033",
-                    textDecoration: "underline",
+                  backgroundColor: "#FFF",
+                  borderRadius: "12px",
+                  border: "1px solid #000",
+                  color: "#000",
+                  fontSize: "16px",
+                  fontWeight: 400,
+                  paddingX: "16px",
+                  paddingY: "8px",
+                  boxShadow: "0px 2px 2px 0px #0000001F",
+                  m: 0,
+                  textTransform: "none",
+                  "&:hover": {
+                    backgroundColor: "#EEE",
                   },
                 }}
               >
-                View More
+                View more
               </Typography>
             </Button>
           </Grid>

@@ -15,6 +15,7 @@ import Typography from "@mui/material/Typography";
 // MUI icons
 import EmailIcon from "@mui/icons-material/Email";
 import RssFeedIcon from "@mui/icons-material/RssFeed";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 // components
 import Logo from "./LogoFooter";
@@ -31,13 +32,13 @@ function Footer(props) {
   }
 
   return (
-    <footer style={{ backgroundColor: "#3475BF", color: "#FFF" }}>
+    <footer style={{ background: "#1f5997FF", color: "#FFF" }}>
       <Box pt={8} pb={4}>
         <Container>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={2}>
               <Link href="/">
-                <Logo />
+                <Logo width={147} />
                 <Typography component="span" sx={{ display: "none" }}>
                   Home
                 </Typography>
@@ -48,20 +49,33 @@ function Footer(props) {
                 <Typography
                   component="div"
                   variant="body2"
-                  sx={{ mb: 2, maxWidth: 275 }}
+                  sx={{ mb: "30px", maxWidth: 355, lineHeight: "1.5" }}
                 >
                   {htmlToReact(
                     _.get(props, "data.config.footer.content", null)
                   )}
                 </Typography>
               )}
+              <Link href="https://www.linkedin.com/company/tech-policy-press">
+                <LinkedInIcon
+                  sx={{
+                    color: "#fff",
+                    marginRight: "20px",
+                    width: 30,
+                    height: 30,
+                  }}
+                />
+                <Typography component="span" sx={{ display: "none" }}>
+                  LinkedIn
+                </Typography>
+              </Link>
               <Link href="https://techpolicy.press/rss/feed.xml">
                 <RssFeedIcon
                   sx={{
-                    backgroundColor: "#FFF",
-                    borderRadius: "4px",
-                    fill: "#3475BF",
-                    marginRight: 1,
+                    color: "#fff",
+                    marginRight: "20px",
+                    width: 30,
+                    height: 30,
                   }}
                 />
                 <Typography component="span" sx={{ display: "none" }}>
@@ -71,28 +85,53 @@ function Footer(props) {
               <Link href="mailto:newsletter@techpolicy.press">
                 <EmailIcon
                   sx={{
-                    backgroundColor: "#FFF",
-                    borderRadius: "4px",
-                    fill: "#3475BF",
+                    fill: "#fff",
+                    width: 30,
+                    height: 30,
                   }}
                 />
                 <Typography component="span" sx={{ display: "none" }}>
                   Email TPP
                 </Typography>
               </Link>
+
+              {_.get(props, "data.config.footer.copyright", null) && (
+                <Typography
+                  component="div"
+                  variant="h5"
+                  sx={{
+                    fontSize: 14,
+                    marginTop: 4,
+                    textAlign: "left",
+                    textTransform: "none",
+                  }}
+                >
+                  {htmlToReact(
+                    _.get(props, "data.config.footer.copyright", null)
+                  )}
+                </Typography>
+              )}
             </Grid>
+            <Grid item xs={0} sm={2}></Grid>
             <Grid
               container
               item
               direction={"column"}
               flexWrap={"wrap"}
-              sx={{ height: 150 }}
+              sx={{ height: 200 }}
               xs={12}
-              sm={6}
+              sm={4}
             >
               {links.length
                 ? links.map((link, idx) => (
-                    <Grid item key={idx} sx={{ my: 1 }}>
+                    <Grid
+                      item
+                      key={idx}
+                      sx={{
+                        mb: "30px",
+                        paddingTop: link.style === "button" ? "7px" : "0",
+                      }}
+                    >
                       <NextLink
                         style={{ textDecoration: "none" }}
                         href={link.url}
@@ -108,6 +147,18 @@ function Footer(props) {
                             "&:hover, &:focus": {
                               textDecoration: "underline",
                             },
+                            ...(link.style === "button"
+                              ? {
+                                  lineHeight: "1.5",
+                                  backgroundColor: "#fff",
+                                  borderRadius: "12px",
+                                  color: " #1f5997FF",
+                                  padding: "8px 16px",
+                                  "&:hover, &:focus": {
+                                    textDecoration: "none",
+                                  },
+                                }
+                              : {}),
                           }}
                         >
                           {link.label}
@@ -160,20 +211,6 @@ function Footer(props) {
               )} */}
             </Grid>
           </Grid>
-          {_.get(props, "data.config.footer.copyright", null) && (
-            <Typography
-              component="div"
-              variant="h5"
-              sx={{
-                fontSize: 14,
-                marginTop: 4,
-                textAlign: "center",
-                textTransform: "none",
-              }}
-            >
-              {htmlToReact(_.get(props, "data.config.footer.copyright", null))}
-            </Typography>
-          )}
         </Container>
       </Box>
     </footer>

@@ -45,14 +45,25 @@ const Topics = (props) => {
       <Grid container>
         <Grid container item justifyContent="space-between">
           <Grid item xs={12}>
-            <Typography component="h2" variant="h4">
+            <Typography
+              component="h2"
+              variant="h4"
+              sx={{
+                fontSize: "20px",
+                marginBottom: "8px",
+                textTransform: "capitalize",
+              }}
+            >
               {title}
             </Typography>
           </Grid>
           <Box
             mb={4}
             pt={2}
-            sx={{ borderTop: "1px solid #8AA29D", width: "100%" }}
+            sx={{
+              borderTop: "1px solid #dcdcdc",
+              width: "100%",
+            }}
           >
             <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
               {specialTopics.map((topic, i) => (
@@ -61,7 +72,8 @@ const Topics = (props) => {
                   label={topic.displayName || topic.name}
                   style={{
                     backgroundColor: "#EFE9DA",
-                    fontWeight: 300,
+                    fontSize: "12px",
+                    fontWeight: 400,
                     marginLeft: 0,
                     marginRight: 4,
                     textTransform: "none",

@@ -6,7 +6,7 @@ import { meta } from "../../layouts";
 export async function getServerSideProps({ params }) {
   console.log("Page /preview/[...slug].js getServerSideProps, slug: ", params);
   const slug = params.slug.join();
-  const [config] = await client.fetch(`*[_type == "config"]`);
+  const [config] = await client.fetch(`*[_type == "config"]{title,favicon,header{topics[]->{displayName, slug}, series[]->{displayName, slug}},footer}`);
   const topics = await client.fetch(
     `*[_type == "topic" && stackbit_model_type == "page" && (_id in path("drafts.**"))]{ displayName, _id, slug } | order(displayName asc)`
   );

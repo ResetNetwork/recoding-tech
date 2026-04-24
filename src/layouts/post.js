@@ -15,21 +15,24 @@ import slugify from "slugify";
 // material ui imports
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Unstable_Grid2";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 // components
 import { Layout } from "../components/index";
-import RelatedCommentary from "../components/RelatedCommentary";
-import RelatedTopics from "../components/RelatedTopics";
+import RelatedCommentary from "../components/Article/RelatedCommentary";
+import RelatedTopics from "../components/Article/RelatedTopics";
+import RelatedArticles from "../components/Article/RelatedArticles";
+import RecentArticles from "../components/Article/RecentArticles";
+import Series from "../components/Article/Series";
+import ShareButtons from "../components/Article/ShareButtons";
 import Badge from "../components/Badge";
 
 // table of contents
 import { PortableText } from "@portabletext/react";
 import { ImageBlock } from "../components/PortableText/ImageBlock";
-import RelatedArticles from "../components/RelatedArticles";
 import NewsletterSubscribe from "../components/NewsletterSubscribe";
 
 const slug = (heading) => {
@@ -95,42 +98,84 @@ const ToCserializer = {
   },
 };
 
+const isEmptyNormalBlock = (block) =>
+  block &&
+  block._type === "block" &&
+  !block.listItem &&
+  (block.style === "normal" || !block.style) &&
+  toPlainText(block).trim() === "";
+
+const splitHeroFromBody = (body, hasFeaturedImage) => {
+  if (!Array.isArray(body) || body.length === 0) {
+    return { heroBlocks: [], contentBlocks: body || [] };
+  }
+  if (hasFeaturedImage) {
+    return { heroBlocks: [], contentBlocks: body };
+  }
+  let i = 0;
+  while (i < body.length && isEmptyNormalBlock(body[i])) {
+    i += 1;
+  }
+  if (i >= body.length || body[i]._type !== "Image") {
+    return { heroBlocks: [], contentBlocks: body };
+  }
+  const heroEnd = i + 1;
+  const heroBlocks = body.slice(0, heroEnd);
+  const contentBlocks = body.slice(heroEnd);
+  return { heroBlocks, contentBlocks };
+};
+
 const Post = (props) => {
   // const router = useRouter();
   const { page } = props;
+  const isTOC = page.toc && Array.isArray(page.toc) && page.toc.length > 0;
+
+  const { heroBlocks, contentBlocks } = splitHeroFromBody(
+    page.body,
+    page.featuredImage && isTOC
+  );
 
   let body1 = null;
   let body2 = null;
 
-  if (page.body && page.disableNewsletterSignup !== true) {
+  if (contentBlocks && page.disableNewsletterSignup !== true) {
     // find the center of the page
     try {
-      let center = Math.ceil(page.body.length / 2);
+      let center = Math.ceil(contentBlocks.length / 2);
       while (
-        ["number", "bullet"].includes(page.body[center]?.listItem) ||
-        ["h2", "h3", "h4"].includes(page.body[center - 1]?.style)
+        ["number", "bullet"].includes(contentBlocks[center]?.listItem) ||
+        ["h2", "h3", "h4"].includes(contentBlocks[center - 1]?.style)
       ) {
-        const newCenter = Math.min(center + 1, page.body.length);
+        const newCenter = Math.min(center + 1, contentBlocks.length);
         if (center == newCenter) {
           break;
         }
         center = newCenter;
       }
-      body1 = page.body.slice(0, center);
-      body2 = page.body.slice(center);
+      body1 = contentBlocks.slice(0, center);
+      body2 = contentBlocks.slice(center);
     } catch (error) {
       // ignore
     }
   }
 
-  const isTOC = page.toc && Array.isArray(page.toc) && page.toc.length > 0;
-
   return (
     <Layout {...props}>
-      <Box my={6}>
-        <Container>
-          <Grid container spacing={8}>
-            <Grid container spacing={4} item xs={12} md={8} direction="row">
+      <Box my={4}>
+        <Container sx={{ maxWidth: "1246px!important" }}>
+          <Grid
+            container
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "1fr",
+                md: "minmax(0, 67.3fr) minmax(0, 32.7fr)",
+              },
+              columnGap: { xs: 2, md: "90px" },
+              rowGap: { xs: 2, md: 0 },
+            }}
+          >
+            <Grid container spacing={4} item direction="row">
               <Grid item sx={{ maxWidth: "100%" }}>
                 {/* <Typography component="div" className="html-to-react">
                   {markdownify(_.get(props, "page.content", null))}
@@ -139,7 +184,12 @@ const Post = (props) => {
                 <Typography
                   component="h1"
                   variant="h2_article"
-                  sx={{ borderBottom: "1px solid #8AA29D", paddingBottom: 2 }}
+                  sx={{
+                    borderBottom: "1px solid #dcdcdc;",
+                    paddingBottom: 2,
+                    fontSize: "36px",
+                    lineHeight: 1.5,
+                  }}
                 >
                   {page.title}
                 </Typography>
@@ -228,8 +278,17 @@ const Post = (props) => {
                     </Grid>
                   </>
                 )}
-                {page.body && (
+
+                {(heroBlocks.length > 0 || contentBlocks.length > 0) && (
                   <Typography component="div" className="html-to-react-article">
+                    {heroBlocks.length > 0 && (
+                      <>
+                        <CustomPortableText value={heroBlocks} />
+                        <ShareButtons
+                          url={`https://www.techpolicy.press/${page.slug.current}`}
+                        />
+                      </>
+                    )}
                     {body1 && body2 ? (
                       <>
                         <CustomPortableText value={body1} />
@@ -237,21 +296,146 @@ const Post = (props) => {
                         <CustomPortableText value={body2} />
                       </>
                     ) : (
-                      <CustomPortableText value={page.body} />
+                      <CustomPortableText value={contentBlocks} />
                     )}
                   </Typography>
                 )}
+
+                {page.featuredImage && (
+                  <Box
+                    sx={{
+                      position: "relative",
+                      overflow: "hidden",
+                      width: "100%",
+                    }}
+                  >
+                    <Link
+                      href="/donate"
+                      underline="none"
+                      sx={{
+                        position: "absolute",
+                        inset: 0,
+                        zIndex: 0,
+                        display: "block",
+                      }}
+                    >
+                      <Box
+                        component="img"
+                        src={urlFor(page.featuredImage).width(965).url()}
+                        alt=""
+                        sx={{
+                          width: "100%",
+                          height: "100%",
+                          display: "block",
+                          objectFit: "cover",
+                          objectPosition: "top",
+                        }}
+                      />
+                    </Link>
+                    <Box
+                      aria-hidden
+                      sx={{
+                        position: "absolute",
+                        inset: 0,
+                        zIndex: 1,
+                        pointerEvents: "none",
+                        background:
+                          "linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 1) 100%)",
+                      }}
+                    />
+                    <Box sx={{ position: "relative", zIndex: 2, p: "40px" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifySelf: "center",
+                          flexDirection: "column",
+                        }}
+                      >
+                        <Typography
+                          component="div"
+                          sx={{
+                            color: "#fff",
+                            fontFamily: "Libre Baskerville",
+                            fontSize: "27px",
+                            fontWeight: 700,
+                            lineHeight: 1.5,
+                          }}
+                        >
+                          Support Tech Policy Press
+                        </Typography>
+                        <Typography
+                          component="div"
+                          sx={{
+                            color: "#fff",
+                            fontFamily: "Lexend",
+                            fontSize: "14px",
+                            fontWeight: 300,
+                            lineHeight: 1.5,
+                            marginTop: "4px",
+                          }}
+                        >
+                          If you&apos;ve found our work helpful, consider
+                          supporting us.
+                        </Typography>
+                        <div
+                          style={{
+                            display: "inline-flex",
+                            justifyContent: "center",
+                            marginTop: "22px",
+                          }}
+                        >
+                          <Link
+                            href="/donate"
+                            sx={{
+                              textDecoration: "none",
+                              "&:hover": {
+                                textDecoration: "none",
+                              },
+                            }}
+                          >
+                            <Typography
+                              component="div"
+                              variant="h5"
+                              sx={{
+                                backgroundColor: "#df1316",
+                                borderRadius: "12px",
+                                color: "#fff",
+                                fontSize: "16px",
+                                fontWeight: 400,
+                                paddingX: "16px",
+                                paddingY: "6px",
+                                boxShadow: "0px 2px 2px 0px #0000001F",
+                                textTransform: "uppercase",
+                                marginBottom: "30px",
+                                m: 0,
+                                "&:hover": {
+                                  backgroundColor: "#D00",
+                                },
+                              }}
+                            >
+                              Donate
+                            </Typography>
+                          </Link>
+                        </div>
+                      </div>
+                    </Box>
+                  </Box>
+                )}
+                <Series id={page._id} topics={page.relatedTopics} />
               </Grid>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item>
               <Box marginBottom={6}>
                 <Typography
                   component="h2"
                   variant="h4"
                   sx={{
-                    borderBottom: "1px solid #8AA29D",
-                    paddingBottom: 2,
+                    fontSize: "20px",
+                    textTransform: "capitalize",
+                    borderBottom: "1px solid #dcdcdc",
+                    paddingBottom: 1,
                     width: "100%",
+                    marginBottom: "12px",
                   }}
                 >
                   Authors
@@ -269,7 +453,10 @@ const Post = (props) => {
                         <Grid
                           item
                           xs={auth.photo ? 3 : 0}
-                          sx={{ paddingLeft: "0!important" }}
+                          sx={{
+                            paddingLeft: "0!important",
+                            paddingRight: "0!important",
+                          }}
                         >
                           {auth.photo && (
                             <Image
@@ -300,7 +487,11 @@ const Post = (props) => {
                             <Typography
                               component="span"
                               variant="h4"
-                              sx={{ color: "#000", fontWeight: 400 }}
+                              sx={{
+                                color: "#000",
+                                fontWeight: 400,
+                                fontSize: "16px",
+                              }}
                             >
                               {auth.name}
                             </Typography>
@@ -310,6 +501,11 @@ const Post = (props) => {
                               color="rgba(0,0,0,0.48)"
                               component="div"
                               variant="body2"
+                              sx={{
+                                fontSize: "16px",
+                                fontWeight: 400,
+                                lineHeight: 1.5,
+                              }}
                             >
                               {toPlainText(auth.bio).substring(0, 300)}
                               {toPlainText(auth.bio).length > 300 ? "..." : ""}
@@ -325,8 +521,9 @@ const Post = (props) => {
                 commentary={page.relatedCommentary}
                 noFilter={true}
               />
-              <RelatedArticles articles={page.relatedArticles} />
               <RelatedTopics topics={page.relatedTopics} />
+              <RelatedArticles articles={page.relatedArticles} />
+              <RecentArticles />
             </Grid>
           </Grid>
         </Container>

@@ -12,6 +12,7 @@ import { makeStyles } from "@mui/styles";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
+import Container from "@mui/material/Container";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
@@ -91,6 +92,7 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
   let query = router.query;
   const [articles, setArticles] = useState(allArticles);
   const [filters, setFilters] = useState([]);
+  const [badge, setBadge] = useState("");
   const [search, setSearch] = useState("");
   const [searchValue, setSearchValue] = useState("");
   const [loading, setLoading] = useState(false);
@@ -112,6 +114,10 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
       } else {
         setFilters([{ _id: query.filter }]);
       }
+    }
+
+    if (query.badge) {
+      setBadge(query.badge);
     }
 
     if (query.query) {
@@ -151,11 +157,17 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
         filterFragment.push(` && references("${filter._id}")`)
       );
     }
+
+    let badgeFragment = "";
+    if (badge) {
+      badgeFragment = ` && badge == "${badge}"`;
+    }
+
     // console.log("***searchFragment***:", searchFragment);
     // console.log("***filterFragment***:", filterFragment);
     const query = `*[!(_id in path("drafts.**")) && _type == "post"${dateFragment}${searchFragment}${filterFragment.join(
       " "
-    )}]${detailFragment}`;
+    )}${badgeFragment}]${detailFragment}`;
     // console.log("***GROQ query***:", query);
     const newArticles = await client.fetch(query);
     setArticles(newArticles);
@@ -165,7 +177,7 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
   useEffect(() => {
     setLoading(true);
 
-    if (filters.length || search || (startValue && endValue)) {
+    if (filters.length || badge || search || (startValue && endValue)) {
       // reset pagination
       setPage(1);
       fetchArticles()
@@ -177,7 +189,7 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
       setArticles(allArticles);
       setLoading(false);
     }
-  }, [filters, search, startValue, endValue]);
+  }, [filters, search, badge, startValue, endValue]);
 
   // table pagination
   const [page, setPage] = useState(1);
@@ -234,53 +246,79 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
             padding: 4,
           }}
         >
-          <Typography
-            component="h2"
-            variant="h4"
-            sx={{ color: "rgba(0,0,0,0.6)", fontWeight: 400 }}
-          >
-            {articles && articles.length
-              ? `Showing ${articles.length} results for: `
-              : ""}
-          </Typography>
-          <TextField
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key == "Enter") {
-                const url = "/search/?query=" + encodeURI(e.target.value);
-                if (router && router.push) {
-                  router.push(url);
+          <Container sx={{ maxWidth: "1165px!important" }}>
+            <Typography
+              component="h1"
+              variant="h4"
+              sx={{
+                fontSize: "32px",
+                fontWeight: 800,
+                lineHeight: 1.5,
+                textTransform: "none",
+                mb: "30px",
+              }}
+            >
+              Search
+            </Typography>
+            <Typography
+              component="h2"
+              variant="h4"
+              sx={{
+                color: "#a7a7a7",
+                fontSize: "17px",
+                fontWeight: 400,
+                lineHeight: 1.3,
+              }}
+            >
+              {articles && articles.length
+                ? `Showing ${articles.length} results for: `
+                : ""}
+            </Typography>
+            <TextField
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key == "Enter") {
+                  const url = "/search/?query=" + encodeURI(e.target.value);
+                  if (router && router.push) {
+                    router.push(url);
+                  }
                 }
-              }
-            }}
-            fullWidth
-            id="search-field"
-            label="Enter search term"
-            variant="standard"
-          />
-          <Grid
-            container
-            alignItems={"center"}
-            spacing={4}
-            sx={{ marginTop: 1 }}
-          >
-            <Grid item>
-              <Typography
-                component="h2"
-                variant="h4"
-                sx={{
-                  color: "rgba(0,0,0,0.6)",
-                  fontWeight: 400,
-                  marginBottom: 0,
-                }}
-              >
-                Filter by:
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Box>
-                <Typography>
+              }}
+              fullWidth
+              id="search-field"
+              label="Enter search term"
+              variant="outlined"
+              sx={{
+                color: "#343434",
+                borderRadius: "6px",
+                backgroundColor: "#FFF",
+                "& fieldset": {
+                  border: 0,
+                },
+              }}
+            />
+            <Grid
+              container
+              alignItems={"center"}
+              spacing={4}
+              sx={{ marginTop: 1 }}
+            >
+              <Grid item>
+                <Typography
+                  component="h2"
+                  variant="h4"
+                  sx={{
+                    color: "#a7a7a7",
+                    fontWeight: 400,
+                    marginBottom: 0,
+                  }}
+                >
+                  Filter by:
+                </Typography>
+              </Grid>
+              <Grid item>
+                <Box>
                   <LocalizationProvider
                     dateAdapter={AdapterLuxon}
                     adapterLocale="en-us"
@@ -289,14 +327,20 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
                       label="Date range - start"
                       value={startValue}
                       onChange={(newStartValue) => setStartValue(newStartValue)}
+                      sx={{
+                        backgroundColor: "#FFF",
+                        borderRadius: "6px",
+                        color: "#343434",
+                        "& fieldset": {
+                          border: 0,
+                        },
+                      }}
                     />
                   </LocalizationProvider>
-                </Typography>
-              </Box>
-            </Grid>
-            <Grid item>
-              <Box>
-                <Typography>
+                </Box>
+              </Grid>
+              <Grid item>
+                <Box>
                   <LocalizationProvider
                     dateAdapter={AdapterLuxon}
                     adapterLocale="en-us"
@@ -305,157 +349,171 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
                       label="Date range - end"
                       value={endValue}
                       onChange={(newEndValue) => setEndValue(newEndValue)}
+                      sx={{
+                        backgroundColor: "#FFF",
+                        borderRadius: "6px",
+                        color: "#343434",
+                        "& fieldset": {
+                          border: 0,
+                        },
+                      }}
                     />
                   </LocalizationProvider>
-                </Typography>
-              </Box>
+                </Box>
+              </Grid>
+              <Grid item>
+                <Box>
+                  <Button
+                    sx={{
+                      border: "0",
+                      color: "#343434",
+                      backgroundColor: "#FFF",
+                      borderRadius: "6px",
+                      padding: "15px 12px",
+                      minWidth: "160px",
+                      justifyContent: "space-between",
+                    }}
+                    id="topics-button"
+                    aria-controls="topics-menu"
+                    aria-haspopup="true"
+                    aria-expanded={openTopics ? "true" : undefined}
+                    disableElevation
+                    onClick={handleClickTopics}
+                    endIcon={
+                      openTopics ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
+                    }
+                  >
+                    Topic
+                  </Button>
+                  <Menu
+                    id="topics-menu"
+                    MenuListProps={{
+                      "aria-labelledby": "topics-button",
+                    }}
+                    anchorEl={topicEl}
+                    open={openTopics}
+                    onClose={handleCloseTopics()}
+                  >
+                    {topics && topics.length
+                      ? topics.map((topic) => (
+                          <MenuItem
+                            key={topic._id}
+                            onClick={handleCloseTopics(topic)}
+                            disableRipple
+                          >
+                            {topic.displayName}
+                          </MenuItem>
+                        ))
+                      : null}
+                  </Menu>
+                </Box>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Box>
-                <Button
-                  sx={{
-                    border: "1px solid rgba(0,0,0,0.56)",
-                    color: "rgba(0,0,0,0.6)",
-                  }}
-                  id="topics-button"
-                  aria-controls="topics-menu"
-                  aria-haspopup="true"
-                  aria-expanded={openTopics ? "true" : undefined}
-                  disableElevation
-                  onClick={handleClickTopics}
-                  endIcon={
-                    openTopics ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
-                  }
-                >
-                  Topic
-                </Button>
-                <Menu
-                  id="topics-menu"
-                  MenuListProps={{
-                    "aria-labelledby": "topics-button",
-                  }}
-                  anchorEl={topicEl}
-                  open={openTopics}
-                  onClose={handleCloseTopics()}
-                >
-                  {topics && topics.length
-                    ? topics.map((topic) => (
-                        <MenuItem
-                          key={topic._id}
-                          onClick={handleCloseTopics(topic)}
-                          disableRipple
-                        >
-                          {topic.displayName}
-                        </MenuItem>
-                      ))
-                    : null}
-                </Menu>
-              </Box>
-            </Grid>
-          </Grid>
+          </Container>
         </Box>
-        <Grid
-          container
-          className={classes.grid}
-          spacing={4}
-          alignItems="flex-start"
-          direction="row-reverse"
-          justifyContent="flex-end"
-        >
+        <Container maxWidth="md" sx={{ maxWidth: "770px!important" }}>
           <Grid
             container
-            item
-            xs={12}
-            md={4}
+            className={classes.grid}
+            spacing={4}
+            alignItems="flex-start"
             direction="column"
-            sx={{ marginTop: 4 }}
+            justifyContent="flex-end"
           >
-            <Grid item xs={12}>
-              <Stack direction="row" spacing={1} flexWrap={"wrap"} useFlexGap>
-                {filters.length
-                  ? filters
-                      .filter((f) => f.displayName)
-                      .map((filter, index) => (
-                        <Chip
-                          className={classes.chip}
-                          key={`${filter}-${index}`}
+            <Grid
+              container
+              item
+              xs={12}
+              direction="column"
+              sx={{ marginTop: 0 }}
+            >
+              <Grid item xs={12}>
+                <Stack direction="row" spacing={1} flexWrap={"wrap"} useFlexGap>
+                  {filters.length
+                    ? filters
+                        .filter((f) => f.displayName)
+                        .map((filter, index) => (
+                          <Chip
+                            className={classes.chip}
+                            key={`${filter}-${index}`}
+                            item
+                            label={filter.displayName}
+                            onDelete={handleDelete(filter)}
+                          />
+                        ))
+                    : null}
+                </Stack>
+              </Grid>
+            </Grid>
+            <Grid
+              container
+              item
+              justifyContent="space-between"
+              spacing={4}
+              xs={12}
+              md={8}
+              sx={{ marginTop: 0, paddingTop: 0 }}
+            >
+              <Grid container item xs={12} spacing={2}>
+                {articles && articles.length
+                  ? articles
+                      .slice(
+                        (page - 1) * ROWS_PER_PAGE,
+                        (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE
+                      )
+                      .map((article) => (
+                        <Grid
+                          key={article._id}
                           item
-                          label={filter.displayName}
-                          onDelete={handleDelete(filter)}
-                        />
+                          xs={12}
+                          className={classes.resultItem}
+                        >
+                          {article.badge && (
+                            <Badge badge={article.badge} variant={"link"} />
+                          )}
+                          <Link href={`/${article.slug.current}`}>
+                            {article.title}
+                          </Link>
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            sx={{
+                              color: "#a7a7a7",
+                              fontSize: 14,
+                              fontWeight: 400,
+                              marginTop: "8px",
+                              textTransform: "uppercase",
+                              lineHeight: 1.75,
+                              display: "inline-block",
+                            }}
+                          >
+                            {DateTime.fromISO(article.date)
+                              .setLocale("en-us")
+                              .toLocaleString(DateTime.DATE_MED)}{" "}
+                          </Typography>
+                        </Grid>
                       ))
                   : null}
-              </Stack>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            item
-            justifyContent="space-between"
-            spacing={4}
-            xs={12}
-            md={8}
-            sx={{ marginTop: 4 }}
-          >
-            <Grid container item xs={12} spacing={2}>
-              {articles && articles.length
-                ? articles
-                    .slice(
-                      (page - 1) * ROWS_PER_PAGE,
-                      (page - 1) * ROWS_PER_PAGE + ROWS_PER_PAGE
-                    )
-                    .map((article) => (
-                      <Grid
-                        key={article._id}
-                        item
-                        xs={12}
-                        className={classes.resultItem}
-                      >
-                        {article.badge && (
-                          <Badge badge={article.badge} variant={"link"} />
-                        )}
-                        <Link href={`/${article.slug.current}`}>
-                          {article.title}
-                        </Link>
-                        <Typography
-                          component="span"
-                          variant="body2"
-                          sx={{
-                            color: "#a7a7a7",
-                            fontSize: 14,
-                            fontWeight: 400,
-                            marginTop: "8px",
-                            textTransform: "uppercase",
-                            lineHeight: 1.75,
-                            display: "inline-block",
-                          }}
-                        >
-                          {DateTime.fromISO(article.date).toLocaleString(
-                            DateTime.DATE_MED
-                          )}{" "}
-                        </Typography>
-                      </Grid>
-                    ))
-                : null}
-            </Grid>
+              </Grid>
 
-            {articles && articles.length ? (
-              <Grid item>
-                <Pagination
-                  count={Math.ceil(articles.length / ROWS_PER_PAGE)}
-                  onChange={handleChangePage}
-                  sx={{ marginLeft: "-16px", marginBottom: "32px" }}
-                />
-              </Grid>
-            ) : (
-              <Grid item>
-                <Typography component="div" variant="body1">
-                  No results found.
-                </Typography>
-              </Grid>
-            )}
+              {articles && articles.length ? (
+                <Grid item>
+                  <Pagination
+                    count={Math.ceil(articles.length / ROWS_PER_PAGE)}
+                    onChange={handleChangePage}
+                    sx={{ marginLeft: "-16px", marginBottom: "32px" }}
+                  />
+                </Grid>
+              ) : (
+                <Grid item sx={{ marginBottom: "64px" }}>
+                  <Typography component="div" variant="body1">
+                    No results found.
+                  </Typography>
+                </Grid>
+              )}
+            </Grid>
           </Grid>
-        </Grid>
+        </Container>
       </Box>
     );
   }

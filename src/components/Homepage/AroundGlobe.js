@@ -1,17 +1,18 @@
 // base imports
 import React, { useState, useEffect } from "react";
-import { DateTime } from "luxon";
 import PropTypes from "prop-types";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import Badge from "../Badge";
+import Container from "@mui/material/Container";
+
+// components
+import ArticleLg from "../Topic/article-lg";
+import ArticleSm from "../Topic/article-sm";
 
 // util
-import urlFor from "../../utils/imageBuilder";
 import client from "../../utils/sanityClient";
 
 const useStyles = makeStyles((theme) => ({
@@ -60,12 +61,7 @@ const useStyles = makeStyles((theme) => ({
     textTransform: "uppercase",
   },
   grid: {
-    marginTop: 20,
-  },
-  gridTitle: {
-    borderBottom: "1px solid #000",
-    marginBottom: 32,
-    width: "100%",
+    marginTop: "80px!important",
   },
   link: {
     textDecoration: "none !important",
@@ -101,101 +97,34 @@ function AroundGlobe({ exclude }) {
   }, [exclude]);
 
   return (
-    <Grid container className={classes.grid}>
-      <Grid item className={classes.gridTitle}>
-        <Typography component="h2" variant="h4" sx={{ marginBottom: 1 }}>
-          Around the globe
-        </Typography>
-      </Grid>
-      <Grid container item flexDirection="column">
-        {articles && articles.length > 0
-          ? articles.slice(0, 6).map((article, index) => (
-              <Grid key={article._id} item className={classes.article}>
-                <Grid container className={classes.articleGrid}>
-                  {index === 0 && article.featuredImage && (
-                    <Grid item>
-                      <Link href={`/${article.slug.current}`}>
-                        <img
-                          src={urlFor(article.featuredImage).width(400).url()}
-                          style={{ maxWidth: "100%" }}
-                        />
-                      </Link>
-                    </Grid>
-                  )}
-                  <Grid item>
-                    {article.badge && (
-                      <Badge badge={article.badge} variant={"link"} />
-                    )}
-                    <Link
-                      href={`/${article.slug.current}`}
-                      className={classes.link}
-                    >
-                      <Typography
-                        component="div"
-                        variant="body1"
-                        className={classes.articleTitle}
-                      >
-                        {article.title}
-                      </Typography>
-                    </Link>
-                    <Typography
-                      component="span"
-                      variant="body2"
-                      sx={{
-                        color: "#a7a7a7",
-                        fontSize: 14,
-                        fontWeight: 400,
-                        marginTop: "8px",
-                        textTransform: "uppercase",
-                        lineHeight: 1.75,
-                        display: "inline-block",
-                      }}
-                    >
-                      {DateTime.fromISO(article.date)
-                        .setLocale("en-us")
-                        .toLocaleString(DateTime.DATE_FULL)}
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Grid>
-            ))
-          : null}
-        <Grid item>
-          <Link
-            href="/category/around-the-globe/"
+    <Container maxWidth={false} sx={{ maxWidth: 1010, mx: "auto" }}>
+      <Grid container className={classes.grid}>
+        <Grid item className={classes.gridTitle}>
+          <Typography
+            component="h2"
+            variant="h4"
             sx={{
-              height: 24,
-              textDecoration: "none",
-              display: "inline-block",
-              "&:hover": {
-                textDecoration: "underline",
-              },
+              color: "#202020",
+              fontSize: "28px",
+              textTransform: "none",
+              m: 0,
             }}
           >
-            <Typography
-              component="div"
-              variant="h5"
-              sx={{
-                backgroundColor: "#ffe5eaFF",
-                borderRadius: "4px",
-                color: "#FF0033",
-                fontWeight: 500,
-                paddingX: "10px",
-                paddingY: "6px",
-                boxShadow: "0px 2px 2px 0px #0000001F",
-                "&:active, & :focus, &:hover": {
-                  color: "#FF0033",
-                  textDecoration: "underline",
-                },
-                marginBottom: "7px",
-              }}
-            >
-              View more
-            </Typography>
-          </Link>
+            Around the globe
+          </Typography>
+        </Grid>
+        <Grid container columns={3} spacing={"30px"} mt="40px">
+          {articles?.length > 0 && (
+            <>
+              <ArticleLg key={articles[0]._id} article={articles[0]} />
+              {articles.slice(1, 4).map((article) => (
+                <ArticleSm key={article._id} article={article} />
+              ))}
+            </>
+          )}
         </Grid>
       </Grid>
-    </Grid>
+    </Container>
   );
 }
 

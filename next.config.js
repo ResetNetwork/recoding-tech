@@ -64,6 +64,15 @@ const nextConfig = {
     );
     return config;
   },
+  async redirects() {
+    return [
+      {
+        source: "/category/:path*",
+        destination: "/topic/:path*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = withTM(nextConfig);

@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 
 function Logo() {
   return (
-    <Box sx={{ maxWidth: 170 }}>
+    <Box sx={{ maxWidth: 120 }}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 741.46 299.57">
         <path
           fill="#407569"

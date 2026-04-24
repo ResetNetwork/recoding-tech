@@ -17,6 +17,14 @@ export default {
       description: 'The text in the page hero.',
     },
     {
+      type: 'image',
+      name: 'heroImage',
+      title: 'Hero Image',
+      description: 'The image shown in the page hero.',
+      validation: null,
+      hidden: ({document}) => document?.stackbit_url_path !== "/fellowships",
+    },
+    {
       type: 'string',
       name: 'heroLinkText',
       title: 'Hero Link Text',
@@ -85,6 +93,15 @@ export default {
         },
         {
           type: 'section_podcast',
+        },
+        {
+          type: 'section_fellowship_stats',
+        },
+        {
+          type: 'section_fellowship_quote',
+        },
+        {
+          type: 'section_fellowship_cohort',
         },
       ],
     },

@@ -47,15 +47,16 @@ const SearchBar = () => {
           color="tertiary"
           variant="contained"
           sx={{
-            borderRadius: "4px",
+            borderRadius: "12px",
             color: "#FFF",
             bgcolor: "#DF1316",
-            fontFamily: `"Roboto", sans-serif`,
-            fontSize: 13,
-            fontWeight: 500,
+            fontFamily: "Lexend",
+            fontSize: 16,
+            fontWeight: 400,
             position: "relative",
             textTransform: "uppercase",
             marginLeft: "24px",
+            padding: "12px 30px",
           }}
         >
           Donate
@@ -68,7 +69,11 @@ const SearchBar = () => {
         component="form"
         elevation={0}
         square
-        sx={{ border: "1px solid #000", borderRadius: "2px", maxWidth: 250 }}
+        sx={{
+          border: "1px solid #000",
+          borderRadius: "2px",
+          maxWidth: 250,
+        }}
         onSubmit={(e) => e.preventDefault()}
       >
         <IconButton

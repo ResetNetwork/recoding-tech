@@ -3,118 +3,64 @@ import React from "react";
 import PropTypes from "prop-types";
 
 // Material UI imports
-import useMediaQuery from "@mui/material/useMediaQuery";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
+import Container from "@mui/material/Container";
 import NextLink from "next/link";
 import Typography from "@mui/material/Typography";
 
+// components
+import ArticleSm from "./Topic/article-sm";
+import ArticleLg from "./Topic/article-lg";
+
 const PageRecents = (props) => {
   const { page, readings } = props;
-  const isMobile = useMediaQuery("(max-width:1064px)");
 
   return (
-    <section>
-      <Grid
-        container
-        alignItems={"flex-end"}
-        justifyContent={"space-between"}
-        sx={{
-          borderBottom: "1px solid #8AA29D",
-        }}
-      >
-        <Grid item>
-          <Typography component={"div"} variant="h3">
-            Latest on {page.displayName}
-          </Typography>
-        </Grid>
-        <Grid item>
-          <NextLink
-            href={{
-              pathname: "/search",
-              query: { filter: page._id },
-            }}
-            style={{
-              height: 24,
-              textDecoration: "none",
-              width: 162,
+    <Container maxWidth={false} sx={{ maxWidth: 1010, mx: "auto" }}>
+      <Grid container columns={3} spacing={"30px"} mt="80px">
+        {readings && readings.length
+          ? readings.map((article, index) =>
+              index % 7 === 0 ? (
+                <ArticleLg key={article._id} article={article} />
+              ) : (
+                <ArticleSm key={article._id} article={article} />
+              )
+            )
+          : null}
+      </Grid>
+      <Grid item sx={{ justifySelf: "center" }}>
+        <NextLink
+          href={{
+            pathname: "/search",
+            query: { filter: page._id },
+          }}
+        >
+          <Typography
+            component="div"
+            variant="h5"
+            sx={{
+              fontSize: "16px",
+              fontWeight: 400,
+              display: "inline-block",
+              color: "#0f2744",
+              backgroundColor: "#fff",
+              border: "1px solid #000",
+              borderRadius: "12px",
+              px: 3,
+              py: 1.25,
+              textAlign: "center",
+              textTransform: "none",
               "&:hover": {
-                textDecoration: "underline",
+                backgroundColor: "#fafafa",
+                boxShadow: "0px 2px 2px 0px #0000001F",
               },
             }}
           >
-            <Typography
-              component="div"
-              variant="h5"
-              sx={{
-                backgroundColor: "#FFE5EA",
-                borderRadius: "2px",
-                color: "#FF0033",
-                fontWeight: 500,
-                paddingX: "10px",
-                paddingY: "6px",
-                textDecoration: "none",
-                "&:active, & :focus, &:hover": {
-                  color: "#FF0033",
-                  textDecoration: "underline",
-                },
-              }}
-            >
-              View more
-            </Typography>
-          </NextLink>
-        </Grid>
+            View more
+          </Typography>
+        </NextLink>
       </Grid>
-      <Grid
-        container
-        columnGap={4}
-        alignItems={"center"}
-        marginBottom={10}
-        marginTop={2}
-      >
-        {readings && readings.length
-          ? readings.map((article) => (
-              <Grid
-                item
-                key={article._id}
-                xs={12}
-                sm={6}
-                md={4}
-                sx={{
-                  borderBottom: "1px solid",
-                  borderBottomColor: "#EFE9DA",
-                  maxWidth: isMobile ? "100%" : "30% !important",
-                  paddingBottom: 2,
-                  paddingTop: 2,
-                }}
-              >
-                <Link
-                  href={`/${article.slug.current}`}
-                  sx={{
-                    textDecoration: "none !important",
-                  }}
-                >
-                  <Typography
-                    component="span"
-                    variant="body1"
-                    sx={{
-                      color: "#000 !important",
-                      fontSize: "1em",
-                      fontWeight: "700",
-                      "&:hover": {
-                        color: "#225C9D !important",
-                        textDecoration: "none",
-                      },
-                    }}
-                  >
-                    {article.title}
-                  </Typography>
-                </Link>
-              </Grid>
-            ))
-          : null}
-      </Grid>
-    </section>
+    </Container>
   );
 };
 

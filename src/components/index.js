@@ -6,8 +6,8 @@ import Header from "./Header";
 import Layout from "./Layout";
 import Logo from "./Logo";
 import Icon from "./Icon";
-import RelatedCommentary from "./RelatedCommentary";
-import RelatedTopics from "./RelatedTopics";
+import RelatedCommentary from "./Article/RelatedCommentary";
+import RelatedTopics from "./Article/RelatedTopics";
 import SectionRecentArticles from "./SectionRecentArticles";
 import SectionContent from "./SectionContent";
 import SectionContributors from "./SectionContributors";
@@ -24,6 +24,9 @@ import SectionSignUp from "./SectionSignUp";
 import SectionTopics from "./SectionTopics";
 import SectionTracker from "./SectionTracker";
 import TrackerActions from "./TrackerActions";
+import SectionFellowshipStats from "./SectionFellowshipStats";
+import SectionFellowshipQuote from "./SectionFellowshipQuote";
+import SectionFellowshipCohort from "./SectionFellowshipCohort";
 
 export {
   CtaButtons,
@@ -52,6 +55,9 @@ export {
   SectionTopics,
   SectionTracker,
   TrackerActions,
+  SectionFellowshipStats,
+  SectionFellowshipQuote,
+  SectionFellowshipCohort,
 };
 
 export default {
@@ -81,4 +87,7 @@ export default {
   SectionTopics,
   SectionTracker,
   TrackerActions,
+  SectionFellowshipStats,
+  SectionFellowshipQuote,
+  SectionFellowshipCohort,
 };
