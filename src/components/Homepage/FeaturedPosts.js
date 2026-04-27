@@ -92,6 +92,9 @@ const FeaturedPosts = ({ featured }) => {
                       component="div"
                       variant="body1"
                       className={classes.articleTitle}
+                      sx={{
+                        fontFamily: "Lexend!important",
+                      }}
                     >
                       {article.title}
                     </Typography>
@@ -101,7 +104,7 @@ const FeaturedPosts = ({ featured }) => {
                     variant="body2"
                     sx={{
                       color: "#a7a7a7",
-                      fontSize: 14,
+                      fontSize: 16,
                       fontWeight: 400,
                       marginTop: "8px",
                       textTransform: "uppercase",
@@ -196,6 +199,7 @@ const FeaturedPosts = ({ featured }) => {
                     lineHeight="1.5"
                     color={main.featuredImage ? "#FFF" : "#000"}
                     sx={{
+                      fontFamily: "Lexend!important",
                       display: "-webkit-box",
                       WebkitLineClamp: 2,
                       WebkitBoxOrient: "vertical",

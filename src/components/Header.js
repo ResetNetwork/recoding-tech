@@ -382,9 +382,9 @@ const Header = (props) => {
                           "& ul": {
                             display: "grid",
                             gridTemplateColumns: "repeat(4, 1fr)",
-                            maxWidth: "60vw !important",
+                            maxWidth: "50vw !important",
                             padding: 3,
-                            width: "60vw",
+                            width: "50vw",
                           },
                         }}
                       >
@@ -565,10 +565,10 @@ const Header = (props) => {
                           marginTop: 4,
                           "& ul": {
                             display: "grid",
-                            gridTemplateColumns: "repeat(2, 1fr)",
-                            maxWidth: "30vw !important",
+                            gridTemplateColumns: "repeat(1, 1fr)",
+                            maxWidth: "20vw !important",
                             padding: 3,
-                            width: "30vw",
+                            width: "20vw",
                           },
                         }}
                       >
