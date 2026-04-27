@@ -194,7 +194,7 @@ const FeaturedPosts = ({ featured }) => {
                   <Typography
                     component="div"
                     variant="body1"
-                    fontSize="16px"
+                    fontSize="14px"
                     fontWeight="300"
                     lineHeight="1.5"
                     color={main.featuredImage ? "#FFF" : "#000"}
