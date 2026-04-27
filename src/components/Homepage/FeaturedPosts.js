@@ -94,6 +94,7 @@ const FeaturedPosts = ({ featured }) => {
                       className={classes.articleTitle}
                       sx={{
                         fontFamily: "Lexend!important",
+                        fontSize: "14px!important",
                       }}
                     >
                       {article.title}
