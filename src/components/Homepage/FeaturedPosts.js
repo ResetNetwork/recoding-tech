@@ -169,8 +169,12 @@ const FeaturedPosts = ({ featured }) => {
               minWidth: 0,
             }}
           >
-            <Grid container>
-              {main.badge && <Badge badge={main.badge} />}
+            <Box sx={{ display: "flex", flexDirection: "column" }}>
+              {main.badge && (
+                <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
+                  <Badge badge={main.badge} />
+                </Box>
+              )}
               <Link href={`/${main.slug.current}`} className={classes.link}>
                 <Typography
                   gutterBottom
@@ -221,7 +225,7 @@ const FeaturedPosts = ({ featured }) => {
                   .setLocale("en-us")
                   .toLocaleString(DateTime.DATE_FULL)}
               </Typography>
-            </Grid>
+            </Box>
           </Box>
           <Box
             sx={{

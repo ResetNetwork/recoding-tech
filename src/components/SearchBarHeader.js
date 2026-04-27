@@ -56,7 +56,7 @@ const SearchBar = () => {
             position: "relative",
             textTransform: "uppercase",
             marginLeft: "24px",
-            padding: "12px 30px",
+            padding: "6px 16px",
           }}
         >
           Donate

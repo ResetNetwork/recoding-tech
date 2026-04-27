@@ -332,11 +332,11 @@ const Header = (props) => {
                     container
                     item
                     xs={9}
-                    spacing={1}
+                    spacing={5}
                     mt={0}
                     paddingTop="0px!important"
                     flexWrap={"nowrap"}
-                    justifyContent="space-between"
+                    justifyContent="flex-end"
                   >
                     <Grid item>
                       <Button
@@ -369,6 +369,14 @@ const Header = (props) => {
                           "aria-labelledby": "topics-button",
                         }}
                         elevation={1}
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "center",
+                        }}
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "center",
+                        }}
                         sx={{
                           marginTop: 4,
                           "& ul": {
@@ -476,6 +484,14 @@ const Header = (props) => {
                           "aria-labelledby": "projects-button",
                         }}
                         elevation={1}
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "center",
+                        }}
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "center",
+                        }}
                         sx={{
                           marginTop: 4,
                           "& ul": {
