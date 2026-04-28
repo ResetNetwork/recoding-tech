@@ -23,7 +23,7 @@ export async function getStaticProps() {
     `*[!(_id in path("drafts.**")) && references("55470b1d-a236-491c-b158-c2ba680dfd63")]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...4]`
   )
   return {
-    props: { path: "/", page, data: { config, topics }, featured: featured.posts, articles, fellows },
+    props: { path: "/", page, data: { config, topics }, featured: featured.posts.slice(0, 3), articles, fellows },
     revalidate: 60,
   };
 }
