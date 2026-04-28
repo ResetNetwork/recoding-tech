@@ -93,7 +93,6 @@ const FeaturedPosts = ({ featured }) => {
                       variant="body1"
                       className={classes.articleTitle}
                       sx={{
-                        fontFamily: "Lexend!important",
                         fontSize: "16px!important",
                       }}
                     >
@@ -105,11 +104,11 @@ const FeaturedPosts = ({ featured }) => {
                     variant="body2"
                     sx={{
                       color: "#a7a7a7",
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: 400,
                       marginTop: "8px",
                       textTransform: "uppercase",
-                      lineHeight: 1.75,
+                      lineHeight: 1.5,
                       display: "inline-block",
                     }}
                   >
@@ -186,6 +185,9 @@ const FeaturedPosts = ({ featured }) => {
                   variant="h2_article"
                   fontSize="36px"
                   color={main.featuredImage ? "#FFF" : "#000"}
+                  sx={{
+                    fontFamily: "Libre Baskerville!important",
+                  }}
                 >
                   {main.title}
                 </Typography>
@@ -195,9 +197,9 @@ const FeaturedPosts = ({ featured }) => {
                   <Typography
                     component="div"
                     variant="body1"
-                    fontSize="14px"
+                    fontSize="16px"
                     fontWeight="300"
-                    lineHeight="1.5"
+                    lineHeight="1.75"
                     color={main.featuredImage ? "#FFF" : "#000"}
                     sx={{
                       fontFamily: "Lexend!important",
@@ -217,7 +219,7 @@ const FeaturedPosts = ({ featured }) => {
                 variant="body2"
                 sx={{
                   color: "#a7a7a7",
-                  fontSize: 18,
+                  fontSize: 14,
                   fontWeight: 400,
                   marginTop: "8px",
                   textTransform: "uppercase",

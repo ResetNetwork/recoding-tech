@@ -161,7 +161,7 @@ const Spotlight = (props) => {
               fontSize: "20px",
               fontWeight: 700,
               textTransform: "capitalize",
-              justifySelf: "center",
+              justifySelf: "center!important",
               mb: 0,
             }}
           >
@@ -174,7 +174,7 @@ const Spotlight = (props) => {
               fontSize: "36px",
               fontWeight: 700,
               lineHeight: 1.5,
-              justifySelf: "center",
+              justifySelf: "center!important",
               mb: 0,
               textTransform: "capitalize",
             }}
@@ -206,7 +206,7 @@ const Spotlight = (props) => {
                   variant="body2"
                   sx={{
                     textAlign: "center",
-                    py: "12px",
+                    py: "14px",
                     fontSize: "16px",
                     fontWeight: 300,
                   }}
@@ -288,7 +288,7 @@ const Spotlight = (props) => {
           position: "relative",
         }}
       >
-        <Box sx={{ flex: 1, minWidth: 0, padding: "40px 20px 60px 20px" }}>
+        <Box sx={{ flex: 1, minWidth: 0, padding: "32px 20px 60px 20px" }}>
           <CarouselRow
             items={posts}
             slideIndex={slideIndex}

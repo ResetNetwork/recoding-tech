@@ -99,8 +99,8 @@ const LatestArticles = (props) => {
                     color: "#000",
                     fontSize: "16px",
                     fontWeight: 400,
-                    paddingX: "16px",
-                    paddingY: "6px",
+                    paddingX: "12px",
+                    paddingY: "4px",
                     boxShadow: "0px 2px 2px 0px #0000001F",
                     textTransform: "none",
                     marginBottom: "20px",
@@ -141,6 +141,7 @@ const LatestArticles = (props) => {
                           ? "none"
                           : "1px solid #DCDCDC",
                         paddingBottom: "20px",
+                        paddingTop: "6px",
                       }}
                     >
                       <Link

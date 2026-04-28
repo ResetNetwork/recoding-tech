@@ -11,7 +11,7 @@ export default {
         {
           type: 'reference',
           to: [{type: 'topic'}],
-          options: { filter: 'topicType == "topic"' }
+          // options: { filter: 'topicType == "topic"' }
         },
       ],
     },
