@@ -61,12 +61,27 @@ function Footer(props) {
                   sx={{
                     color: "#fff",
                     marginRight: "20px",
-                    width: 30,
-                    height: 30,
+                    width: 32,
+                    height: 32,
                   }}
                 />
                 <Typography component="span" sx={{ display: "none" }}>
                   LinkedIn
+                </Typography>
+              </Link>
+              <Link
+                href="https://bsky.app/profile/techpolicypress.bsky.social"
+                style={{ marginRight: "20px" }}
+              >
+                <img
+                  src="/images/icon_bluesky.png"
+                  alt="BlueSky"
+                  width={27}
+                  height={27}
+                  style={{ paddingBottom: "2px" }}
+                />
+                <Typography component="span" sx={{ display: "none" }}>
+                  BlueSky
                 </Typography>
               </Link>
               <Link href="https://techpolicy.press/rss/feed.xml">
@@ -74,8 +89,8 @@ function Footer(props) {
                   sx={{
                     color: "#fff",
                     marginRight: "20px",
-                    width: 30,
-                    height: 30,
+                    width: 32,
+                    height: 32,
                   }}
                 />
                 <Typography component="span" sx={{ display: "none" }}>
@@ -86,8 +101,8 @@ function Footer(props) {
                 <EmailIcon
                   sx={{
                     fill: "#fff",
-                    width: 30,
-                    height: 30,
+                    width: 32,
+                    height: 32,
                   }}
                 />
                 <Typography component="span" sx={{ display: "none" }}>

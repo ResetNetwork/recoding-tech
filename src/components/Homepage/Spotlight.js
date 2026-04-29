@@ -26,6 +26,7 @@ import client from "../../utils/sanityClient";
 
 const useStyles = makeStyles(() => ({
   hero: {
+    display: "grid",
     paddingTop: "40px",
     paddingBottom: "40px",
     color: "#FFF",

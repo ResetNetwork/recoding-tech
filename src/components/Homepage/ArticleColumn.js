@@ -3,8 +3,11 @@ import PropTypes from "prop-types";
 import { DateTime } from "luxon";
 
 // Material UI imports
-import { Grid, Link, Typography, Badge } from "@mui/material";
+import { Grid, Link, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
+
+// components
+import Badge from "../Badge";
 
 // utils
 import client from "../../utils/sanityClient";
@@ -52,6 +55,8 @@ const ArticleColumn = (props) => {
       }
     });
   }, []);
+
+  console.log(posts);
 
   return (
     <>
