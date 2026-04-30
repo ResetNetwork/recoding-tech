@@ -25,9 +25,101 @@ const useStyles = makeStyles(() => ({
 
 const query = `*[!(_id in path("drafts.**")) && _type == "post" && badge == "podcast"]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...3]`;
 
+const ArticleCard = ({ article }) => {
+  const classes = useStyles();
+
+  const imageUrl = article.featuredImage
+    ? urlFor(article.featuredImage).width(200).url()
+    : null;
+
+  return (
+    <Grid item key={article._id} className={classes.article} xs={12} md={4}>
+      <Box
+        sx={(theme) => ({
+          position: "relative",
+          ...(imageUrl
+            ? {
+                [theme.breakpoints.down("sm")]: {
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-end",
+                  minHeight: 150,
+                  p: 1,
+                  pt: 2,
+                  mt: 2,
+                  overflow: "hidden",
+                  borderRadius: 1,
+                  backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.35) 45%, rgba(0, 0, 0, 0.2) 100%), url(${imageUrl})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  backgroundRepeat: "no-repeat",
+                },
+              }
+            : {}),
+        })}
+      >
+        <Grid container spacing={"10px"} wrap="nowrap">
+          <Grid
+            item
+            xs="auto"
+            sx={{
+              display: { xs: "none", sm: "flex" },
+              paddingTop: "5px!important",
+            }}
+          >
+            <Link href={`/${article.slug.current}`} className={classes.link}>
+              <img
+                src={imageUrl}
+                alt={article.title}
+                style={{
+                  width: "164px",
+                  minWidth: "164px",
+                  minHeight: "93px",
+                }}
+              />
+            </Link>
+          </Grid>
+          <Grid item xs sx={{ paddingTop: "0px!important" }}>
+            <Link href={`/${article.slug.current}`} className={classes.link}>
+              <Typography
+                component="div"
+                variant="body1"
+                className={classes.articleTitleRecent}
+              >
+                {article.title}
+              </Typography>
+            </Link>
+            <Typography
+              component="span"
+              variant="body2"
+              sx={{
+                color: "#a7a7a7",
+                fontSize: 14,
+                fontWeight: 400,
+                marginTop: "8px",
+                textTransform: "uppercase",
+                lineHeight: 1.75,
+                display: "inline-block",
+              }}
+            >
+              {DateTime.fromISO(article.date)
+                .setZone("America/New_York")
+                .setLocale("en-us")
+                .toLocaleString(DateTime.DATE_FULL)}
+            </Typography>
+          </Grid>
+        </Grid>
+      </Box>
+    </Grid>
+  );
+};
+
+ArticleCard.propTypes = {
+  article: PropTypes.object.isRequired,
+};
+
 function Podcast() {
   const [posts, setPosts] = useState([]);
-  const classes = useStyles();
 
   useEffect(() => {
     client.fetch(query).then((articles) => {
@@ -47,7 +139,6 @@ function Podcast() {
       <Box
         style={{
           position: "relative",
-          padding: "60px 40px",
           backgroundColor: "#343434FF",
           ...(heroUrl
             ? {
@@ -58,11 +149,15 @@ function Podcast() {
               }
             : {}),
         }}
+        sx={{
+          padding: { xs: "40px 20px", md: "60px 40px" },
+        }}
       >
         <Grid
           container
           sx={{
             justifyContent: "space-between",
+            alignItems: "flex-start",
           }}
         >
           <Grid item sx={{ display: "flex", alignItems: "center" }}>
@@ -86,6 +181,7 @@ function Podcast() {
                 height: 24,
                 textDecoration: "none",
                 width: 162,
+                verticalAlign: "middle",
                 "&:hover": {
                   textDecoration: "none",
                 },
@@ -118,68 +214,7 @@ function Podcast() {
         <Grid container columnSpacing={"20px"} sx={{ mt: "30px" }}>
           {posts && posts.length
             ? posts.map((article) => (
-                <Grid
-                  item
-                  key={article._id}
-                  className={classes.article}
-                  xs={12}
-                  md={4}
-                >
-                  <Grid container spacing={"10px"} wrap="nowrap">
-                    <Grid item xs="auto" sx={{ paddingTop: "5px!important" }}>
-                      <Link
-                        href={`/${article.slug.current}`}
-                        className={classes.link}
-                      >
-                        <img
-                          src={
-                            article.featuredImage
-                              ? urlFor(article.featuredImage).width(200).url()
-                              : null
-                          }
-                          alt={article.title}
-                          style={{
-                            width: "164px",
-                            minWidth: "164px",
-                            minHeight: "93px",
-                          }}
-                        />
-                      </Link>
-                    </Grid>
-                    <Grid item xs sx={{ paddingTop: "0px!important" }}>
-                      <Link
-                        href={`/${article.slug.current}`}
-                        className={classes.link}
-                      >
-                        <Typography
-                          component="div"
-                          variant="body1"
-                          className={classes.articleTitleRecent}
-                        >
-                          {article.title}
-                        </Typography>
-                      </Link>
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        sx={{
-                          color: "#a7a7a7",
-                          fontSize: 14,
-                          fontWeight: 400,
-                          marginTop: "8px",
-                          textTransform: "uppercase",
-                          lineHeight: 1.75,
-                          display: "inline-block",
-                        }}
-                      >
-                        {DateTime.fromISO(article.date)
-                          .setZone("America/New_York")
-                          .setLocale("en-us")
-                          .toLocaleString(DateTime.DATE_FULL)}
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Grid>
+                <ArticleCard key={article._id} article={article} />
               ))
             : null}
         </Grid>

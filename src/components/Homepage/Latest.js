@@ -141,7 +141,7 @@ const LatestArticles = (props) => {
                           ? "none"
                           : "1px solid #DCDCDC",
                         paddingBottom: "20px",
-                        paddingTop: "6px",
+                        display: { xs: "none", md: "block" },
                       }}
                     >
                       <Link
@@ -170,7 +170,7 @@ const LatestArticles = (props) => {
                         borderBottom: isBottomRow(idx, articles.length, isMdUp)
                           ? "none"
                           : "1px solid #DCDCDC",
-                        paddingLeft: "10px",
+                        paddingLeft: { xs: "0", md: "10px" },
                         paddingBottom: "20px",
                       }}
                     >

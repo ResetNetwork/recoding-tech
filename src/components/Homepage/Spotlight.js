@@ -25,6 +25,9 @@ import urlFor from "../../utils/imageBuilder";
 import client from "../../utils/sanityClient";
 
 const useStyles = makeStyles(() => ({
+  link: {
+    textDecoration: "none !important",
+  },
   hero: {
     display: "grid",
     paddingTop: "40px",
@@ -41,62 +44,87 @@ const useStyles = makeStyles(() => ({
 
 const ArticleCard = ({ article }) => {
   const classes = useStyles();
+
+  const imageUrl = article.featuredImage
+    ? urlFor(article.featuredImage).width(200).url()
+    : null;
+
   return (
-    <Grid container spacing={0} wrap="nowrap">
-      <Grid item xs="auto">
-        <Link href={`/${article.slug.current}`} className={classes.link}>
-          <img
-            src={
-              article.featuredImage
-                ? urlFor(article.featuredImage).width(200).url()
-                : null
+    <Box
+      sx={(theme) => ({
+        position: "relative",
+        ...(imageUrl
+          ? {
+              [theme.breakpoints.down("sm")]: {
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-end",
+                minHeight: 150,
+                p: 1,
+                pt: 2,
+                overflow: "hidden",
+                borderRadius: 1,
+                backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.35) 45%, rgba(0, 0, 0, 0.2) 100%), url(${imageUrl})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat",
+              },
             }
-            alt={article.title}
-            style={{
-              width: "164px",
-              minWidth: "164px",
-              minHeight: "93px",
-            }}
-          />
-        </Link>
-      </Grid>
-      <Grid
-        item
-        xs
-        sx={{
-          paddingLeft: "12px",
-        }}
-      >
-        {article.badge && <Badge badge={article.badge} marginBottom="8px" />}
-        <Link href={`/${article.slug.current}`} className={classes.link}>
-          <Typography
-            component="div"
-            variant="body1"
-            className={classes.articleTitleRecent}
-          >
-            {article.title}
-          </Typography>
-        </Link>
-        <Typography
-          component="span"
-          variant="body2"
+          : {}),
+      })}
+    >
+      <Grid container spacing={0} wrap="nowrap">
+        <Grid item xs="auto" sx={{ display: { xs: "none", sm: "flex" } }}>
+          <Link href={`/${article.slug.current}`} className={classes.link}>
+            <img
+              src={imageUrl}
+              alt={article.title}
+              style={{
+                width: "164px",
+                minWidth: "164px",
+                minHeight: "93px",
+              }}
+            />
+          </Link>
+        </Grid>
+        <Grid
+          item
+          xs
           sx={{
-            color: "#a7a7a7",
-            fontSize: 14,
-            fontWeight: 400,
-            marginTop: "8px",
-            textTransform: "uppercase",
-            lineHeight: 1.75,
-            display: "inline-block",
+            paddingLeft: "12px",
           }}
         >
-          {DateTime.fromISO(article.date)
-            .setZone("America/New_York")
-            .setLocale("en-us")
-            .toLocaleString(DateTime.DATE_FULL)}
-        </Typography>
+          {article.badge && <Badge badge={article.badge} marginBottom="8px" />}
+          <Link href={`/${article.slug.current}`} className={classes.link}>
+            <Typography
+              component="div"
+              variant="body1"
+              className={classes.articleTitleRecent}
+            >
+              {article.title}
+            </Typography>
+          </Link>
+          <Typography
+            component="span"
+            variant="body2"
+            sx={{
+              color: "#a7a7a7",
+              fontSize: 14,
+              fontWeight: 400,
+              marginTop: "8px",
+              textTransform: "uppercase",
+              lineHeight: 1.75,
+              display: "inline-block",
+            }}
+          >
+            {DateTime.fromISO(article.date)
+              .setZone("America/New_York")
+              .setLocale("en-us")
+              .toLocaleString(DateTime.DATE_FULL)}
+          </Typography>
+        </Grid>
       </Grid>
-    </Grid>
+    </Box>
   );
 };
 
@@ -178,6 +206,7 @@ const Spotlight = (props) => {
               justifySelf: "center!important",
               mb: 0,
               textTransform: "capitalize",
+              textAlign: "center",
             }}
           >
             {page.title}

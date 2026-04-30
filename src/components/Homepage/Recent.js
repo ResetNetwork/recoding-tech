@@ -113,7 +113,13 @@ const RecentArticles = (props) => {
                 <Grid
                   item
                   xs={12}
-                  sx={{ flexShrink: 0, minWidth: 0, width: "100%", mb: "20px" }}
+                  sx={{
+                    flexShrink: 0,
+                    minWidth: 0,
+                    width: "100%",
+                    mb: "20px",
+                    display: { xs: "none", md: "block" },
+                  }}
                 >
                   <Link
                     href={`/${articles[item * 2].slug.current}`}
