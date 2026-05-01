@@ -102,8 +102,7 @@ const isEmptyNormalBlock = (block) =>
   block &&
   block._type === "block" &&
   !block.listItem &&
-  (block.style === "normal" || !block.style) &&
-  toPlainText(block).trim() === "";
+  (block.style === "normal" || !block.style);
 
 const splitHeroFromBody = (body, hasFeaturedImage) => {
   if (!Array.isArray(body) || body.length === 0) {
@@ -116,7 +115,10 @@ const splitHeroFromBody = (body, hasFeaturedImage) => {
   while (i < body.length && isEmptyNormalBlock(body[i])) {
     i += 1;
   }
-  if (i >= body.length || body[i]._type !== "Image") {
+  if (
+    i >= body.length ||
+    (body[i]._type !== "Image" && body[i]._type !== "iframeEmbed")
+  ) {
     return { heroBlocks: [], contentBlocks: body };
   }
   const heroEnd = i + 1;
