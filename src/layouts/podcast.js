@@ -46,6 +46,7 @@ const Podcast = (props) => {
             maxWidth="sm"
             className={classes.hero}
             sx={{
+              display: "grid",
               paddingBottom: "60px!important",
             }}
           >

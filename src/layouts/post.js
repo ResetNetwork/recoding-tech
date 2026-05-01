@@ -347,7 +347,7 @@ const Post = (props) => {
                       <div
                         style={{
                           display: "flex",
-                          justifySelf: "center",
+                          justifyContent: "center",
                           flexDirection: "column",
                         }}
                       >
@@ -359,6 +359,7 @@ const Post = (props) => {
                             fontSize: "27px",
                             fontWeight: 700,
                             lineHeight: 1.5,
+                            textAlign: "center",
                           }}
                         >
                           Support Tech Policy Press
@@ -372,6 +373,7 @@ const Post = (props) => {
                             fontWeight: 300,
                             lineHeight: 1.5,
                             marginTop: "4px",
+                            textAlign: "center",
                           }}
                         >
                           If you&apos;ve found our work helpful, consider
@@ -501,11 +503,6 @@ const Post = (props) => {
                               color="rgba(0,0,0,0.48)"
                               component="div"
                               variant="body2"
-                              sx={{
-                                fontSize: "16px",
-                                fontWeight: 400,
-                                lineHeight: 1.5,
-                              }}
                             >
                               {toPlainText(auth.bio).substring(0, 300)}
                               {toPlainText(auth.bio).length > 300 ? "..." : ""}

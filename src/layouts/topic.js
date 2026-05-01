@@ -61,6 +61,7 @@ const Topic = (props) => {
             maxWidth="sm"
             className={classes.hero}
             sx={{
+              display: "grid",
               paddingBottom: page.showLogos
                 ? "30px!important"
                 : "60px!important",
@@ -89,6 +90,7 @@ const Topic = (props) => {
                 fontWeight: 700,
                 lineHeight: 1.5,
                 justifySelf: "center",
+                textAlign: "center",
                 mb: 0,
               }}
             >
