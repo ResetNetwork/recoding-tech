@@ -38,8 +38,14 @@ const Topic = (props) => {
   const classes = useStyles();
   const { page, headlines } = props;
 
-  const heroUrl =
+  const firstPostImage = headlines?.find((h) => h.featuredImage)?.featuredImage;
+
+  let heroUrl =
     page.heroBackground && urlFor(page.heroBackground).width(1920).url();
+
+  if (!heroUrl && firstPostImage) {
+    heroUrl = urlFor(firstPostImage).width(1920).url();
+  }
 
   return (
     <Layout {...props} isHomepage={true}>
