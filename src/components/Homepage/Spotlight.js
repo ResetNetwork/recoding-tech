@@ -287,6 +287,8 @@ const Spotlight = (props) => {
               position: "absolute",
               right: 30,
               bottom: { xs: -20, md: 30 },
+              left: { xs: "50%", md: "auto" },
+              marginLeft: { xs: "-60px", md: "auto" },
               zIndex: 1,
             }}
           >
