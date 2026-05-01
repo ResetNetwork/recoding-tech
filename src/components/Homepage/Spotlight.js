@@ -282,7 +282,14 @@ const Spotlight = (props) => {
             )}
         </Container>
         {canScroll && (
-          <Box sx={{ position: "absolute", right: 30, bottom: 30, zIndex: 1 }}>
+          <Box
+            sx={{
+              position: "absolute",
+              right: 30,
+              bottom: { xs: -20, md: 30 },
+              zIndex: 1,
+            }}
+          >
             <IconButton
               aria-label="Previous articles"
               onClick={() => setSlideIndex((i) => Math.max(0, i - 1))}
