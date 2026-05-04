@@ -130,7 +130,7 @@ const FeaturedPosts = ({ featured }) => {
       <Box
         sx={{
           position: "relative",
-          minHeight: { xs: 320, md: 700 },
+          minHeight: { xs: 450, md: 700 },
         }}
       >
         <Box
@@ -154,7 +154,7 @@ const FeaturedPosts = ({ featured }) => {
           sx={{
             position: "relative",
             zIndex: 1,
-            minHeight: { xs: 320, md: 590 },
+            minHeight: { xs: 450, md: 590 },
             display: "flex",
             flexDirection: { xs: "column", md: "row" },
             alignItems: { md: "stretch" },
@@ -183,17 +183,21 @@ const FeaturedPosts = ({ featured }) => {
                   gutterBottom
                   component="div"
                   variant="h2_article"
-                  fontSize="36px"
                   color={main.featuredImage ? "#FFF" : "#000"}
                   sx={{
                     fontFamily: "Libre Baskerville!important",
+                    fontSize: { xs: "24px", md: "36px" },
                   }}
                 >
                   {main.title}
                 </Typography>
               </Link>
               {main.body && (
-                <Link href={`/${main.slug.current}`} className={classes.link}>
+                <Link
+                  href={`/${main.slug.current}`}
+                  className={classes.link}
+                  sx={{ display: { xs: "none", md: "block" } }}
+                >
                   <Typography
                     component="div"
                     variant="body1"
@@ -256,6 +260,7 @@ const FeaturedPosts = ({ featured }) => {
         sx={{
           display: { xs: "block", md: "none" },
           bgcolor: "rgba(30,30,30,0.9)",
+          marginTop: "40px",
           p: 2,
         }}
       >

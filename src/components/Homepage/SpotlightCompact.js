@@ -6,6 +6,8 @@ import { makeStyles } from "@mui/styles";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 // components
 import ArticleLg from "../Topic/article-lg";
@@ -32,6 +34,9 @@ const SpotlightCompact = (props) => {
   const [posts, setPosts] = useState([]);
   const classes = useStyles();
 
+  const theme = useTheme();
+  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
+
   const query = `*[!(_id in path("drafts.**")) && _type == "post" && references("${page?.topic?._ref}")]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...6]`;
 
   useEffect(() => {
@@ -54,7 +59,11 @@ const SpotlightCompact = (props) => {
         </Typography>
 
         <Grid container columns={3} spacing={"30px"} mt="30px">
-          <ArticleLg article={posts[0]} />
+          {isMdUp ? (
+            <ArticleLg article={posts[0]} />
+          ) : (
+            <ArticleSm article={posts[0]} />
+          )}
           {posts && posts.length
             ? posts
                 .slice(1, 4)

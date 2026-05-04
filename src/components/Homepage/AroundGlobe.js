@@ -7,6 +7,8 @@ import { makeStyles } from "@mui/styles";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 // components
 import ArticleLg from "../Topic/article-lg";
@@ -89,6 +91,9 @@ function AroundGlobe({ exclude }) {
   const classes = useStyles();
   const [articles, setArticles] = useState([]);
 
+  const theme = useTheme();
+  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
+
   useEffect(() => {
     client.fetch(query).then((recents) => {
       const posts = recents.filter((post) => !exclude.includes(post._id));
@@ -116,7 +121,11 @@ function AroundGlobe({ exclude }) {
         <Grid container columns={3} spacing={"30px"} mt="40px">
           {articles?.length > 0 && (
             <>
-              <ArticleLg key={articles[0]._id} article={articles[0]} />
+              {isMdUp ? (
+                <ArticleLg key={articles[0]._id} article={articles[0]} />
+              ) : (
+                <ArticleSm key={articles[0]._id} article={articles[0]} />
+              )}
               {articles.slice(1, 4).map((article) => (
                 <ArticleSm key={article._id} article={article} />
               ))}
