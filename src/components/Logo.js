@@ -1,12 +1,13 @@
 // base imports
 import React from "react";
+import PropTypes from "prop-types";
 
 // material ui imports
 import Box from "@mui/material/Box";
 
-function Logo() {
+function Logo({ maxWidth = 120 }) {
   return (
-    <Box sx={{ maxWidth: 120 }}>
+    <Box sx={{ maxWidth }}>
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 741.46 299.57">
         <path
           fill="#407569"
@@ -132,5 +133,9 @@ function Logo() {
     </Box>
   );
 }
+
+Logo.propTypes = {
+  maxWidth: PropTypes.number,
+};
 
 export default Logo;

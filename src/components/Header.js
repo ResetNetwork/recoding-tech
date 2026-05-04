@@ -99,7 +99,7 @@ const Header = (props) => {
   return (
     <header className={classes.header}>
       <Box
-        p={"20px 36px"}
+        p={"12px 36px"}
         mb={0}
         mt={0}
         sx={{
@@ -109,7 +109,7 @@ const Header = (props) => {
         <Grid container spacing={3} justifyContent="space-between">
           <Grid item xs={10} md={2}>
             <Link href="/" className={classes.logoLink}>
-              <Logo />
+              <Logo maxWidth={isMobile ? 120 : 160} />
               <Typography sx={{ display: "none" }}>Home</Typography>
             </Link>
           </Grid>
