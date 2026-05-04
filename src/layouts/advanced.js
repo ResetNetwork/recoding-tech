@@ -229,6 +229,7 @@ const Advanced = (props) => {
                     _.camelCase(_.get(section, "type", null))
                   );
                   let Component = components[component];
+                  if (!Component) return null;
                   return (
                     <Component
                       key={section_idx}
