@@ -131,17 +131,20 @@ const LatestArticles = (props) => {
                     wrap="nowrap"
                     sx={{
                       marginBottom: "20px",
+                      flexDirection: { xs: "column", md: "row" },
                     }}
                   >
                     <Grid
                       item
                       xs="auto"
                       sx={{
-                        borderBottom: isBottomRow(idx, articles.length, isMdUp)
-                          ? "none"
-                          : "1px solid #DCDCDC",
-                        paddingBottom: "20px",
-                        display: { xs: "none", md: "block" },
+                        borderBottom: {
+                          xs: "none",
+                          md: isBottomRow(idx, articles.length, isMdUp)
+                            ? "none"
+                            : "1px solid #DCDCDC",
+                        },
+                        paddingBottom: { xs: "5px", md: "20px" },
                       }}
                     >
                       <Link
@@ -156,7 +159,7 @@ const LatestArticles = (props) => {
                           }
                           alt={article.title}
                           style={{
-                            width: "164px",
+                            width: isMdUp ? "164px" : "100%",
                             minWidth: "164px",
                             minHeight: "93px",
                           }}
