@@ -94,14 +94,28 @@ const ArticleSm = (props) => {
       <Grid container className={classes.articleGrid}>
         <Grid item>
           <Link href={`/${article.slug.current}`}>
-            <img
-              src={
-                article.featuredImage
-                  ? urlFor(article.featuredImage).width(400).url()
-                  : null
-              }
-              style={{ maxWidth: "100%" }}
-            />
+            <div
+              style={{
+                width: "100%",
+                aspectRatio: "16 / 9",
+                overflow: "hidden",
+              }}
+            >
+              <img
+                src={
+                  article.featuredImage
+                    ? urlFor(article.featuredImage).width(400).url()
+                    : null
+                }
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                  objectPosition: "center",
+                  display: "block",
+                }}
+              />
+            </div>
           </Link>
         </Grid>
         <Grid item>
