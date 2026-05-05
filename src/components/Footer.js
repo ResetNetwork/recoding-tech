@@ -84,6 +84,21 @@ function Footer(props) {
                   BlueSky
                 </Typography>
               </Link>
+              <Link
+                href="https://www.instagram.com/techpolicy.press"
+                style={{ marginRight: "20px" }}
+              >
+                <img
+                  src="/images/icon_instagram.png"
+                  alt="Instagram"
+                  width={27}
+                  height={27}
+                  style={{ paddingBottom: "2px" }}
+                />
+                <Typography component="span" sx={{ display: "none" }}>
+                  Instagram
+                </Typography>
+              </Link>
               <Link href="https://techpolicy.press/rss/feed.xml">
                 <RssFeedIcon
                   sx={{
