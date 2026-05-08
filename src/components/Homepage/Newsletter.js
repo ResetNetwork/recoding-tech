@@ -27,10 +27,10 @@ const Newsletter = () => {
     urlFor(posts[0].featuredImage).width(450).url();
 
   return (
-    <div
+    <Box
       id="mlb2-5983540"
       className="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-5983540"
-      style={{ marginTop: "60px!important" }}
+      sx={{ marginTop: { xs: "20px!important", md: "60px!important" } }}
     >
       <div className="ml-form-align-center">
         <Box
@@ -263,7 +263,7 @@ const Newsletter = () => {
           </Box>
         </Box>
       </div>
-    </div>
+    </Box>
   );
 };
 

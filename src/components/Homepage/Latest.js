@@ -144,6 +144,7 @@ const LatestArticles = (props) => {
                             ? "none"
                             : "1px solid #DCDCDC",
                         },
+                        marginTop: { xs: "0", md: "5px" },
                         paddingBottom: { xs: "5px", md: "20px" },
                       }}
                     >

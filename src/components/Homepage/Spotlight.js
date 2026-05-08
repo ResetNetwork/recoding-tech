@@ -46,7 +46,7 @@ const ArticleCard = ({ article }) => {
   const classes = useStyles();
 
   const imageUrl = article.featuredImage
-    ? urlFor(article.featuredImage).width(200).url()
+    ? urlFor(article.featuredImage).width(400).url()
     : null;
 
   return (
@@ -167,7 +167,10 @@ const Spotlight = (props) => {
     page.heroBackground && urlFor(page.heroBackground).width(1920).url();
 
   return (
-    <section className="block block-hero" style={{ marginTop: "60px" }}>
+    <section
+      className="block block-hero"
+      style={{ marginTop: isMdUp ? "60px" : "20px" }}
+    >
       <Box
         style={{
           position: "relative",

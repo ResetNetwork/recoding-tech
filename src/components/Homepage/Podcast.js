@@ -6,6 +6,8 @@ import { DateTime } from "luxon";
 // Material UI imports
 import { makeStyles } from "@mui/styles";
 import { Box, Grid, Typography, Link } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 
 //utils
 import urlFor from "../../utils/imageBuilder";
@@ -29,7 +31,7 @@ const ArticleCard = ({ article }) => {
   const classes = useStyles();
 
   const imageUrl = article.featuredImage
-    ? urlFor(article.featuredImage).width(200).url()
+    ? urlFor(article.featuredImage).width(400).url()
     : null;
 
   return (
@@ -120,6 +122,8 @@ ArticleCard.propTypes = {
 
 function Podcast() {
   const [posts, setPosts] = useState([]);
+  const theme = useTheme();
+  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
 
   useEffect(() => {
     client.fetch(query).then((articles) => {
@@ -135,7 +139,10 @@ function Podcast() {
     urlFor(posts[0].featuredImage).width(1920).url();
 
   return (
-    <section className="block block-hero" style={{ marginTop: "60px" }}>
+    <section
+      className="block block-hero"
+      style={{ marginTop: isMdUp ? "60px" : "20px" }}
+    >
       <Box
         style={{
           position: "relative",

@@ -62,9 +62,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "700",
     textTransform: "uppercase",
   },
-  grid: {
-    marginTop: "80px!important",
-  },
   link: {
     textDecoration: "none !important",
   },
@@ -100,10 +97,13 @@ function AroundGlobe({ exclude }) {
       setArticles(posts);
     });
   }, [exclude]);
-
   return (
     <Container maxWidth={false} sx={{ maxWidth: 1010, mx: "auto" }}>
-      <Grid container className={classes.grid}>
+      <Grid
+        container
+        className={classes.grid}
+        sx={{ marginTop: { xs: "40px", md: "80px" } }}
+      >
         <Grid item className={classes.gridTitle}>
           <Typography
             component="h2"

@@ -260,7 +260,6 @@ const FeaturedPosts = ({ featured }) => {
         sx={{
           display: { xs: "block", md: "none" },
           bgcolor: "rgba(30,30,30,0.9)",
-          marginTop: "40px",
           p: 2,
         }}
       >

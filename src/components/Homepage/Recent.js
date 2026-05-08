@@ -130,7 +130,7 @@ const RecentArticles = (props) => {
                       src={
                         articles[item * 2].featuredImage
                           ? urlFor(articles[item * 2].featuredImage)
-                              .width(300)
+                              .width(400)
                               .url()
                           : null
                       }

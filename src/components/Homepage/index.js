@@ -80,8 +80,13 @@ function Homepage(props) {
           <Spotlight name="Series" page={spotlight?.third_spotlight} />
         )}
 
-        <Container sx={{ marginTop: "80px", marginBottom: "80px" }}>
-          <Grid container spacing={"60px"}>
+        <Container
+          sx={{
+            marginTop: { xs: "40px", md: "80px" },
+            marginBottom: { xs: "0", md: "80px" },
+          }}
+        >
+          <Grid container spacing={{ xs: "20px", md: "60px" }}>
             <ArticleColumn
               topicRef={"dd7d8733-8893-4d15-9a50-fddd74596af3"}
               title="Must read"

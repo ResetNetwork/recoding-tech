@@ -52,7 +52,10 @@ const SpotlightCompact = (props) => {
   if (!page || posts.length === 0) return <></>;
 
   return (
-    <section className="block block-hero" style={{ marginTop: "80px" }}>
+    <section
+      className="block block-hero"
+      style={{ marginTop: isMdUp ? "80px" : "40px" }}
+    >
       <Container maxWidth="lg" className={classes.hero}>
         <Typography variant="h2" sx={{ color: "#000" }}>
           {page.title}
