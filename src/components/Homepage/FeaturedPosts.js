@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { DateTime } from "luxon";
-import { toPlainText } from "@portabletext/react";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
@@ -192,7 +191,7 @@ const FeaturedPosts = ({ featured }) => {
                   {main.title}
                 </Typography>
               </Link>
-              {main.body && (
+              {(main.intro || main.seo?.description) && (
                 <Link
                   href={`/${main.slug.current}`}
                   className={classes.link}
@@ -214,7 +213,7 @@ const FeaturedPosts = ({ featured }) => {
                       textOverflow: "ellipsis",
                     }}
                   >
-                    {toPlainText(main.body).substring(0, 300)}
+                    {main.intro || main.seo?.description}
                   </Typography>
                 </Link>
               )}

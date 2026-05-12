@@ -21,7 +21,7 @@ import ArticleColumn from "./ArticleColumn";
 // utils
 import client from "../../utils/sanityClient";
 
-const query = `*[_type == "featured_posts" && title == "Homepage"] { posts[]->{_id, title, author, badge, date, featuredImage, category, date, type, slug, stackbit_model_type}, first_spotlight, second_spotlight, third_spotlight }`;
+const query = `*[_type == "featured_posts" && title == "Homepage"] { posts[]->{_id, title, author, badge, date, featuredImage, category, date, type, slug, stackbit_model_type, intro, seo}, first_spotlight, second_spotlight, third_spotlight }`;
 
 function Homepage(props) {
   const { featured, articles, fellows } = props;

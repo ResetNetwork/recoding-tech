@@ -56,8 +56,6 @@ const ArticleColumn = (props) => {
     });
   }, []);
 
-  console.log(posts);
-
   return (
     <>
       {posts.length > 0 && (
