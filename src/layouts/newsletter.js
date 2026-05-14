@@ -21,7 +21,7 @@ const Newsletter = (props) => {
       <Box mb={4}>
         <Box
           sx={{
-            padding: "60px 0",
+            padding: "60px 10px",
             backgroundColor: "#37675c",
             display: "flex",
             flexDirection: "column",

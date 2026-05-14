@@ -94,7 +94,7 @@ const Topic = (props) => {
               sx={{
                 fontSize: "36px",
                 fontWeight: 700,
-                lineHeight: 1.5,
+                lineHeight: { xs: 1.2, sm: 1.5 },
                 justifySelf: "center",
                 textAlign: "center",
                 mb: 0,
@@ -303,7 +303,7 @@ const Topic = (props) => {
           </Box>
         )}
       </section>
-      <Box my={8}>
+      <Box my={4}>
         <Container>
           <Box marginTop={4}>
             <PageRecents page={page} readings={headlines} />

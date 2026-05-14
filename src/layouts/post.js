@@ -189,8 +189,6 @@ const Post = (props) => {
                   sx={{
                     borderBottom: "1px solid #dcdcdc;",
                     paddingBottom: 2,
-                    fontSize: "36px",
-                    lineHeight: 1.5,
                   }}
                 >
                   {page.title}

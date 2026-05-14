@@ -120,8 +120,8 @@ const ShareButtons = (props) => {
             <Image
               src="/images/share_linkedin.png"
               alt="Share"
-              width={45}
-              height={44}
+              width={39}
+              height={38}
             />
           </Link>
 
@@ -132,8 +132,8 @@ const ShareButtons = (props) => {
             <Image
               src="/images/share_mastodon.png"
               alt="Share"
-              width={44}
-              height={44}
+              width={38}
+              height={38}
             />
           </Link>
 
@@ -147,8 +147,8 @@ const ShareButtons = (props) => {
             <Image
               src="/images/share_bluesky.png"
               alt="Share"
-              width={37}
-              height={37}
+              width={30}
+              height={30}
             />
           </Link>
 
@@ -162,8 +162,8 @@ const ShareButtons = (props) => {
             <Image
               src="/images/share_reddit.png"
               alt="Share"
-              width={43}
-              height={43}
+              width={34}
+              height={34}
             />
           </Link>
 
@@ -175,8 +175,8 @@ const ShareButtons = (props) => {
             <Image
               src="/images/share_whats.png"
               alt="Share"
-              width={44}
-              height={44}
+              width={38}
+              height={38}
             />
           </Link>
 
@@ -188,28 +188,28 @@ const ShareButtons = (props) => {
             <Image
               src="/images/share_email.png"
               alt="Share"
-              width={40}
-              height={40}
+              width={30}
+              height={30}
             />
           </Link>
 
           <Link
             href={"#"}
             style={{ marginLeft: "10px" }}
-            onClick={() => {
+            onClick={async (e) => {
+              e.preventDefault();
               try {
-                navigator.share({ text: url });
-              } catch (error) {
+                await navigator.clipboard.writeText(url);
+              } catch {
                 // ignore
               }
-              return false;
             }}
           >
             <Image
-              src="/images/share_link.png"
+              src="/images/share_link2.png"
               alt="Share"
-              width={40}
-              height={40}
+              width={32}
+              height={32}
             />
           </Link>
         </Grid>

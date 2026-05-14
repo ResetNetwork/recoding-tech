@@ -17,7 +17,7 @@ const PageRecents = (props) => {
 
   return (
     <Container maxWidth={false} sx={{ maxWidth: 1010, mx: "auto" }}>
-      <Grid container columns={3} spacing={"30px"} mt="80px">
+      <Grid container columns={3} spacing={"30px"} mt="40px">
         {readings && readings.length
           ? readings.map((article, index) =>
               index % 7 === 0 ? (

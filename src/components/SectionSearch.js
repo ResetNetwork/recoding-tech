@@ -296,6 +296,9 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
                 "& fieldset": {
                   border: 0,
                 },
+                "& label": {
+                  // top: "-7px",
+                },
               }}
             />
             <Grid
@@ -411,7 +414,7 @@ const SectionSearch = ({ articles: allArticles, data: { topics } }) => {
             </Grid>
           </Container>
         </Box>
-        <Container maxWidth="md" sx={{ maxWidth: "770px!important" }}>
+        <Container maxWidth="md" sx={{ maxWidth: "1165px!important" }}>
           <Grid
             container
             className={classes.grid}
