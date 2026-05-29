@@ -270,8 +270,11 @@ const Header = (props) => {
                         variant="h4"
                         sx={{ marginLeft: 2, textTransform: "none" }}
                       >
-                        <Link href={`/contributors`} className={classes.link}>
-                          Contributors
+                        <Link
+                          href={`/contributor-guidelines/`}
+                          className={classes.link}
+                        >
+                          Contributor Guidelines
                         </Link>
                       </Typography>
                       <Typography
@@ -279,11 +282,8 @@ const Header = (props) => {
                         variant="h4"
                         sx={{ marginLeft: 2, textTransform: "none" }}
                       >
-                        <Link
-                          href={`/contributor-guidelines/`}
-                          className={classes.link}
-                        >
-                          Contributor Guidelines
+                        <Link href={`/contributors`} className={classes.link}>
+                          Contributors
                         </Link>
                       </Typography>
                       <Typography
@@ -497,9 +497,9 @@ const Header = (props) => {
                           "& ul": {
                             display: "grid",
                             gridTemplateColumns: "repeat(1, 1fr)",
-                            maxWidth: "700px",
+                            maxWidth: "900px",
                             padding: 3,
-                            width: "40vw",
+                            width: "100%",
                           },
                         }}
                       >
@@ -574,22 +574,6 @@ const Header = (props) => {
                       >
                         <MenuItem sx={{ padding: 1 }}>
                           <Link
-                            href={`/contributors`}
-                            sx={{
-                              color: "#000",
-                              fontSize: "1.3em",
-                              fontWeight: 400,
-                              textDecoration: "none",
-                              "&:active, &:focus, &:hover": {
-                                fontWeight: 600,
-                              },
-                            }}
-                          >
-                            Contributors
-                          </Link>
-                        </MenuItem>
-                        <MenuItem sx={{ padding: 1 }}>
-                          <Link
                             href={`/contributor-guidelines/`}
                             sx={{
                               color: "#000",
@@ -602,6 +586,22 @@ const Header = (props) => {
                             }}
                           >
                             Contributor Guidelines
+                          </Link>
+                        </MenuItem>
+                        <MenuItem sx={{ padding: 1 }}>
+                          <Link
+                            href={`/contributors`}
+                            sx={{
+                              color: "#000",
+                              fontSize: "1.3em",
+                              fontWeight: 400,
+                              textDecoration: "none",
+                              "&:active, &:focus, &:hover": {
+                                fontWeight: 600,
+                              },
+                            }}
+                          >
+                            Contributors
                           </Link>
                         </MenuItem>
                       </Menu>

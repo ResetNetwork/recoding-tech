@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: theme.typography.link.fontFamily,
     fontWeight: 500,
     textTransform: "uppercase",
+    marginTop: "20px",
   },
   article: {
     marginBottom: 20,

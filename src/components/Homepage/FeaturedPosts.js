@@ -155,103 +155,109 @@ const FeaturedPosts = ({ featured }) => {
             zIndex: 1,
             minHeight: { xs: 450, md: 590 },
             display: "flex",
-            flexDirection: { xs: "column", md: "row" },
-            alignItems: { md: "stretch" },
+            flexDirection: "column",
+            justifyContent: { xs: "flex-end", md: "center" },
             p: { xs: 2, md: 7 },
-            pr: { md: 60 },
           }}
         >
           <Box
             sx={{
-              flex: 1,
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-              color: "#fff",
-              minWidth: 0,
+              display: { xs: "contents", md: "flex" },
+              flexDirection: "row",
+              alignItems: "flex-end",
+              width: "100%",
+              gap: { md: 3 },
             }}
           >
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
-              {main.badge && (
-                <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
-                  <Badge badge={main.badge} />
-                </Box>
-              )}
-              <Link href={`/${main.slug.current}`} className={classes.link}>
-                <Typography
-                  gutterBottom
-                  component="div"
-                  variant="h2_article"
-                  color={main.featuredImage ? "#FFF" : "#000"}
-                  sx={{
-                    fontFamily: "Libre Baskerville!important",
-                    fontSize: { xs: "24px", md: "36px" },
-                  }}
-                >
-                  {main.title}
-                </Typography>
-              </Link>
-              {(main.intro || main.seo?.description) && (
-                <Link
-                  href={`/${main.slug.current}`}
-                  className={classes.link}
-                  sx={{ display: { xs: "none", md: "block" } }}
-                >
+            <Box
+              sx={{
+                flex: 1,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: { xs: "flex-end" },
+                color: "#fff",
+                minWidth: 0,
+              }}
+            >
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                {main.badge && (
+                  <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
+                    <Badge badge={main.badge} />
+                  </Box>
+                )}
+                <Link href={`/${main.slug.current}`} className={classes.link}>
                   <Typography
+                    gutterBottom
                     component="div"
-                    variant="body1"
-                    fontSize="16px"
-                    fontWeight="300"
-                    lineHeight="1.75"
+                    variant="h2_article"
                     color={main.featuredImage ? "#FFF" : "#000"}
                     sx={{
-                      fontFamily: "Lexend!important",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: "vertical",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
+                      fontFamily: "Libre Baskerville!important",
+                      fontSize: { xs: "24px", md: "36px" },
                     }}
                   >
-                    {main.intro || main.seo?.description}
+                    {main.title}
                   </Typography>
                 </Link>
-              )}
-              <Typography
-                component="span"
-                variant="body2"
-                sx={{
-                  color: "#a7a7a7",
-                  fontSize: 14,
-                  fontWeight: 400,
-                  marginTop: "8px",
-                  textTransform: "uppercase",
-                  lineHeight: 1.5,
-                  display: "inline-block",
-                }}
-              >
-                {DateTime.fromISO(main.date)
-                  .setZone("America/New_York")
-                  .setLocale("en-us")
-                  .toLocaleString(DateTime.DATE_FULL)}
-              </Typography>
+                {(main.intro || main.seo?.description) && (
+                  <Link
+                    href={`/${main.slug.current}`}
+                    className={classes.link}
+                    sx={{ display: { xs: "none", md: "block" } }}
+                  >
+                    <Typography
+                      component="div"
+                      variant="body1"
+                      fontSize="16px"
+                      fontWeight="300"
+                      lineHeight="1.75"
+                      color={main.featuredImage ? "#FFF" : "#000"}
+                      sx={{
+                        fontFamily: "Lexend!important",
+                        display: "-webkit-box",
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: "vertical",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {main.intro || main.seo?.description}
+                    </Typography>
+                  </Link>
+                )}
+                <Typography
+                  component="span"
+                  variant="body2"
+                  sx={{
+                    color: "#a7a7a7",
+                    fontSize: 14,
+                    fontWeight: 400,
+                    marginTop: "8px",
+                    textTransform: "uppercase",
+                    lineHeight: 1.5,
+                    display: "inline-block",
+                  }}
+                >
+                  {DateTime.fromISO(main.date)
+                    .setZone("America/New_York")
+                    .setLocale("en-us")
+                    .toLocaleString(DateTime.DATE_FULL)}
+                </Typography>
+              </Box>
             </Box>
-          </Box>
-          <Box
-            sx={{
-              display: { xs: "none", md: "flex" },
-              position: "absolute",
-              top: (t) => t.spacing(4),
-              bottom: "auto",
-              right: (t) => t.spacing(5),
-              width: "min(320px, 32vw)",
-              flexDirection: "column",
-              background: "#343434FF",
-              p: 3,
-              boxShadow: 3,
-            }}
-          >
-            <Grid container>{articles}</Grid>
+            <Box
+              sx={{
+                display: { xs: "none", md: "flex" },
+                width: "min(320px, 32vw)",
+                flexDirection: "column",
+                background: "#343434FF",
+                p: 3,
+                boxShadow: 3,
+                flexShrink: 0,
+              }}
+            >
+              <Grid container>{articles}</Grid>
+            </Box>
           </Box>
         </Box>
       </Box>

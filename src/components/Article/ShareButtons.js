@@ -52,6 +52,8 @@ const ShareButtons = (props) => {
             border: "none",
             backgroundColor: "transparent",
             cursor: "pointer",
+            paddingTop: "0px",
+            paddingBottom: "0px",
           }}
           onClick={() => setShare((prev) => !prev)}
         >
