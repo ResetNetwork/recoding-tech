@@ -73,7 +73,7 @@ const Topics = (props) => {
                   style={{
                     backgroundColor: "#EFE9DA",
                     fontSize: "12px",
-                    fontWeight: 400,
+                    fontWeight: 300,
                     marginLeft: 0,
                     marginRight: 4,
                     textTransform: "none",
