@@ -80,7 +80,7 @@ const Topics = (props) => {
                   }}
                   component="a"
                   className={classes.chip}
-                  href={`/category/${
+                  href={`/topic/${
                     typeof topic.slug == "string"
                       ? topic.slug
                       : topic.slug.current
