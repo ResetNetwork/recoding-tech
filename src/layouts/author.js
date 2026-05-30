@@ -78,7 +78,6 @@ const Author = (props) => {
         <Box
           style={{
             backgroundColor: "#343434FF",
-            paddingBottom: "60px!important",
           }}
         >
           <Container
