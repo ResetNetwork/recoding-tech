@@ -302,6 +302,7 @@ const Contributors = () => {
               container
               alignItems="center"
               justifyContent="space-between"
+              rowSpacing={3}
               sx={{
                 borderBottom: loading ? "" : "1px solid #8AA29D",
                 paddingBottom: "25px",
@@ -326,6 +327,7 @@ const Contributors = () => {
                   aria-describedby={id}
                   onClick={handleClick}
                   sx={{
+                    padding: 0,
                     height: 24,
                     textDecoration: "none",
                     "&:hover": {
