@@ -11,18 +11,39 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { makeStyles } from "@mui/styles";
 
 // components
 import { Layout } from "../components/index";
-import SectionHero from "../components/SectionHero";
 import { CustomPortableText } from "../components/PortableText";
 
 // utils
 import imageBuilder from "../utils/imageBuilder";
 import client from "../utils/sanityClient";
 
+const useStyles = makeStyles(() => ({
+  box: {
+    border: "1px solid #000",
+    borderRadius: 0,
+    overflow: "unset",
+    position: "relative",
+  },
+  em: {
+    fontStyle: "italic",
+  },
+  maxWidth: {
+    maxWidth: "100% !important",
+  },
+  hero: {
+    paddingTop: "65px",
+    paddingBottom: "60px",
+    color: "#FFF",
+  },
+}));
+
 const Author = (props) => {
   const { page } = props;
+  const classes = useStyles();
   const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   const [topics, setTopics] = useState([]);
@@ -53,8 +74,51 @@ const Author = (props) => {
   // useEffect(() => {}, [posts, topics]);
   return (
     <Layout {...props}>
-      <SectionHero {...props} />
-      <Container maxWidth="md" sx={{ marginBottom: 4 }}>
+      <section className="block block-hero">
+        <Box
+          style={{
+            backgroundColor: "#343434FF",
+          }}
+        >
+          <Container
+            maxWidth="sm"
+            className={classes.hero}
+            sx={{
+              display: "grid",
+              paddingBottom: "60px!important",
+            }}
+          >
+            <Typography
+              component="h4"
+              variant="h4"
+              sx={{
+                fontSize: "20px",
+                fontWeight: 700,
+                textTransform: "capitalize",
+                justifySelf: "center",
+                mb: 0,
+              }}
+            >
+              Contributors
+            </Typography>
+            <Typography
+              component="h1"
+              variant="h2_article"
+              sx={{
+                fontSize: "36px",
+                fontWeight: 700,
+                lineHeight: { xs: 1.2, sm: 1.5 },
+                justifySelf: "center",
+                textAlign: "center",
+                mb: 0,
+              }}
+            >
+              {page.name}
+            </Typography>
+          </Container>
+        </Box>
+      </section>
+      <Container maxWidth="md" sx={{ marginBottom: 4, marginTop: "80px" }}>
         <Box
           marginBottom={4}
           paddingBottom={4}

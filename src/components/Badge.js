@@ -12,14 +12,14 @@ const badges = [
   { key: "newsletter", label: "Newsletter", color: "#559482" },
 ];
 
-function Badge({ badge, variant = "default" }) {
+function Badge({ badge, variant = "default", marginBottom = "16px" }) {
   const currentBadge = badges.find((b) => b.key === badge);
   if (!currentBadge) return <></>;
 
   return (
     <Box
       sx={{
-        marginBottom: variant == "link" ? "8px" : "16px",
+        marginBottom: variant == "link" ? "8px" : marginBottom,
         color: variant == "link" ? currentBadge.color : "#fff",
         backgroundColor: variant == "link" ? undefined : currentBadge.color,
         padding: variant == "link" ? undefined : "4px 16px",
@@ -40,6 +40,7 @@ function Badge({ badge, variant = "default" }) {
 Badge.propTypes = {
   badge: PropTypes.string,
   variant: PropTypes.string,
+  marginBottom: PropTypes.string,
 };
 
 export default Badge;

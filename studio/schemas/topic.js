@@ -4,6 +4,20 @@ export default {
   title: 'Topics',
   fields: [
     {
+      title: 'Topic type',
+      name: 'topicType',
+      type: 'string',
+      description: 'Type of topic/series page.',
+      initialValue: 'topic',
+      options: {
+        list: [
+          {title: 'Topic', value: 'topic'},
+          {title: 'Series', value: 'series'},
+        ],
+        layout: 'radio',
+      },
+    },
+    {
       title: 'Name',
       type: 'string',
       name: 'name',
@@ -18,11 +32,19 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      title: 'Show description in hero',
+      name: 'showDescription',
+      type: 'boolean',
+      description: 'Toggle the description paragraph below the title.',
+      initialValue: false,
+    },
+    {
       title: 'Topic description',
       name: 'description',
       description: 'Anything you want to say about the topic.',
       type: 'array',
       of: [{type: 'block'}],
+      hidden: ({document}) => !document?.showDescription,
     },
     {
       title: 'Category or post_tag',
@@ -50,6 +72,41 @@ export default {
       },
     },
     {
+      title: 'Hero background image',
+      name: 'heroBackground',
+      type: 'image',
+      description:
+        'Optional full-width image behind the title. If empty, the site uses solid background #343434.',
+      fields: [{name: 'alt', type: 'string', title: 'Alt text'}],
+    },
+    {
+      title: 'Show partner logos',
+      name: 'showLogos',
+      type: 'boolean',
+      description: 'Collaborator logos in the hero (e.g. for joint series).',
+      initialValue: false,
+    },
+    {
+      title: 'Partner logos',
+      name: 'partnerLogos',
+      type: 'array',
+      of: [
+        {
+          type: 'image',
+          fields: [{name: 'alt', type: 'string', title: 'Alt text'}],
+        },
+      ],
+      description: 'Shown when "Show partner logos" is on.',
+      hidden: ({document}) => !document?.showLogos,
+    },
+    {
+      title: 'Show newsletter signup',
+      name: 'showNewsletterSignup',
+      type: 'boolean',
+      description: 'Newsletter bar below the hero on this topic page.',
+      initialValue: false,
+    },
+    {
       title: 'Related commentary and analysis',
       name: 'relatedCommentary',
       type: 'array',
@@ -63,6 +120,7 @@ export default {
           ],
         },
       ],
+      hidden: true,
     },
     {
       title: 'Related topics',
@@ -74,6 +132,7 @@ export default {
           to: [{type: 'topic'}],
         },
       ],
+      hidden: true,
     },
     {
       type: 'stackbit_page_meta',

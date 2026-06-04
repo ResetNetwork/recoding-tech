@@ -5,12 +5,12 @@ import PropTypes from "prop-types";
 // import { DateTime } from "luxon";
 
 // utils
-import process from "../utils/processCitations";
+import process from "../../utils/processCitations";
 
 // Material UI imports
 import { makeStyles } from "@mui/styles";
 import Grid from "@mui/material/Grid";
-import Link from "./NextLinkComposed";
+import Link from "../NextLinkComposed";
 import Typography from "@mui/material/Typography";
 
 const useStyles = makeStyles(() => ({

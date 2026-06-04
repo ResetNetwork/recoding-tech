@@ -91,6 +91,12 @@ export default {
       ]
     },
     {
+      type: 'text',
+      name: 'intro',
+      title: 'Intro',
+      description: 'The intro paragraph of the post, shown for featured posts on the homepage.',
+    },
+    {
       title: 'Content',
       name: 'body',
       type: 'array',
