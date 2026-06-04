@@ -54,7 +54,7 @@ function NewsletterSubscribe() {
                     marginBottom: "4px",
                   }}
                 >
-                  Our Content delivered to your inbox.
+                  Our content delivered to your inbox.
                 </h4>
                 <div
                   style={{
