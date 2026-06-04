@@ -6,7 +6,7 @@ import { advanced } from "../../layouts";
 
 export async function getStaticProps() {
   console.log("Page tracker/index.js getStaticProps, /");
-  const [config] = await client.fetch(`*[_type == "config"]`);
+  const [config] = await client.fetch(`*[_type == "config"]{title,favicon,header{topics[]->{displayName, slug}, series[]->{displayName, slug}},footer}`);
   const topics = await client.fetch(
     `*[_type == "topic"]{ displayName, link, slug, type }`
   );

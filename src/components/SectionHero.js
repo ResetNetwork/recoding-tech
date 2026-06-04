@@ -66,6 +66,12 @@ function SectionHero(props) {
   const theme = useTheme();
   let { page } = props;
 
+  if (
+    page.stackbit_url_path == "/contributors" ||
+    page.stackbit_url_path == "/search"
+  )
+    return null;
+
   return (
     <section id={page._id} className="block block-hero">
       <Box

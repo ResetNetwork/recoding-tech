@@ -27,7 +27,7 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const slug = params.slug.join();
   console.log("Page category/[...slug].js getStaticProps, slug: ", slug);
-  const [config] = await client.fetch(`*[_type == "config"]`);
+  const [config] = await client.fetch(`*[_type == "config"]{title,favicon,header{topics[]->{displayName, slug}, series[]->{displayName, slug}},footer}`);
   const topics = await client.fetch(
     `*[_type == "topic"]{ displayName, link, slug, type }`
   );
