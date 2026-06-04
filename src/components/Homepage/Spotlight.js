@@ -225,6 +225,11 @@ const Spotlight = (props) => {
               "& p": {
                 margin: 0,
               },
+              "& a": {
+                color: "#fff!important",
+                textDecoration: "underline",
+                "&:hover": { color: "#ff0033" },
+              },
             }}
           >
             <CustomPortableText value={page.description} />
