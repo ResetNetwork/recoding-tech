@@ -10,6 +10,13 @@ export default {
       description: 'The title of the page',
       validation: (Rule) => Rule.required(),
     },
+    {
+      type: 'string',
+      name: 'description',
+      title: 'Description',
+      description: 'The description of the page',
+      hidden: ({document}) => document?.stackbit_url_path !== "/donate",
+    },
     // {
     //   "title": 'Author',
     //   "name": 'author',
@@ -22,6 +29,7 @@ export default {
       title: 'Supertitle',
       description: 'Text to describe the page, if any. Used in the related pages sidebar.',
       validation: null,
+      hidden: ({document}) => document?.stackbit_url_path === "/donate",
     },
     {
       type: 'image',
@@ -106,6 +114,23 @@ export default {
         },
       ],
     },
+    {
+      type: 'array',
+      name: 'faq',
+      title: 'FAQ',
+      description: 'The FAQ of the page',
+      of: [
+        {
+          type: 'object', 
+          fields: [
+            { name: 'question', type: 'string' }, 
+            { name: 'answer', type: 'string' }
+          ]
+        }
+      ],
+      hidden: ({document}) => document?.stackbit_url_path !== "/donate",
+    },
+
     // {
     //     "type": "stackbit_page_meta",
     //     "name": "seo",

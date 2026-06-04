@@ -61,6 +61,7 @@
     text-transform: uppercase;
   }
 
+  /* */
   ul {
     display: flex;
     flex-wrap: wrap;
@@ -94,6 +95,7 @@
       }
     }
   }
+  /* */
 
   p,
   ul,
@@ -177,7 +179,6 @@
   }
 
   p:last-of-type {
-    border-bottom: 1px solid #E2D7BB;
     padding-bottom: 30px;
   }
 }

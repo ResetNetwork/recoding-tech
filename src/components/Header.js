@@ -32,7 +32,12 @@ const useStyles = makeStyles(() => ({
   em: {
     fontStyle: "italic",
   },
-  header: {},
+  header: {
+    position: "sticky",
+    top: 0,
+    zIndex: 1100,
+    backgroundColor: "#fff",
+  },
   link: {
     color: "#000 !important",
     textDecoration: "none!important",
@@ -82,23 +87,29 @@ const Header = (props) => {
     setAnchorElProjects(null);
   };
 
+  const [anchorElContribs, setAnchorElContribs] = React.useState(null);
+  const openContribs = Boolean(anchorElContribs);
+  const handleClickContribs = (event) => {
+    setAnchorElContribs(event.currentTarget);
+  };
+  const handleCloseContribs = () => {
+    setAnchorElContribs(null);
+  };
+
   return (
     <header className={classes.header}>
       <Box
-        p={4}
-        mb={props.isHomepage ? 0 : 4}
-        mt={isMobile ? 0 : 1.5}
+        p={"12px 36px"}
+        mb={0}
+        mt={0}
         sx={{
-          boxShadow:
-            props.isHomepage || isMobile
-              ? ""
-              : "0px 2px 1px -1px rgba(0, 0, 0, 0.2)",
+          boxShadow: "0px 2px 1px -1px #cdcdcd",
         }}
       >
         <Grid container spacing={3} justifyContent="space-between">
           <Grid item xs={10} md={2}>
             <Link href="/" className={classes.logoLink}>
-              <Logo />
+              <Logo maxWidth={isMobile ? 120 : 160} />
               <Typography sx={{ display: "none" }}>Home</Typography>
             </Link>
           </Grid>
@@ -158,23 +169,25 @@ const Header = (props) => {
                           <Typography
                             component="div"
                             variant="h4"
-                            paddingTop={2}
+                            paddingTop={1}
+                            marginBottom={1}
                             sx={{ textTransform: "none" }}
                           >
                             Topics
                           </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                          {data.config.header.topicsLinks &&
-                            data.config.header.topicsLinks.map((link) => (
+                          {data.config.header &&
+                            data.config.header.topics &&
+                            data.config.header.topics.map((link) => (
                               <Typography
-                                key={link.url}
+                                key={link.slug.current}
                                 component="div"
                                 variant="body2"
                                 marginBottom={2}
                               >
                                 <Link
-                                  href={link.url}
+                                  href={`/topic/${link.slug.current}`}
                                   sx={{
                                     color: "#000",
                                     fontSize: "1.1em",
@@ -182,21 +195,12 @@ const Header = (props) => {
                                     textDecoration: "none",
                                   }}
                                 >
-                                  {link.label}
+                                  {link.displayName}
                                 </Link>
                               </Typography>
                             ))}
                         </AccordionDetails>
                       </Accordion>
-                      <Typography
-                        component="div"
-                        variant="h4"
-                        sx={{ marginLeft: 2, textTransform: "none" }}
-                      >
-                        <Link href={`/tracker`} className={classes.link}>
-                          Policy Tracker
-                        </Link>
-                      </Typography>
                       <Typography
                         component="div"
                         variant="h4"
@@ -229,23 +233,25 @@ const Header = (props) => {
                           <Typography
                             component="div"
                             variant="h4"
-                            paddingTop={2}
+                            paddingTop={1}
+                            marginBottom={1}
                             sx={{ textTransform: "none" }}
                           >
-                            Projects
+                            Series
                           </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                          {data.config.header.projectsLinks &&
-                            data.config.header.projectsLinks.map((link) => (
+                          {data.config.header &&
+                            data.config.header.series &&
+                            data.config.header.series.map((link) => (
                               <Typography
-                                key={link.url}
+                                key={link.slug.current}
                                 component="div"
                                 variant="body2"
                                 marginBottom={2}
                               >
                                 <Link
-                                  href={link.url}
+                                  href={`/topic/${link.slug.current}`}
                                   sx={{
                                     color: "#000",
                                     fontSize: "1.1em",
@@ -253,12 +259,24 @@ const Header = (props) => {
                                     textDecoration: "none",
                                   }}
                                 >
-                                  {link.label}
+                                  {link.displayName}
                                 </Link>
                               </Typography>
                             ))}
                         </AccordionDetails>
                       </Accordion>
+                      <Typography
+                        component="div"
+                        variant="h4"
+                        sx={{ marginLeft: 2, textTransform: "none" }}
+                      >
+                        <Link
+                          href={`/contributor-guidelines/`}
+                          className={classes.link}
+                        >
+                          Contributor Guidelines
+                        </Link>
+                      </Typography>
                       <Typography
                         component="div"
                         variant="h4"
@@ -305,18 +323,20 @@ const Header = (props) => {
                   container
                   item
                   xs={12}
-                  alignItems="flex-end"
+                  alignItems="baseline"
                   justifyContent="space-between"
                   spacing={6}
+                  paddingTop="20px"
                 >
                   <Grid
                     container
                     item
                     xs={9}
-                    spacing={1}
-                    mt={1}
+                    spacing={5}
+                    mt={0}
+                    paddingTop="0px!important"
                     flexWrap={"nowrap"}
-                    justifyContent="space-between"
+                    justifyContent="flex-end"
                   >
                     <Grid item>
                       <Button
@@ -349,22 +369,34 @@ const Header = (props) => {
                           "aria-labelledby": "topics-button",
                         }}
                         elevation={1}
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "center",
+                        }}
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "center",
+                        }}
                         sx={{
                           marginTop: 4,
                           "& ul": {
                             display: "grid",
                             gridTemplateColumns: "repeat(4, 1fr)",
-                            maxWidth: "60vw !important",
+                            maxWidth: "1100px",
                             padding: 3,
-                            width: "60vw",
+                            width: "50vw",
                           },
                         }}
                       >
-                        {data.config.header.topicsLinks &&
-                          data.config.header.topicsLinks.map((link) => (
-                            <MenuItem key={link.url} sx={{ padding: 1 }}>
+                        {data.config.header &&
+                          data.config.header.topics &&
+                          data.config.header.topics.map((link) => (
+                            <MenuItem
+                              key={link.slug.current}
+                              sx={{ padding: 1 }}
+                            >
                               <Link
-                                href={link.url}
+                                href={`/topic/${link.slug.current}`}
                                 sx={{
                                   color: "#000",
                                   fontSize: "1.3em",
@@ -375,30 +407,11 @@ const Header = (props) => {
                                   },
                                 }}
                               >
-                                {link.label}
+                                {link.displayName}
                               </Link>
                             </MenuItem>
                           ))}
                       </Menu>
-                    </Grid>
-                    <Grid item>
-                      <Typography
-                        component="div"
-                        variant="h4"
-                        sx={{
-                          fontWeight: 500,
-                          marginBottom: 0,
-                          padding: 1,
-                          textTransform: "none",
-                          "&:active, &:focus, &:hover": {
-                            background: "#f2f2f2",
-                          },
-                        }}
-                      >
-                        <Link href={`/tracker`} className={classes.link}>
-                          Policy Tracker
-                        </Link>
-                      </Typography>
                     </Grid>
                     <Grid item>
                       <Typography
@@ -460,7 +473,7 @@ const Header = (props) => {
                         }}
                         endIcon={<ArrowDropDownIcon />}
                       >
-                        Projects
+                        Series
                       </Button>
                       <Menu
                         id="projects-menu"
@@ -471,29 +484,34 @@ const Header = (props) => {
                           "aria-labelledby": "projects-button",
                         }}
                         elevation={1}
+                        anchorOrigin={{
+                          vertical: "bottom",
+                          horizontal: "center",
+                        }}
+                        transformOrigin={{
+                          vertical: "top",
+                          horizontal: "center",
+                        }}
                         sx={{
                           marginTop: 4,
-                          padding: 3,
                           "& ul": {
-                            display: "flex",
-                            // gridTemplateColumns: "repeat(4, 1fr)",
-                            maxWidth: `30vw`,
-                            flexWrap: "wrap",
-                            // maxWidth: `${
-                            //   (data.config.header.projectsLinks.length + 1) * 15
-                            // }vw !important`
-                            width: `100%`,
-                            // width: `${
-                            //   (data.config.header.projectsLinks.length + 1) * 10
-                            // }vw`,
+                            display: "grid",
+                            gridTemplateColumns: "repeat(1, 1fr)",
+                            maxWidth: "900px",
+                            padding: 3,
+                            width: "100%",
                           },
                         }}
                       >
-                        {data.config.header.projectsLinks &&
-                          data.config.header.projectsLinks.map((link) => (
-                            <MenuItem key={link.url} sx={{ padding: 1 }}>
+                        {data.config.header &&
+                          data.config.header.series &&
+                          data.config.header.series.map((link) => (
+                            <MenuItem
+                              key={link.slug.current}
+                              sx={{ padding: 1 }}
+                            >
                               <Link
-                                href={link.url}
+                                href={`/topic/${link.slug.current}`}
                                 sx={{
                                   color: "#000",
                                   fontSize: "1.3em",
@@ -504,30 +522,89 @@ const Header = (props) => {
                                   },
                                 }}
                               >
-                                {link.label}
+                                {link.displayName}
                               </Link>
                             </MenuItem>
                           ))}
                       </Menu>
                     </Grid>
                     <Grid item>
-                      <Typography
-                        component="div"
-                        variant="h4"
+                      <Button
+                        id="contributors-button"
+                        aria-controls={
+                          openContribs ? "contributors-menu" : undefined
+                        }
+                        aria-haspopup="true"
+                        aria-expanded={openContribs ? "true" : undefined}
+                        onClick={handleClickContribs}
                         sx={{
+                          fontSize: "1em",
                           fontWeight: 500,
-                          marginBottom: 0,
-                          padding: 1,
+                          marginTop: "3px",
+                          paddingTop: 0,
                           textTransform: "none",
                           "&:active, &:focus, &:hover": {
-                            background: "#f2f2f2",
+                            backgroundColor: "#f2f2f2",
+                            borderRadius: 0,
+                          },
+                        }}
+                        endIcon={<ArrowDropDownIcon />}
+                      >
+                        Contributors
+                      </Button>
+                      <Menu
+                        id="contributors-menu"
+                        anchorEl={anchorElContribs}
+                        open={openContribs}
+                        onClose={handleCloseContribs}
+                        MenuListProps={{
+                          "aria-labelledby": "contributors-button",
+                        }}
+                        elevation={1}
+                        sx={{
+                          marginTop: 4,
+                          "& ul": {
+                            display: "grid",
+                            gridTemplateColumns: "repeat(1, 1fr)",
+                            maxWidth: "350px",
+                            padding: 3,
+                            width: "20vw",
                           },
                         }}
                       >
-                        <Link href={`/contributors`} className={classes.link}>
-                          Contributors
-                        </Link>
-                      </Typography>
+                        <MenuItem sx={{ padding: 1 }}>
+                          <Link
+                            href={`/contributor-guidelines/`}
+                            sx={{
+                              color: "#000",
+                              fontSize: "1.3em",
+                              fontWeight: 400,
+                              textDecoration: "none",
+                              "&:active, &:focus, &:hover": {
+                                fontWeight: 600,
+                              },
+                            }}
+                          >
+                            Contributor Guidelines
+                          </Link>
+                        </MenuItem>
+                        <MenuItem sx={{ padding: 1 }}>
+                          <Link
+                            href={`/contributors`}
+                            sx={{
+                              color: "#000",
+                              fontSize: "1.3em",
+                              fontWeight: 400,
+                              textDecoration: "none",
+                              "&:active, &:focus, &:hover": {
+                                fontWeight: 600,
+                              },
+                            }}
+                          >
+                            Contributors
+                          </Link>
+                        </MenuItem>
+                      </Menu>
                     </Grid>
                     <Grid item>
                       <Typography
@@ -549,7 +626,7 @@ const Header = (props) => {
                       </Typography>
                     </Grid>
                   </Grid>
-                  <Grid item xs={3} flexGrow={2}>
+                  <Grid item xs={3} flexGrow={2} paddingTop="20px">
                     <SearchBarHeader />
                   </Grid>
                 </Grid>

@@ -10,6 +10,7 @@ export default {
     {
       type: 'array',
       name: 'posts',
+      title: 'Featured posts',
       of: [
         {
           title: 'Posts',
@@ -20,6 +21,21 @@ export default {
           },
         },
       ],
+    },
+    {
+      type: 'homepage_section',
+      name: 'first_spotlight',
+      title: 'First spotlight section',
+    },
+    {
+      type: 'homepage_section_light',
+      name: 'second_spotlight',
+      title: 'Second spotlight section',
+    },
+    {
+      type: 'homepage_section',
+      name: 'third_spotlight',
+      title: 'Third spotlight section',
     },
   ],
 }
