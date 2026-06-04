@@ -33,17 +33,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const query = `*[!(_id in path("drafts.**")) && _type=="post"]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...3]`;
+const query = `*[!(_id in path("drafts.**")) && _type=="post" && _id != $currentId]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...3]`;
 
-const RelatedArticles = () => {
+const RelatedArticles = ({ currentArticleId }) => {
   const [articles, setArticles] = useState([]);
   const classes = useStyles();
 
   useEffect(() => {
-    client.fetch(query).then((recents) => {
+    client.fetch(query, { currentId: currentArticleId }).then((recents) => {
       setArticles(recents);
     });
-  }, []);
+  }, [currentArticleId]);
 
   if (!Array.isArray(articles) || !articles.length) return null;
 
@@ -109,6 +109,7 @@ const RelatedArticles = () => {
 RelatedArticles.propTypes = {
   section: PropTypes.object,
   articles: PropTypes.array,
+  currentArticleId: PropTypes.string,
 };
 
 export default RelatedArticles;

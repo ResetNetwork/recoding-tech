@@ -155,7 +155,7 @@ const LatestArticles = (props) => {
                         <img
                           src={
                             article.featuredImage
-                              ? urlFor(article.featuredImage).width(200).url()
+                              ? urlFor(article.featuredImage).width(400).url()
                               : null
                           }
                           alt={article.title}

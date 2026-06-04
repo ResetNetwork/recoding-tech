@@ -520,7 +520,7 @@ const Post = (props) => {
               />
               <RelatedTopics topics={page.relatedTopics} />
               <RelatedArticles articles={page.relatedArticles} />
-              <RecentArticles />
+              <RecentArticles currentArticleId={page._id} />
             </Grid>
           </Grid>
         </Container>

@@ -1,11 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { DateTime } from "luxon";
+import _ from "lodash";
 
 import { Box, Container, Typography, Grid, Link } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 
 import { Layout } from "../components/index";
+import { CustomPortableText } from "../components/PortableText";
 
 import urlFor from "../utils/imageBuilder";
 
@@ -30,7 +32,8 @@ const useStyles = makeStyles(() => ({
 }));
 
 const Podcast = (props) => {
-  const { data } = props;
+  const { data, page } = props;
+  const podcastSection = _.find(page?.sections, { type: "section_podcast" });
   const classes = useStyles();
 
   return (
@@ -74,11 +77,14 @@ const Podcast = (props) => {
                 "& p": {
                   margin: 0,
                 },
+                "& a": {
+                  color: "#fff!important",
+                  textDecoration: "underline",
+                  "&:hover": { color: "#ff0033" },
+                },
               }}
             >
-              Tech Policy press publishes a weekly (and sometimes more often)
-              podcast. You can subscribe with your favorite podcast service.
-              Give it a listen and let us know what you think!
+              <CustomPortableText value={podcastSection?.intro} />
             </Typography>
           </Container>
           <Container sx={{ maxWidth: "1300px!important" }}>
@@ -396,6 +402,7 @@ const Podcast = (props) => {
 
 Podcast.propTypes = {
   data: PropTypes.object.isRequired,
+  page: PropTypes.object.isRequired,
 };
 
 export default Podcast;
