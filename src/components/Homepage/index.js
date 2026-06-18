@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 // Material UI imports
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import { useTheme } from "@mui/material/styles";
 
 // components
 import Podcast from "./Podcast";
@@ -24,6 +25,7 @@ import client from "../../utils/sanityClient";
 const query = `*[_type == "featured_posts" && title == "Homepage"] { posts[]->{_id, title, author, badge, date, featuredImage, category, date, type, slug, stackbit_model_type, intro, seo}, first_spotlight, second_spotlight, third_spotlight }`;
 
 function Homepage(props) {
+  const theme = useTheme();
   const { featured, articles, fellows } = props;
   const [spotlight, setSpotlight] = useState({});
 
@@ -55,7 +57,16 @@ function Homepage(props) {
 
   return (
     <>
-      <Container maxWidth="xl" sx={{ maxWidth: "1383px!important" }}>
+      <Container
+        maxWidth="xl"
+        sx={{
+          maxWidth: "1383px!important",
+          [theme.breakpoints.only("xs")]: {
+            paddingLeft: 0,
+            paddingRight: 0,
+          },
+        }}
+      >
         <FeaturedPosts featured={featured} />
 
         <Latest articles={latest.slice(0, 6)} />

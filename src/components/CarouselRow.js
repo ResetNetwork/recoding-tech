@@ -47,7 +47,7 @@ function CarouselRow({
             sx={{
               flex: `0 0 ${100 / n}%`,
               boxSizing: "border-box",
-              pr: i < n - 1 ? "20px" : 0,
+              pr: visibleCount > 1 && i < n - 1 ? "20px" : 0,
               minWidth: 0,
             }}
           >
