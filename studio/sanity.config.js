@@ -10,8 +10,8 @@ export default defineConfig({
   name: 'default',
   title: 'Tech Policy Press',
   projectId: '3tzzh18d',
-  dataset: 'tpp-development',
-  // dataset: 'production',
+  // dataset: 'tpp-development',
+  dataset: 'production',
   // document: {
   //   productionUrl: async (prev, context) => {
   //     const {getClient, dataset, document} = context
