@@ -16,8 +16,6 @@ function MyApp({ Component, pageProps }) {
     }
 
     if (window.onNextjsRouteChangeComplete) {
-      console.log(window.onNextjsRouteChangeComplete());
-
       window.onNextjsRouteChangeComplete();
     }
 
@@ -43,16 +41,18 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      <Script src="https://sa.recoding.tech/latest.js" />
+      <Component {...pageProps} />
+      <Script
+        src="https://scripts.simpleanalyticscdn.com/latest.js"
+        strategy="afterInteractive"
+      />
       <noscript>
-        {/* eslint-disable @next/next/no-img-element */}
         <img
-          src="https://sa.recoding.tech/noscript.gif"
+          src="https://queue.simpleanalyticscdn.com/noscript.gif"
           alt=""
           referrerPolicy="no-referrer-when-downgrade"
         />
       </noscript>
-      <Component {...pageProps} />
     </>
   );
 }
