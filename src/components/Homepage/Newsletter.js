@@ -46,7 +46,7 @@ const Newsletter = () => {
               justifyContent: "space-between",
               alignItems: { xs: "stretch", md: "center" },
               flexDirection: { xs: "column", md: "row" },
-              gap: { xs: 3, md: 0 },
+              gap: { xs: 3, md: "20px" },
             }}
           >
             <div style={{ flex: "1 1 0%", minWidth: 0 }}>
