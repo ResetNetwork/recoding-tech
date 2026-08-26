@@ -20,6 +20,47 @@ import LinkedInIcon from "@mui/icons-material/LinkedIn";
 // components
 import Logo from "./LogoFooter";
 
+const renderLink = (link, idx) => (
+  <Grid
+    item
+    key={idx}
+    sx={{
+      mb: "30px",
+      paddingTop: link.style === "button" ? "7px" : "0",
+    }}
+  >
+    <NextLink style={{ textDecoration: "none" }} href={link.url}>
+      <Typography
+        component="span"
+        variant="h5"
+        sx={{
+          color: "#FFF",
+          fontSize: 14,
+          textDecoration: "none",
+          textTransform: "none",
+          "&:hover, &:focus": {
+            textDecoration: "underline",
+          },
+          ...(link.style === "button"
+            ? {
+                lineHeight: "1.5",
+                backgroundColor: "#fff",
+                borderRadius: "12px",
+                color: " #1f5997FF",
+                padding: "8px 16px",
+                "&:hover, &:focus": {
+                  textDecoration: "none",
+                },
+              }
+            : {}),
+        }}
+      >
+        {link.label}
+      </Typography>
+    </NextLink>
+  </Grid>
+);
+
 function Footer(props) {
   let links;
   if (
@@ -148,97 +189,16 @@ function Footer(props) {
               item
               direction={"column"}
               flexWrap={"wrap"}
-              sx={{ height: 200 }}
+              sx={{ height: 250 }}
               xs={12}
               sm={4}
             >
-              {links.length
-                ? links.map((link, idx) => (
-                    <Grid
-                      item
-                      key={idx}
-                      sx={{
-                        mb: "30px",
-                        paddingTop: link.style === "button" ? "7px" : "0",
-                      }}
-                    >
-                      <NextLink
-                        style={{ textDecoration: "none" }}
-                        href={link.url}
-                      >
-                        <Typography
-                          component="span"
-                          variant="h5"
-                          sx={{
-                            color: "#FFF",
-                            fontSize: 14,
-                            textDecoration: "none",
-                            textTransform: "none",
-                            "&:hover, &:focus": {
-                              textDecoration: "underline",
-                            },
-                            ...(link.style === "button"
-                              ? {
-                                  lineHeight: "1.5",
-                                  backgroundColor: "#fff",
-                                  borderRadius: "12px",
-                                  color: " #1f5997FF",
-                                  padding: "8px 16px",
-                                  "&:hover, &:focus": {
-                                    textDecoration: "none",
-                                  },
-                                }
-                              : {}),
-                          }}
-                        >
-                          {link.label}
-                        </Typography>
-                      </NextLink>
-                    </Grid>
-                  ))
-                : null}
-              {/* {_.map(
-                _.get(props, "data.config.footer.links", null),
-                (action, action_idx) => (
-                  <Grid item key={action_idx} sx={{ my: 1 }}>
-                    <Link
-                      style={{ textDecoration: "none" }}
-                      href={withPrefix(_.get(action, "url", null))}
-                      {...(_.get(action, "new_window", null)
-                        ? { target: "_blank" }
-                        : null)}
-                      {...(_.get(action, "new_window", null) ||
-                      _.get(action, "no_follow", null)
-                        ? {
-                            rel:
-                              (_.get(action, "new_window", null)
-                                ? "noopener "
-                                : "") +
-                              (_.get(action, "no_follow", null)
-                                ? "nofollow"
-                                : ""),
-                          }
-                        : null)}
-                    >
-                      <Typography
-                        component="span"
-                        variant="h5"
-                        sx={{
-                          color: "#FFF",
-                          fontSize: 14,
-                          textDecoration: "none",
-                          textTransform: "none",
-                          "&:hover, &:focus": {
-                            textDecoration: "underline",
-                          },
-                        }}
-                      >
-                        {_.get(action, "label", null)}
-                      </Typography>
-                    </Link>
-                  </Grid>
-                )
-              )} */}
+              <Grid item xs={6}>
+                {links.slice(0, 3).map(renderLink)}
+              </Grid>
+              <Grid item xs={6}>
+                {links.slice(3).map(renderLink)}
+              </Grid>
             </Grid>
           </Grid>
         </Container>
