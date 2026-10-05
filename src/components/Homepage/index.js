@@ -112,6 +112,7 @@ function Homepage(props) {
               topicRef={"86a72333-1b53-4afa-95d4-9581a48db9b9"}
               title="Resources"
               slug="resources"
+              priorityTagRef="8fec1f36-7fc0-4944-ad91-a7068aa7fc3f"
             />
           </Grid>
         </Container>

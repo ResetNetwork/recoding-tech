@@ -42,11 +42,13 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ArticleColumn = (props) => {
-  const { topicRef, title, slug } = props;
+  const { topicRef, title, slug, priorityTagRef } = props;
   const [posts, setPosts] = useState([]);
   const classes = useStyles();
 
-  const query = `*[!(_id in path("drafts.**")) && _type == "post" && references("${topicRef}")]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...6]`;
+  const query = priorityTagRef
+    ? `*[!(_id in path("drafts.**")) && _type == "post" && references("${topicRef}")]{ _id, title, slug, featuredImage, date, badge, "pinned": references("${priorityTagRef}") } | order(pinned desc, date desc)[0...6]`
+    : `*[!(_id in path("drafts.**")) && _type == "post" && references("${topicRef}")]{ _id, title, slug, featuredImage, date, badge } | order(date desc)[0...6]`;
 
   useEffect(() => {
     client.fetch(query).then((articles) => {
@@ -194,6 +196,7 @@ ArticleColumn.propTypes = {
   title: PropTypes.string.isRequired,
   slug: PropTypes.string.isRequired,
   topicRef: PropTypes.string.isRequired,
+  priorityTagRef: PropTypes.string,
 };
 
 export default ArticleColumn;
